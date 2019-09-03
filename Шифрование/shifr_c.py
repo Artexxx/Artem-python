@@ -22,9 +22,9 @@ def encrypt_decrypt(mode, massage, key, final=""):
     """Основная функция принимающая аргументы: переключатель, сообщение, ключ"""
     for sumvol in massage:
         if mode == "E":  # Шифрование сообщения при помощи таблицы ASCII
-            final += chr(ord(sumvol) + key)
+            final += chr((ord(sumvol) + key - 13) % 26 + ord("A"))
         else:  # Decrypteed сообщения при помощи таблицы ASCII
-            final += chr(ord(sumvol) - key)
+            final += chr((ord(sumvol) - key - 13) % 26 + ord("A"))
     return final
 
 
