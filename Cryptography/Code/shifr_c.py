@@ -10,7 +10,7 @@ if cryptMode not in ["D", "E"]:
 
 startMassage = input("Write text ->").upper()
 
-# если ключ не является числом – выводится ошибка
+# если ключ не является числом – выводится ошибкаgit branch
 try:
     assKey = int(input("Write assKey ->"))
 except ValueError:
