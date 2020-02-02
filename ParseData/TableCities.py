@@ -13,7 +13,7 @@ html = res.text
 soup = BeautifulSoup(html, "html.parser")
 conteiner = soup.find("div", {"class": "mw-parser-output"})
 
-trs = conteiner.find_all('tr')
+lines = conteiner.find_all('tr')
 cities = [["Город", "Регион", "Федеральный округ", "Население", "Основание или певое упоминание", "Статус"]]
 
 
@@ -26,10 +26,10 @@ def inform_to_city(tds: "tag") -> list:
 
 
 # cities = /div/table/tbody/tr/td
-for tr in trs:
-    tds = tr.find_all("td")
-    if len(tds) == 8:
-        inf_city = inform_to_city(tds)
+for line in lines:
+    elements = line.find_all("td")
+    if len(elements) == 8:
+        inf_city = inform_to_city(elements)
         cities.append(inf_city)
 
 with open("data.txt", "w", encoding="utf8") as f:
