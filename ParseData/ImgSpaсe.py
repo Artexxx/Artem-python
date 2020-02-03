@@ -1,7 +1,6 @@
 #  ImgSpace.py - парсит фотки о космосе и сохраняет их.
 import urllib
 
-from bs4 import BeautifulSoup
 import requests
 from bs4 import BeautifulSoup
 
