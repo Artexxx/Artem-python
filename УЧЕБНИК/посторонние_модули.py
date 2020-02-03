@@ -17,6 +17,13 @@ class Beautiful_Soup():
     print(soup.head)
     print(soup.li)
 
+    # attrs -- возвращает список классов объекта
+    for product in products:  # soup.find_all("div", {"class": "Porn"})
+        print(product.attrs)  # ->{'class': ['class1', 'class2', 'class3']}
+
+    image = product.find("img")['src']
+    link = element.find("a", {"data-item-name": "detail-page-link"})["href"]
+
     for tag in soup.find_all("li"):
         print("{0}: {1}".format(tag.name, tag.text))
 
@@ -58,12 +65,3 @@ class lxml():  # библеотека lxml похожа на стандартн�
         print(i, i.attrib)  # <Element a at 0x36cf0d0> {'href': 'https://docs.python.org/2.7/'}
 
 # -------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-

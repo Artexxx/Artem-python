@@ -3,8 +3,6 @@ import urllib
 
 from bs4 import BeautifulSoup
 import requests
-
-import requests
 from bs4 import BeautifulSoup
 
 BASE_URL = "https://wallpapershome.com"

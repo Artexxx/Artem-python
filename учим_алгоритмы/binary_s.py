@@ -2,7 +2,6 @@ def binarysearch(mylist, items):
     """ вводите список чисел(mylist) и число(items} которое хотите найти """
     start = 0
     stop = len(mylist) - 1
-
     while start <= stop:
         mid = (start + stop) / 2
         dogadka = list(mid)
