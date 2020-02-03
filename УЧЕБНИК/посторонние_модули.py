@@ -18,7 +18,8 @@ class Beautiful_Soup():
     print(soup.li)
 
     # attrs -- возвращает список классов объекта
-    for product in products:  # soup.find_all("div", {"class": "Porn"})
+    elements = soup.select("div.mycontent")
+    for elements in products:  # soup.find_all("div", {"class": "Porn"})
         print(product.attrs)  # ->{'class': ['class1', 'class2', 'class3']}
 
     image = product.find("img")['src']

@@ -23,5 +23,3 @@ for element in elements:
         string += "\t" + element.find("strong").text + "\n"
 with open("data.txt", "w", encoding='utf8') as file:
     file.write(string)
-
-
