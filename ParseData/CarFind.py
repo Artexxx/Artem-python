@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_info_to_car(element):
+def get_info_about_car(element):
     name = element.find("div", {"class": "cldt-summary-title"}).text
     price = element.find("div", {"class": "cldt-summary-payment"}).text
     mileage = element.find("ul", {"data-item-name": "vehicle-details"}).find_all("li")[0].text
@@ -28,7 +28,7 @@ for x in range(1, 21):
     soup = BeautifulSoup(html, 'html.parser')
     elements = soup.find_all("div", {"class": "cl-list-element-gap"})
     for element in elements:
-        all_elements.append(get_info_to_car(element))
+        all_elements.append(get_info_about_car(element))
 
 with open("data.json", "w", encoding="utf8") as file:
     json.dump(all_elements, file)

@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_info_product(product) -> list:
+def get_info_about_product(product) -> list:
     image = product.find("img")['src']
     name = product.find("div", {"class": "product-name"}).text
     code = product.find("div", {"class": "product-model"}).text
@@ -27,7 +27,7 @@ all_product = []
 
 for product in products:
     if product.attrs['class'] == multy_class:
-        all_product.append(get_info_product(product))
+        all_product.append(get_info_about_product(product))
 
 names = ["Наименование", "Артикль", "Описание", "Цена"]
 

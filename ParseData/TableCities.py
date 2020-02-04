@@ -17,7 +17,7 @@ lines = conteiner.find_all('tr')
 cities = [["Город", "Регион", "Федеральный округ", "Население", "Основание или певое упоминание", "Статус"]]
 
 
-def inform_to_city(tds: "tag") -> list:
+def get_inform_about_city(tds) -> list:
     inform = []
     for i in range(2, len(tds) - 1):
         inform.append(tds[i].text)
@@ -29,7 +29,7 @@ def inform_to_city(tds: "tag") -> list:
 for line in lines:
     elements = line.find_all("td")
     if len(elements) == 8:
-        inf_city = inform_to_city(elements)
+        inf_city = get_inform_about_city(elements)
         cities.append(inf_city)
 
 with open("data.txt", "w", encoding="utf8") as f:

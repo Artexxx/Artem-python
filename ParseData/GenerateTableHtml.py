@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_story_info(element) -> list:
+def get_info_about_story(element) -> list:
     name = element.select("a")[0].text
     url = element.select("a")[0]['href']
     like = element.select("span.likes")[0].text
@@ -27,7 +27,7 @@ elements = soup.select("div.mycontent")
 
 stories = []
 for element in elements:
-    stories.append(get_story_info(element))
+    stories.append(get_info_about_story(element))
 
 table_element = ""
 for story in stories:
