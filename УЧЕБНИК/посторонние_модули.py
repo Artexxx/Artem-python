@@ -16,14 +16,21 @@ class Beautiful_Soup():
     print(soup.h2.string)
     print(soup.head)
     print(soup.li)
+    print(soup.all_tags(True))  # все тэги на странице
+
+    elements = soup.select("div.mycontent")
+    conteiner = soup.select_one("ol.row")  # полезно для вобора всех элементов таблицы
+    url = product.select_one("h3 a")["href"]  # =  h3.a
 
     # attrs -- возвращает список классов объекта
-    elements = soup.select("div.mycontent")
     for elements in products:  # soup.find_all("div", {"class": "Porn"})
         print(product.attrs)  # ->{'class': ['class1', 'class2', 'class3']}
 
     image = product.find("img")['src']
     link = element.find("a", {"data-item-name": "detail-page-link"})["href"]
+
+    # следующий тег
+    description = soup.find("div", {"class": "sub-header"}).find_next("p").text
 
     for tag in soup.find_all("li"):
         print("{0}: {1}".format(tag.name, tag.text))

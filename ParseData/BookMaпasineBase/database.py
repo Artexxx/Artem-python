@@ -6,9 +6,10 @@ _SQL_CREATE = "CREATE TABLE books (name TEXT, price TEXT, description TEXT, info
 _SQL_DATA = "SELECT * FROM books"
 cursor = conn.cursor()
 
+cursor.execute(_SQL_DATA)
 res = cursor.fetchall()
 for r in res:
-    print(r)
-cursor.execute(_SQL_DATA)
+    print("NAME", r[0])
+    print("PRICE", r[1])
 
 conn.close()
