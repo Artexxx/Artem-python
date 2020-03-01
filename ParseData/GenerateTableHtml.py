@@ -37,5 +37,5 @@ table = f'''<ul>
          {table_element}
         </ul>'''
 
-with open("index.html", "w", encoding="utf8") as f:
+with open("main.html", "w", encoding="utf8") as f:
     f.write(table)
