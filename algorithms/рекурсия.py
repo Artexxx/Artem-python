@@ -5,16 +5,20 @@ def factorial(num):
 
 
 # Сумма цифр числа
-def sum_n(a):
-    if a:
-        return a % 10 + sum_n(a // 10)
-    # Базовый  случай
+def sum_n(num):
+    if num:
+        return num % 10 + sum_n(num // 10)
     return 0
+
+
+# Сумма массива
+def sum(items):
+    head, *tail = items
+    return head + sum(tail) if tail else head
 
 
 # Цифры числа справа налево
 def reverse_n(n):
-    # Базовый  случай
     if (n < 10):
         return n
     else:
@@ -24,7 +28,6 @@ def reverse_n(n):
 
 # Цифры числа слева направо
 def lToR(n):
-    # Базовый  случай
     if n == 0:
         return
     else:
