@@ -135,7 +135,8 @@ class str():  #  работа с текстом
     print(f_dob)
     #  Выхлоп/  #  05.03.1987 #  Дата рождения  /
 
-    str.translate(None, "aeiouAEIOU")  # возвращает строку "Loli"-> "Ll"
+    "Swap vowels for numbers.".translate(str.maketrans('aeiou', '12345'))
+    # возвращает строку `Sw1p v4w2ls f4r n5mb2rs.`
 
     str.join(sequence)
     """Функция join() возвращает строку, в которой элементы были соединены с помощью str."""
