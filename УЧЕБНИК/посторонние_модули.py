@@ -2,10 +2,10 @@
 class urllib_request():  # модуль который может скачивать из интернета,читать и парсить сайты
     import urllib.request
 
-    urllib.request.urlretrieve(url, nameFile)
     """urlretrieve скачивает файл из интернета давая имя nameFile"""
+    urllib.request.urlretrieve(url, nameFile)
 
-
+    urllib.request.urlopen("http://www.python.org")
 # -------------------------------------------------------------------------------------------
 class Beautiful_Soup():
     from bs4 import BeautifulSoup
