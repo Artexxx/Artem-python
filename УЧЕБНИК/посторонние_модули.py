@@ -1,4 +1,24 @@
 # -------------------------------------------------------------------------------------------
+class scrapy():  # модуль который может скачивать из интернета,читать и парсить сайты
+    #        (в папке проекта)
+    # scrapy runspider auto_ru.py --output=data.json -сохраняет заголовки с сайта в файл
+    # scrapy runspider auto_ru.py --output=data.json -L WARNING
+    import scrapy
+    class BlogSpider(scrapy.Spider):
+        name = 'blogspider'
+        start_urls = ['https://blog.scrapinghub.com']
+
+        def parse(self, response):
+            for title in response.css('.post-header>h2'):
+                yield {'title': title.css('a ::text').get()}
+
+            for next_page in response.css('a.next-posts-link'):
+                yield response.follow(next_page, self.parse)
+
+    """ Дополнить ссылку картинки без `http`"""
+    response.urljoin(img)
+
+# -------------------------------------------------------------------------------------------
 class urllib_request():  # модуль который может скачивать из интернета,читать и парсить сайты
     import urllib.request
 
