@@ -4,7 +4,7 @@
 
 cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
 if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!");
+    print("Error: mode is not Found!")
     raise SystemExit
 
 rawMessage = list(input("Write the message: ").upper())
