@@ -1,9 +1,11 @@
 """ Шифр Атбаш --Создаёт зеркальную версию алфавита,
                 где начало - буква ’Z’, а конец алфавита буква - ‘A’.)"""
 
+from string import ascii_uppercase
+
 message = input("Write the message: ").upper()
 
-alphaDefault = [chr(x) for x in range(65, 91)]
+alphaDefault = ascii_uppercase
 alphaReverse = alphaDefault[::-1]
 
 final = ""
