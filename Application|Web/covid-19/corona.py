@@ -50,7 +50,6 @@ def get_information(country, save=False, path=None):
         country)
     cari = re.search(data, r)
     print(" -> \u001b[32mSuccess\u001b[0m")
-    #	print (cari.group())
     last = str(cari.group(2))
     print("\u001b[35m[+] Country: " + country)
     print("\u001b[36m[+] Last Update: " + last)
@@ -63,7 +62,7 @@ def get_information(country, save=False, path=None):
 def show_list():
     banner()
     try:
-        o = open("../../PROJECT/covid-19/list.txt", "r").read()
+        o = open("list.txt", "r").read()
         for a in o.splitlines():
             print("[+] " + str(a))
     except IOError:
@@ -74,7 +73,7 @@ def show_list():
         country = re.findall('"Country_Region":"(.*?)"', r)
         for coun in country:
             print("[+] " + str(coun), end="", flush=True)
-            buka = open("../../PROJECT/covid-19/list.txt", "a")
+            buka = open("list.txt", "a")
             buka.write(coun + "\n")
             buka.close()
             print(" -> \u001b[32mSuccess\n", end="", flush=True)
@@ -90,10 +89,10 @@ def main():
     parse.add_option("-c", "--country", help="Show All Country", dest="country", action="store_true")
     opt, args = parse.parse_args()
     if opt.help == True:
-        banner(help=True);
+        banner(help=True)
         sys.exit()
     elif opt.about == True:
-        banner(about=True);
+        banner(about=True)
         sys.exit()
     elif opt.country == True:
         show_list()
@@ -101,7 +100,7 @@ def main():
         try:
             save = args[0]
         except IndexError:
-            banner(about=False);
+            banner(about=False)
             sys.exit()
     else:
         try:
@@ -112,7 +111,7 @@ def main():
     if country:
         banner()
         try:
-            o = open("../../PROJECT/covid-19/list.txt", "r").read()
+            o = open("list.txt", "r").read()
             for a in o.splitlines():
                 if country.lower() in a.lower():
                     if save:
@@ -120,8 +119,6 @@ def main():
                     else:
                         get_information(a)
                     break
-        #				else:
-        #					print ("[#] Country '%s' Not Found, Please Use -c to show all country list"%(country));break
         except IOError:
             print("[+] File List Country \u001b[31mNot Found\u001b[0m, please configure")
             sys.exit()
