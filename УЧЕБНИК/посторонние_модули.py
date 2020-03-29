@@ -57,6 +57,27 @@ class Beautiful_Soup():
 
 
 # -------------------------------------------------------------------------------------------
+class PIL():
+    from PIL import Image, ImageFilter, ImageDraw
+    img = Image.open('picture.png')
+    img.save("ass.png")
+
+    img.show()  # показывает картинку в мини проигрывателе
+    img.size()  # (960, 800)
+    img.format()  # 'PNG'
+
+    img.thumbnail((200, 200))  # уменьшает размер фотки
+    crop_img = img.crop((0, 0, 100, 100))  # обрезает фотку по координатам
+    r_img = img.rotate(180)  # поворот
+
+    blurred_img = img.filter(ImageFilter.EDGE_ENHANCE_MORE)
+
+    img = Image.new("RGBA", (400, 200), "red")
+    idraw = ImageDraw.Draw(img)
+    idraw.rectangle((50, 50, 100, 100), fill="green")
+
+
+# -------------------------------------------------------------------------------------------
 """
 Вот команды, которые нам понадобятся в гите:
 git clone ссылка путь_куда_клонировать
