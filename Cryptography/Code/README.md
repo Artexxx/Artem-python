@@ -9,6 +9,7 @@
 |шифр ROT13| [0](shifr_rot13.py)|
 |Цезарь ключ-слово| [3](caesarWithKeyword.py)|
 |шифр Тритемиуса| [2](trithemius.py)|
+|индексированный шифр| [Midde](index.py)|
 |шифр замены| [1](replace.py)|
 |Омофонический шифр| [5](homophonic.py)|
 |шифр Атбаш| [0](atbash.py)|
@@ -27,11 +28,14 @@
 |кодирование| [2](codind.py)|
 |замены слогов| [Pair](syllable.py)|
 |шифр порты| [3](ports.py)|
-|рототное шифр| [4](rotors.py)|
+|рототное шифров| [4](rotors.py)|
+|машина TYPEX| [max](typex.py)|
 |sha256| [max](sha256.py)|
 
 |Перестановкой|Крутость|
 | -----------| :-------:|
 |шифр штакетник| [0](fence.py)|
 |шифр решётки| [max](lattice.py)|
+|двойная цифирь| [max](doubleCifire.py)|
+|шифр Плейфера| [max](playfair.py)|
 
