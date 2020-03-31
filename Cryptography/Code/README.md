@@ -9,6 +9,7 @@
 |шифр ROT13| [0](shifr_rot13.py)|
 |Цезарь ключ-слово| [3](caesarWithKeyword.py)|
 |шифр Тритемиуса| [2](trithemius.py)|
+|Аффинский шифр| [0](affine.py)|
 |индексированный шифр| [Midde](index.py)|
 |шифр замены| [1](replace.py)|
 |Омофонический шифр| [5](homophonic.py)|
@@ -38,4 +39,10 @@
 |шифр решётки| [max](lattice.py)|
 |двойная цифирь| [max](doubleCifire.py)|
 |шифр Плейфера| [max](playfair.py)|
+|шифр ADFGVX| [5](adfgvx.py)|
 
+|Критостойкие|Крутость|модуль|
+| --------    | :---:| :-------:|
+|AES|[max](aes_module.py)|pyAesCrypt|
+|RSA|[max](rsa_module.py)|rsa|
+|Великий шифр|[хранение](GreatCipher/greatcipher.py)|memory|
