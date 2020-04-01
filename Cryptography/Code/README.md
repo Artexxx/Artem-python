@@ -1,17 +1,17 @@
-|Шифры замены|Крутость|
-| -----------| :-------:|
+|Шифры замены|Крутость| Взлом
+| -----------| :-------:| ---|
 |Книжный шифр| [max](book.py)|
 |Шифр Гронсвельда| [4](gonsfeld.py)|
 |Шифр Виженера| [3](vishener.py)|
 |Степени Виженера| [4](vishenerPow.py)|
 |шифр Полибея| [1](polibiy.py)|
-|шифр Цезаря| [0](shifr_c.py)|
+|шифр Цезаря| [0](shifr_c.py)|[`BF 25`](hack/caesar.py)|
 |шифр ROT13| [0](shifr_rot13.py)|
 |Цезарь ключ-слово| [3](caesarWithKeyword.py)|
 |шифр Тритемиуса| [2](trithemius.py)|
-|Аффинский шифр| [0](affine.py)|
+|Аффинский шифр| [0](affine.py)|[`dict`](hack/affine.py)|
 |индексированный шифр| [Midde](index.py)|
-|шифр замены| [1](replace.py)|
+|шифр замены| [1](replace.py)|[`analys`](hack/cryptoanalysis.py)|
 |Омофонический шифр| [5](homophonic.py)|
 |шифр Атбаш| [0](atbash.py)|
 |шифр A1Z26| [-1](A1Z26.py)|
@@ -32,6 +32,9 @@
 |рототное шифров| [4](rotors.py)|
 |машина TYPEX| [max](typex.py)|
 |sha256| [max](sha256.py)|
+|Шифр Хилла [2x2]| [math](hill2x2.py)|
+|Шифр Хилла [3x3]| [math](hill3x3.py)|
+|протокол Диффи-Хеллмана| [math](diffie-hellman.py)|
 
 |Перестановкой|Крутость|
 | -----------| :-------:|
