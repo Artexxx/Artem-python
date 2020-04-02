@@ -48,4 +48,6 @@
 | --------    | :---:| :-------:|
 |AES|[max](aes_module.py)|pyAesCrypt|
 |RSA|[max](rsa_module.py)|rsa|
+|RSA|[max](rsa.py)||
+|RSA|[max](rsa_signature.py)||
 |Великий шифр|[хранение](GreatCipher/greatcipher.py)|memory|

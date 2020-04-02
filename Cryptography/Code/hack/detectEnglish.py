@@ -12,7 +12,7 @@ LETTERS_AND_SPACE = ascii_letters + ' \t\n'
 def loadDictionary():
     with open('dictEnglishWords.txt', "r") as dictionaryFile:
         englishWords = {}
-        for word in dictionaryFile.read().split('\n'):
+        for word in dictionaryFile.read().upper().split('\n'):
             englishWords[word] = None
         dictionaryFile.close()
         return englishWords

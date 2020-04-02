@@ -29,10 +29,11 @@ while True:
     locations = fr.face_locations(rgbImg)
     encodings = fr.face_encodings(rgbImg, locations)
 
+    name = "unknown!"
     for encoding in encodings:
         matches = fr.compare_faces(known_faces, encoding)
-
         name = "unknown!"
+
         face_distances = fr.face_distance(known_faces, encoding)
         best_match_index = np.argmin(face_distances)
         if matches[best_match_index]:
