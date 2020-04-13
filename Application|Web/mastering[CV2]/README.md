@@ -1,0 +1,5 @@
+|Topic|Image|Description|
+|:----:|:----:|:----:|
+|[трансформация](perspective_trans.py)|<img src = "https://user-images.githubusercontent.com/54672403/79069689-dd8ce500-7cd8-11ea-81a6-9bbf4ef4fe6b.jpg" width="450" height="200" />|  растягивает  картинку из точек ```1,2``` в углы |
+|[склейка](matrixImg.py)|<img src = "https://user-images.githubusercontent.com/54672403/79075101-54d27100-7cf9-11ea-8f51-32a53863a4b1.png" width="350" height="170" />|выводит изображение, состоящее из склеенных фоток, одного размера|
+|[классификация фигур](detectShape.py)|<img src = "https://user-images.githubusercontent.com/54672403/79110254-b38ffd00-7d82-11ea-8a58-cee7c927e7ce.png" width="350" height="170" />|различает фигуры<br> квадрат, триугольник, круг, прямоугольник</br>|

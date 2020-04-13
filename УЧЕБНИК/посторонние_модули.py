@@ -57,6 +57,68 @@ class Beautiful_Soup():
 
 
 # -------------------------------------------------------------------------------------------
+class numpy():
+    import numpy as np
+    # заполнить все строки во всех таблицах       [[255. 0. 0.],[255. 0. 0.]]
+    array[:] = 255, 0, 0
+
+    """ Найти процент совпадений двух массивов"""
+    x = np.array([1, 2, 1, 2, 1, 1])
+    y = np.array([1, 2, 1, 1, 1, 1])
+    (x == y).mean()
+
+    """ создать массив изменённый по условию"""
+    np.where(a > 0.5, True, False)
+    array([True, True, False, False, False, False, True, True, False, ])
+
+    """ символы без повторений |работает с векторами|"""
+    set_a = np.unique(a)
+
+    """ создать матрицу элементы | на диагонали -1 | остальные 0.5|"""
+    a = -1.5 * np.eye(4, 5, 0) + 0.5 * np.ones((4, 5))
+
+    """превратить массив в одномерный"""
+    a.flatten()
+
+    """ транспонирование (или смена порядка осей в случае, когда размерность массива больше двух)."""
+    a.T or a.transpose(*axes)
+
+    """ смена формы массива. Массив "распрямляется" и построчно заполняется в новую форму."""
+    a.reshape(1, 2, 3)
+    # [1] Количество "матриц"
+    # [2] Количество строк в каждой матрице
+    # [3] Количество столбцов в каждой матрице
+
+    """ одномерный массив из 12 случайных чисел от 1 до 1000"""
+    np.array(random.sample(range(1000), 12))
+
+    """ посчитать среднее арифметическое  """
+    a.mean(axis=0)  # вдоль столбцов
+    a.mean(axis=1)  # вдоль строк
+    a.mean(axis=None)  # вдоль всего массива
+
+    np.loadtxt("data.csv", usecols=(0, 1, 4), skiprows=1, delimiter=",",
+               dtype={'names': ('date', 'open', 'close'),
+                      'formats': ('datetime64[D]', 'f4', 'f4')})
+    # [usecols] — | список колонок, которые нужно использовать | все |
+    # skiprows  — | количество рядов в начале, которые нужно пропустить | skiprows = 0 |
+    #              < пропустил ряд заголовков >
+    # delimiter — | разделитель столбцов в одной строке | любой пробел  |
+
+    """ удалить 1 столбец в файле"""
+    x = np.delete(data, 0, axis=1)
+
+    """ вставить матрицу `а` перед матрицей `x`1 (похоже на |str +|)"""
+    np.hstack((a, x1))
+
+
+# -------------------------------------------------------------------------------------------
+class pandas():
+    import pandas as pd
+    df = pd.read_csv('iris.data', header=None)
+
+
+# -------------------------------------------------------------------------------------------
 class PIL():
     from PIL import Image, ImageFilter, ImageDraw
     img = Image.open('picture.png')
@@ -78,8 +140,57 @@ class PIL():
 
 
 # -------------------------------------------------------------------------------------------
+class cv2():
+    import cv2
+
+    """ показать на экране картинку """
+    img = cv2.imread('picture.png')
+    cv2.imshow('title', img)
+    cv2.waitKey(0)
+    imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    imgCanny = cv2.Canny(img, 150, 200)  # найти края на изображение
+    kernel = np.ones((5, 5), np.uint8)  # расширить вывод краей
+    imgDialation = cv2.dilate(imgCanny, kernel, iterations=5)
+    imgResize = cv2.resize(img, (100, 100))  # изменит размер
+    mini = cv2.resize(img, dsize=(0, 0), fx=0.5, fy=0.5)  # уменьшит размер в 2 раза
+
+    imgCropped = img[0:700, 500:900]  # обрезать
+
+    """ запуск онлайн камеры"""
+    cap = cv2.VideoCapture(0)
+    while True:
+        success, img = cap.read()
+        cv2.imshow('Live', img)
+        if cv2.waitKey(10) == 27: break  # press `ESC`
+    cap.release()
+    cv2.destroyAllWindows()
+
+    """ создать пустую картинку (h = 480, w = 640)"""
+    img = np.zeros((480, 640, 3))  # 480 таблиц по 640 строк и 3 столбцам
+    img[:] = 0, 255, 70  # покрасить всё изображение
+    cv2.line(img, (0, 0), (300, 300), (0, 0, 255), 10)  # нарисовать линию (закруглена)
+    cv2.rectangle(img, (100, 100), (300, 300), (0, 0, 255))  # нарисовать квадрат
+    cv2.circle(img, (100, 100), 100, (0, 0, 255), cv2.FILLED)  # нарисовать круг
+    # написать текст размером=2 и толщиной=3
+    cv2.putText(img, "ass", (100, 100), cv2.FONT_HERSHEY_COMPLEX, 2, (0, 0, 255), 3)
+
+    """ склеить 2 фотки"""
+    imgVert = np.vstack((img, img))
+    imgHor = np.hstack((img, img))
+
+    """" создать track bar"""
+
+    def empty():
+        ...
+
+    cv2.namedWindow("TrackBars")
+    cv2.resizeWindow('TrackBars', 640, 200)
+    cv2.createTrackbar('Hue Min', 'TrackBars', 0, 179, empty)
+    h_min = cv2.getTrackbarPos('Hue Min', "TrackBars")
+
+
+# -------------------------------------------------------------------------------------------
 """
-Вот команды, которые нам понадобятся в гите:
 git clone ссылка путь_куда_клонировать
 git pull (получает обновления с хаба)
 git log (чекнуть чё было пока я отошёл)
@@ -113,4 +224,68 @@ class lxml():  # библеотека lxml похожа на стандартн�
     for i in root.iter("a"):  # поддеревья с тегом a
         print(i, i.attrib)  # <Element a at 0x36cf0d0> {'href': 'https://docs.python.org/2.7/'}
 
+
 # -------------------------------------------------------------------------------------------
+import atexit
+
+""" Выполнить код по завершению программы"""
+
+
+def hello(name): print(name)
+
+
+for name in ['Geeks', 'for', 'Geeek']:
+    atexit.register(hello, name)
+print("-" * 50)
+
+# -------------------------------------------------------------------------------------------
+import fileinput
+
+""" Открывает файлы переданные как аргументы
+    python3 main.py dict.txt"""
+with fileinput.input(files="mail.py") as f:
+    for line in f:
+        print(line)
+
+# -------------------------------------------------------------------------------------------
+import argparse
+
+parser = argparse.ArgumentParser(description="Search some file")
+parser.add_argument(dest='filenames', metavar='filename', nargs='*')
+parser.add_argument('-p', '--pat', metavar='pattern', required=True, dest='patterns',
+                    action='append', help="text pattern to search for")
+parser.add_argument('-v', dest='verbose', action='store_true', help="verbose mode")
+parser.add_argument('-o', dest='outfile', action='store', help="output file")
+parser.add_argument('--speed', dest='speed', action='store', choices={'slow', 'fast'},
+                    default="slow", help="search speed")
+args = parser.parse_args()
+print(args)
+print(args.filenames)
+print(args.patterns)
+print(args.verbose)
+print(args.outfile)
+print(args.speed)
+
+# -------------------------------------------------------------------------------------------
+
+"""  считайте данные из файла и посчитайте их средние значения """
+f = urlopen('https://stepic.org/media/attachments/lesson/16462/boston_houses.csv')
+print(np.loadtxt(f, skiprows=1, delimiter=",").mean(axis=0))
+
+""" построить график рвссеивания для 2х классов"""
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+df = pd.read_csv('iris.data', header=None)
+y = df.iloc[0: 150, 4].values
+y = np.where(y == 'Iris-setosa', -1, 1)
+x = df.iloc[0:100, [0, 2]].values
+plt.scatter(x[:50, 0], x[:50, 1],
+            color='red', marker='o', label='щетинистый')
+plt.scatter(x[50:100, 0], x[50:100, 1],
+            color='blue', marker='x', label='разноцветный')
+plt.xlabel('чашелистник [см]')
+plt.ylabel('лепесток [см]')
+plt.legend(loc='upper left')
+plt.show()
