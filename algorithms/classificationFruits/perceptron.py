@@ -1,4 +1,4 @@
-""" perceptronApple.py -- простой линейный нейрон """
+""" perceptronApple.py --  классификатор на основе пепрсептрона """
 import matplotlib.pyplot as plt
 import numpy as np
 
