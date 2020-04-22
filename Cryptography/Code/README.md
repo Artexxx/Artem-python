@@ -51,3 +51,9 @@
 |RSA|[max](rsa.py)||
 |RSA|[max](rsa_signature.py)||
 |Великий шифр|[хранение](GreatCipher/greatcipher.py)|memory|
+
+|Для передачи инфы| Код|
+| --------        |  :-------:|
+|Азбука Морзе|[тут](morze.py)
+|ASCII кодировка|[тут](ascii.py)
+|Двоичный код|[тут](binary.py)

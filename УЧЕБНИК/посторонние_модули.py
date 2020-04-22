@@ -122,6 +122,7 @@ class pandas():
     import pandas as pd
     df = pd.read_csv('iris.data', header = None, )
     index_col = 0 # чтобы 0 столбец стал индексами | df = df.set_index('Test1')
+    parse_dates = ["date"] # привести столбцы к типу дата
 
     """ махинации с столбцами """
     df.apply(pd.to_numeric, errors='coerce')
@@ -130,12 +131,14 @@ class pandas():
     df.fillna({'Test1':0.0}, inplace=True)
     df.isna().sum() # найти количество пропусков
     df.columns.str.replace('/', '') # удалить символ в названиях
+    df["sales"].replace("[$,]", "", regex=True).astype("float") # удаление по регулярному выражению
 
     df.drop([0, 5])      # удалить строки
     df.drop_duplicates() # удалить повторяющиеся строки subset = ['Test1', 'Test2']
     df.unique(), df.nunique()
     df.groupby('legs').size()  # группирует и выводит количество
 '=   df['CountryRegion'].value_counts()
+    _.get_group('XL')
 
     """ отфильтровать 'Name' по значению столбца 'Age' """
     df.loc[df.Age <= 18.0, ['Name']]
