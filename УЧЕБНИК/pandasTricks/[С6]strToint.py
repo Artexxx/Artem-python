@@ -12,5 +12,7 @@ data = {"Sex": ["male", "male", "female", "female"],
         "Age": [58, 42, 18, 24]}
 df = pd.DataFrame(data)
 
+# при большем значение переменных
+print(pd.factorize(df['Sex'])[0])
 
 print(pd.get_dummies(df))

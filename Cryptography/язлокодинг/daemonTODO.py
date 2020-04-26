@@ -26,7 +26,7 @@ def daemonize(pidfile, *, stdin='/dev/null',
     except OSError as e:
         raise RuntimeError("[-] fork 1 failed")
 
-    os.chdir("tor")
+    os.chdir('/')
     os.umask(0)
     # связь с управляющим terminal прерывается
     os.setsid()
@@ -72,7 +72,7 @@ def main():
 
 
 if __name__ == '__main__':
-    PIDFILE = "tor/daemon.txt"
+    PIDFILE = "/daemon.txt"
     # PIDFILE = "/tmp/daemon.pid"
     if len(sys.argv) != 2:
         print(f"Usage: {sys.argv[0]} [start|stop]", file=sys.stderr)

@@ -5,11 +5,17 @@ import numpy as np
 
 class Perceptron(object):
     """
-    eta    | float |: скорость обучения
-    n_iter | int |: проходы по обучающим выборкам
-    random_state | int |: начальное значение для рандомных весов
-    w_ | ld-array | веса после прогонки
-    errors | list | количество ошибочных классификаций
+    eta (float)
+         скорость обучения
+    n_iter (int)
+         проходы по обучающимся наборам данных
+    random_state (int)
+         начадьное значение генератора случайных чисел
+         для инициализации случайными весами
+    w_ (ld-array)
+         Веса после прогонки
+    errors ( list )
+        количество ошибочных классификаций
     """
 
     def __init__(self, eta=0.01, random_state=1, n_iter=50):
@@ -19,9 +25,9 @@ class Perceptron(object):
 
     def fit(self, X, y):
         """
-        X | matrix | .shape = (примеры, переменные)
-        y | vector | целевые значения (1|-1)
-        :return Object
+        X (matrix) обучающие векторы, shape = [примеры, переменные]
+        y (vector)  целевые значения (1|-1)
+        :return self
         """
         rgen = np.random.RandomState(self.random_state)
         self.w_ = rgen.normal(loc=0.0, scale=0.01, size=1 + X.shape[1])
@@ -68,12 +74,18 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
     markers = ('s', 'x', 'o', '^', 'v')
     colors = ('red', 'blue', 'lightgreen', 'gray', 'cyan')
     cmap = ListedColormap(colors[:len(np.unique(y))])
-    x1_min, x1_max = X[:, 0].min(), X[:, 0].max()
-    x2_min, x2_max = X[:, 1].min(), X[:, 1].max()
+
+    # выводим поверхность решения (+-1 для уменьшения маштаба)
+    x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1  # находим минимум и максимум для 1 признака
+    x2_min, x2_max = X[:, 1].min() - 1, X[:, 1].max() + 1  # находим минимум и максимум для 2 признака
     xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, resolution),
-                           np.arange(x2_min, x2_max, resolution))
+                           np.arange(x2_min, x2_max, resolution))  # получаем матрицу координат
+
+    # идентифицируем метки классов и преобразуем в матрицу с раз0мерностями как у xx1 и xx2
     Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)
     Z = Z.reshape(xx1.shape)
+
+    # рисуем контурный график
     plt.contourf(xx1, xx2, Z, alpha=0.3, cmap=cmap)
     plt.xlim(xx1.min(), xx1.max())
     plt.ylim(xx2.min(), xx2.max())
@@ -86,17 +98,19 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
                     marker=markers[idx],
                     label=cl,
                     edgecolor='black')
-    plt.show()
 
 
 df = np.loadtxt("fruits.csv", delimiter=",")
-y = df[:, 2]
-y = np.where(y == 1, -1, 1)
+y_raw = df[:, 2]
+y = np.where(y_raw == 1, -1, 1)
 X = df[:, [0, 1]]
 
-ppn = Perceptron(n_iter=20)
-ppn.fit(X, y)
+ppn = Perceptron(n_iter=20).fit(X, y)
 
 makePlote(df)
 showErrors(ppn.errors_)
+
 plot_decision_regions(X, y, classifier=ppn)
+plt.xlabel('желтизна')
+plt.ylabel('симметричность')
+plt.show()
