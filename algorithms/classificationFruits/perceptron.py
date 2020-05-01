@@ -42,10 +42,13 @@ class Perceptron(object):
             self.errors_.append(errors)
         return self
 
+    def net_input(self, X):
+        """  вычисляет общий вход """
+        return X @ self.w_[1:] + self.w_[0]
+
     def predict(self, X):
         """ :return -1|1 (нужно для смещения весов) """
-        pr = X @ self.w_[1:] + self.w_[0]
-        return np.where(pr > 0, 1, -1)
+        return np.where(self.net_input(X) > 0, 1, -1)
 
 
 def makePlote(df):
@@ -80,6 +83,7 @@ if __name__ == '__main__':
     showErrors(ppn.errors_)
 
     from plot_decision_regions import plot_decision_regions
+
     plot_decision_regions(X, y, classifier=ppn)
     plt.xlabel('желтизна')
     plt.ylabel('симметричность')

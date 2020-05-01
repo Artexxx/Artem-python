@@ -15,7 +15,7 @@ class LogisticRegressionGD(object):
     w_ (ld-array)
          Веса после прогонки
     cost_ (list)
-        сумма квадратичных ошибок, показывающие успешность алгоритма
+        Логистические издержки, показывающие успешность алгоритма
     """
 
     def __init__(self, eta=0.001, n_iter=50, random_state=1):
@@ -62,7 +62,7 @@ def showErrors(errors):
     plt.plot(range(1, len(errors) + 1),
              errors, marker='o')
     plt.xlabel('Эпохи')
-    plt.ylabel('Сумма квадратичных ошибок')
+    plt.ylabel('Логистические ошибки')
     plt.show()
 
 
