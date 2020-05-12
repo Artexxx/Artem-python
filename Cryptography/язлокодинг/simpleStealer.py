@@ -1,5 +1,5 @@
 """ simpleStealer.py -- создаёт `stealer.py`,
-      который копирует указанные директории в `./Result` """
+      который копирует указанные директории в папку `./Result` """
 listTarget = []
 counter = 0
 print("[*] Write the 'exit' if you want break the cicle")
