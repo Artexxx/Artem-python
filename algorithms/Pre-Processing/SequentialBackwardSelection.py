@@ -7,7 +7,7 @@ import pandas as pd
 class SBS():
     """
     k_features (int)
-            количество признаков, который будут оставлены
+            количество главных признаков, который будут оставлены
     estimator (class)
             обучающаяся модель
 
@@ -61,12 +61,8 @@ class SBS():
 
 
 if __name__ == '__main__':
-    df = pd.read_csv('https://archive.ics.uci.edu/'
-                     'ml/machine-learning-databases/wine/wine.data',
-                     header=None)
-    df.columns = ['Class', 'Alcohol', 'Malic acid', 'Ash', 'Alcalinity', 'Magnesium', 'Total phenols', 'Flavanoids',
-                  'Nonflavanoid phenols', 'Proanthocyanins', 'Color intensity', 'Hue', 'Diluted wines', 'Proline']
-    X, y = df.drop(['Class'], axis=1), df[['Class']]
+    df = pd.read_csv('wine.csv')
+    X, y = df.drop(['Class label'], axis=1), df[['Class label']]
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
 
     from sklearn.preprocessing import StandardScaler
