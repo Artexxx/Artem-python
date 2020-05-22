@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+    <title>Predict review</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% from "_form_macros.html" import render_field %}
+<h1>Please enter your movie review:</h1>
+
+<form action="/results" method=post>
+    <dl>
+        {{ render_field(form.moviereview, cols='30', rows='10') }}
+    </dl>
+    <div>
+        <input type=submit value='Submit review' name='submit_btn'>
+    </div>
+</form>
+
+
+</body>
+</html>

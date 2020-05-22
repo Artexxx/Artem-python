@@ -74,7 +74,7 @@ class numpy():
     np.where(a > 0.5, True, False)
     array([True, True, False, False, False, False, True, True, False,])
 
-    """ символы без повторений |работает с векторами|"""
+    """ символы без повторений |работает с вy[y==0]екторами|"""
     set_a = np.unique(a)
 
     """ создать матрицу элементы | на диагонали -1 | остальные 0.5|"""
@@ -343,7 +343,34 @@ print(args.outfile)
 print(args.speed)
 
 # -------------------------------------------------------------------------------------------
+import sqlite3
+import os
 
+
+def create_SQL_table():
+    """ Создаёт новую базу данных в каталоге `movieclassifier`"""
+    if os.path.exists('reviews.sqlite'):
+        os.remove('reviews.sqlite')
+    conn = sqlite3.connect('reviews.sqlite')
+    c = conn.cursor()
+    c.execute('CREATE TABLE review_db (review TEXT, sentiment INTEGER, date TEXT)')
+    example1 = 'I love this movie :)'
+    c.execute("INSERT INTO review_db (review, sentiment, date) VALUES (?, ?, DATETIME('now'))", (example1, 1))
+    example2 = 'I disliked this movie :('
+    c.execute("INSERT INTO review_db (review, sentiment, date) VALUES (?, ?, DATETIME('now'))", (example2, 0))
+    conn.commit()
+    conn.close()
+
+
+def sqlite_entry(path='reviews.sqlite', document, y):
+    conn = sqlite3.connect(path)
+    c = conn.cursor()
+    c.execute("INSERT INTO review_db (review, sentiment, date)" \
+              " VALUES (?, ?, DATETIME('now'))", (document, y))
+    conn.commit()
+    conn.close()
+
+# -------------------------------------------------------------------------------------------
 """  считайте данные из файла и посчитайте их средние значения """
 f = urlopen('https://stepic.org/media/attachments/lesson/16462/boston_houses.csv')
 print(np.loadtxt(f, skiprows=1, delimiter=",").mean(axis = 0))
