@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div id="container">
+    <div id="content">
+        <form action="/results" method="POST">
+            <h1>Movie Classification </h1>
+            <div id="movie-image">
+                <img
+                        src="{{ url_for('static', filename='hpeapf.jpeg') }}"
+                        alt="Harry Potter Pedra Filosofal"
+                        width="200"
+                        height="300"
+                >
+            </div>
+            {% if data.reviewresponse == 'None' %}
+            <p>Please enter your movie review:</p>
+            <textarea id="input-text" name="review">
+Harry Potter is an unusual, I would even say magical creation in the full sense of the word. Rowling's light "handwriting" is perfectly combined with an interesting plot that gives a unique atmosphere of a fairy tale.
+I grew up on these books, I grew up with them, and back in 2001, I was happy to watch the first movie about the Boy who survived
+I will tell you straight — the first film seemed to me the most successful adaptation of the book and to this day, I consider it the pinnacle achievement.
+The genuine atmosphere of the miracle fascinates, makes you believe in everything that happens on the screen, gives you real feelings of fear, confusion, joy, curiosity, love and friendship…
+Chris Columbus did his best.
+This fairy tale has come a long way with me and at present I do not know any analogues of such a wonderful story about a real miracle.
+                    </textarea>
+            <div id="submit"><input id="input-submit" type="submit" value="Submit"></div>
+            {% else %}
+            <div id="response">
+                <p>This movie review is <strong>{{ data.reviewresponse }}</strong></p>
+                <h4> (proba: {{ probability }}%) </h4>
+            </div>
+            <div id="submit">
+                <button style="height: fit-content;"><a href="/">Submit another review</a></button>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}
