@@ -370,6 +370,17 @@ def sqlite_entry(path='reviews.sqlite', document, y):
     conn.commit()
     conn.close()
 
+def get_data(path='reviews.sqlite'):
+    conn = sqlite3.connect(path)
+    c = conn.cursor()
+    c.execute("SELECT * FROM review_db WHERE date BETWEEN '2020-05-20 10:10:10' AND DATETIME('now')")
+    results = c.fetchall()
+    conn.close()
+    return results
+""" Получение данных порциями (по 1000)"""
+c.execute('SELECT * from review_db'), batch_size=1000
+results = c.fetchmany(batch_size)
+
 # -------------------------------------------------------------------------------------------
 """  считайте данные из файла и посчитайте их средние значения """
 f = urlopen('https://stepic.org/media/attachments/lesson/16462/boston_houses.csv')

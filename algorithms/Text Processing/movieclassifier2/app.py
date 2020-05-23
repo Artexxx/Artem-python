@@ -59,7 +59,6 @@ def main():
 def resolve():
     review = request.form.get('review')
     data['reviewresponse'], proba = classify(preprocessor(review))
-
     return render_template('index.html', data=data, probability=round(proba * 100, 2))
 
 

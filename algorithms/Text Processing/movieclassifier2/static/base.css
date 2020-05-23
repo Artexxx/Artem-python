@@ -1,8 +1,24 @@
 body {
-    background-color: darkslateblue;
+    /* background-image: url(../images/bg.png); */
+    /* background-size: cover; */
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
+    background: linear-gradient(-45deg, #131210, #301C3B, #A4427A, #565793);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 div#container {
