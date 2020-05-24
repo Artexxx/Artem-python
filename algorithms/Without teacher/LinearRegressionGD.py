@@ -59,7 +59,7 @@ def showErrors(errors):
 if __name__ == '__main__':
     import pandas as pd
 
-    df = pd.read_csv('fruits.csv')
+    df = pd.read_csv('../Linear Classifier/fruits.csv')
     X = df.iloc[:, [0, 1]].values
     y = df.iloc[:, 2].values
 
