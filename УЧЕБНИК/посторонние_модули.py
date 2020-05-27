@@ -200,11 +200,90 @@ class pandas():
 
 # -------------------------------------------------------------------------------------------
 
-class sklearn():
-    from sklearn import tree
-    """ построить разноцветное дерево решений """
-    clf = tree.DecisionTreeClassifier(criterion='entropy')
-    tree.plot_tree(clf.fit(X, y) , class_names=['Positive', 'Negative'], filled=True)
+class tensorflow():
+    import tensorflow as tf
+    """Создание тензоров (tf.Tensor)"""
+    a = np.array([1, 2, 3], dtype=np.int32)
+    b = [4, 5, 6]
+    t_a = tf.convert_to_tensor(a)
+    t_b = tf.convert_to_tensor(b)
+    # Выхлоп a:/ tf.Tensor([1 2 3], shape=(3,), dtype=int32) /
+    # Выхлоп b:/ tf.Tensor([1 2 3], shape=(3,), dtype=int32) /
+    t_ones = tf.ones((2, 3))
+    t_ones.shape
+    # рандомные числа
+    tf.random.uniform(shape=(3, 5), seed=1, maxval=0.1, minval=-0.1)
+
+    # Выхлоп размер:/ TensorShape([2, 3]) /
+    """Обращение tf.Tensor в np"""
+    t_ones.numpy()
+    # Выхлоп / array([[1., 1., 1.) /
+    """Махинации с матрицами"""
+    tf.cast(t_a, tf.int64) # изменяет dtype тензора
+    tf.transpose(t)        # транспонирование
+    tf.reshape(t, shape=(5, 6)) # изменение размера
+    tf.multiply(t1, t2).numpy() # умножение матриц !простое!
+    tf.split(t, 3) # разделяет вектор на 3 части (только раные отрезки)
+    C = tf.concat([a, a, a, a], axis=0) # склеивает несколько векторов (по горизонтали) или матриц (по вертикали)
+    tf.stack([A, B], axis=1) # склеивает несколько матриц (по горизонтали)
+
+    """ TensorFlow Dataset """
+    a = [1.2, 3.4, 7.5, 4.1, 5.0, 1.0]
+    ds = tf.data.Dataset.from_tensor_slices(a)
+    for item in ds: print(item)
+    # Выхлоп / tf.Tensor(1.2, shape=(), dtype=float32) ......
+    # .......  tf.Tensor(1.0, shape=(), dtype=float32) /
+
+    ds_batch = ds.batch(3) # нарезка Dataset на мини-пакеы
+    for i, elem in enumerate(ds_batch, 1):
+        print('batch {}:'.format(i), elem.numpy())
+    # Выхлоп / batch 1: [1.2 3.4 7.5]
+    #......... batch 2: [4.1 5.  1.] /
+
+    """ Объединение двух тензоров в единый набор данных """
+    X = tf.convert_to_tensor([[6, 3 ,15],[2, 3 , 5]])
+    y = tf.convert_to_tensor([1.0, 0, 1.0, 0, 1.0, 1.0])
+
+    ds_x = tf.data.Dataset.from_tensor_slices(X)
+    ds_y = tf.data.Dataset.from_tensor_slices(y)
+    ds_joint = tf.data.Dataset.zip((ds_x, ds_y))
+    for example in ds_joint:
+        print('  x: ', example[0].numpy(), '  y: ', example[1].numpy())
+    # Выхлоп /  x:  [6 3 15]   y:  1.0
+    #........   x:  [2 3 5 ]   y:  0.0
+    # <~~~> 2 МЕТОД + lambda|shuffle
+    ds_joint = tf.data.Dataset.from_tensor_slices((X, y))
+    ds_trans = ds_joint.map(lambda x, y: (x * 2 - 1.0, y))
+    ds_shuffle = ds_joint.shuffle(buffer_size=len(X))
+    for example in ds_shuffle:
+        print('  x: ', example[0].numpy(), '  y: ', example[1].numpy())
+    # Выхлоп /   x:  [2 3 5 ]   y:  0.0 (перемешались пакеты)
+    #........    x:  [6 3 15]   y:  1.0
+
+    """ Чтение данных"""
+    import pathlib
+    imgdir_path = pathlib.Path('cat_dog_images')
+    file_list = sorted([str(path) for path in imgdir_path.glob('*.jpg')])
+    # Выхлоп / 'cat_dog_images/cat-01.jpg', 'cat_dog_images/cat-02.jpg' /
+    import matplotlib.pyplot as plt
+    import os
+    fig = plt.figure(figsize=(10, 5))
+    for i, file in enumerate(file_list):
+        img_raw = tf.io.read_file(file)
+        img = tf.image.decode_image(img_raw)
+        print('Image shape: ', img.shape)
+        ax = fig.add_subplot(2, 3, i + 1)
+        ax.set_xticks([]); ax.set_yticks([])
+        ax.imshow(img)
+        ax.set_title(os.path.basename(file), size=15)
+    plt.show()
+    # Выхлоп / Image shape:  (900, 1200, 3)
+    # .......  Image shape:  (900, 1200, 3) /
+# -------------------------------------------------------------------------------------------
+class tensorflow1():
+    import tensorflow.compat.v1 as tf
+    tf.disable_v2_behavior()
+
 
 # -------------------------------------------------------------------------------------------
 class PIL():
