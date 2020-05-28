@@ -284,6 +284,15 @@ class tensorflow1():
     import tensorflow.compat.v1 as tf
     tf.disable_v2_behavior()
 
+    """ Изменить размер фото """
+    from keras_preprocessing.image import ImageDataGenerator
+    IMG_SIZE = 100
+    TEST_DIR = "fruits-360/Test"
+    test_datagen = ImageDataGenerator(rescale=1. / 255)
+    test_generator = test_datagen.flow_from_directory(TEST_DIR, target_size=(IMG_SIZE, IMG_SIZE))
+    x, y = train_generator.next()
+    for i in range(0, 3):
+        image = x[i];plt.imshow(image); plt.show()
 
 # -------------------------------------------------------------------------------------------
 class PIL():
