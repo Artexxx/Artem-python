@@ -138,6 +138,7 @@ class pandas():
     df.isna().sum() # найти количество пропусков
     df.columns.str.replace('/', '') # удалить символ в названиях
     df["sales"].replace("[$,]", "", regex=True).astype("float") # удаление по регулярному выражению
+    df['sales'].str.contains('Web|Mobile', regex=True, case=False) # возвращает логичский ряд, содержащий содержится-ли регулярное выражение в строке ряда
 
     df.drop([0, 5])      # удалить строки
     df.drop_duplicates() # удалить повторяющиеся строки subset = ['Test1', 'Test2']
