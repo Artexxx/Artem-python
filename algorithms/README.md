@@ -1,5 +1,4 @@
-# Data Science вопрос-ответ
-
+# Data Science question-answer
 
 * [Resume](#resume)
 * [SQL](#sql)
@@ -35,7 +34,7 @@ or
 * **RIGHT (OUTER) JOIN**: Возвращает записи из правой таблицы и совпадающие записи из левой таблицы
 * **FULL (OUTER) JOIN**: Возвращает записи при наличии совпадения в левой или правой таблице
 
-![](Linear Classifier/assets/sql-join.PNG)
+![](NONLinearClassifier/assets/sql-join.PNG)
 
 [back to top](#data-science-question-answer)
 
@@ -93,7 +92,7 @@ or
 * **Monitor model.** Мониторинг производительности модели и сбор обратных связей.
 * **Iterate.** Повторите предыдущие шаги. ML, как правило, представляет собой итеративный процесс, при котором с течением времени разрабатываются новые и улучшенные модели.
 
-![](Linear Classifier/assets/workflow.png)
+![](NONLinearClassifier/assets/workflow.png)
 
 
 [back to top](#data-science-question-answer)
@@ -101,7 +100,7 @@ or
 ### Cross Validation
 
 Перекрестная проверка - это метод оценки прогностических моделей путем разбиения исходной выборки на обучающий набор для обучения модели и валидационный набор для ее оценки. Например, перекрестная проверка k-кратности делит данные на k блоков (или секций), тренируется на каждом K-1 блоке и проверяется на оставшемся 1 блоке. Это приводит к k моделям/оценкам, которые могут быть усреднены для получения общей производительности модели.
-![](Linear Classifier/assets/cv.png)
+![](NONLinearClassifier/assets/cv.png)
 
 [back to top](#data-science-question-answer)
 
@@ -131,7 +130,7 @@ or
 
 * На графике (а) Черный Квадрат представляет допустимую область регуляризации L1, а график (б) - допустимую область регуляризации L2. Контуры на графиках представляют различные значения потерь (для модели неограниченной регрессии ). Допустимая точка, которая минимизирует потери, с большей вероятностью произойдет на координатах на графике (а), чем на графике (Б), поскольку график (а) является более **угловым**. Этот эффект усиливается, когда ваше число коэффициентов увеличивается, т. е. от 2 до 200. Следствием этого является то, что регуляризация L1 дает вам разреженные оценки. А именно, в высокомерном пространстве вы получаете в основном нули и небольшое количество ненулевых коэффициентов.
 
-![](Linear Classifier/assets/l1l2.png)
+![](NONLinearClassifier/assets/l1l2.png)
 
 [back to top](#data-science-question-answer)
 
@@ -172,7 +171,7 @@ or
 
 Вот [хорошая иллюстрация](http://scikit-learn.org/stable/auto_examples/ensemble/plot_bias_variance.html#sphx-glr-auto-examples-ensemble-plot-bias-variance-py) одного оценщика  vs. bagging.
 
-![](Linear Classifier/assets/bagging.png)
+![](NONLinearClassifier/assets/bagging.png)
 
 *  Bagging - это когда samlping выполняется с *заменой*. Когда sampling выполняется без замены, это называется pasting.
 * Bagging популярен не только из-за его повышения производительности, но также и из-за того, что отдельные учащиеся могут обучаться параллельно и хорошо масштабироваться
@@ -189,7 +188,7 @@ or
 * Далее учащиеся первого уровня используются для создания прогнозов (мета-объектов) на втором подмножестве, и эти прогнозы используются для обучения других моделей (для получения Весов различных учащихся) на втором уровне.
 * Мы можем обучить несколько моделей во втором слое, но это влечет за собой разбиение исходного набора данных на 3 части
 
-![stacking](Linear Classifier/assets/stacking.jpg)
+![stacking](NONLinearClassifier/assets/stacking.jpg)
 
 [back to top](#data-science-question-answer)
 
@@ -237,7 +236,7 @@ or
 * Холодный запуск и разреженная матрица могут быть проблемами для рекомендательных систем
 * Широко используется в фильмах, новостях, исследовательских статьях, продуктах, социальных тегах, музыке и т. д.
 
-![cf](Linear Classifier/assets/collaborative_filtering.gif)
+![cf](NONLinearClassifier/assets/collaborative_filtering.gif)
 
 [back to top](#data-science-question-answer)
 
@@ -277,7 +276,7 @@ or
 * Предполагается линейная связь между объектами и меткой
 * Можно добавить полиномиальные и интерактивные функции для создания нелинейности
 
-![lr](Linear Classifier/assets/lr.png)
+![lr](NONLinearClassifier/assets/lr.png)
 
 [back to top](#data-science-question-answer)
 
@@ -319,7 +318,7 @@ or
 * Когда K равно 1 или другому малому числу, модель склонна к переобучению (высокая дисперсия), в то время как
 когда K равно числу точек данных или другому большому числу, модель склонна к недообучению (высокому смещению)
 
-![KNN](Linear Classifier/assets/knn.png)
+![KNN](NONLinearClassifier/assets/knn.png)
 
 [back to top](#data-science-question-answer)
 
@@ -332,7 +331,7 @@ or
 на основании которых проводится граница принятия решения
 * SVM чувствителен к масштабированию объектов
 
-![svm](Linear Classifier/assets/svm.png)
+![svm](NONLinearClassifier/assets/svm.png)
 
 [back to top](#data-science-question-answer)
 
@@ -353,7 +352,7 @@ or
     - может быть ненадежным: небольшое изменение данных обучения может привести к совершенно другому дереву
     - нестабильность: чувствителен к вращению обучающего набора из-за его ортогональных границ принятия решений
 
-![decision tree](Linear Classifier/assets/tree.gif)
+![decision tree](NONLinearClassifier/assets/tree.gif)
 
 [back to top](#data-science-question-answer)
 
@@ -372,7 +371,7 @@ or
 В случайном лесу для каждого разбиения мы рассматриваем только подмножество признаков и поэтому
 это уменьшает дисперсию еще больше, введя больше некоррелированных деревьев.
 
-Я написал [notebook](Linear Classifier/assets/bag-rf-var.ipynb), чтобы проиллюстрировать этот момент.
+Я написал [notebook](NONLinearClassifier/assets/bag-rf-var.ipynb), чтобы проиллюстрировать этот момент.
 
 На практике настройка случайного леса влечет за собой наличие большого количества деревьев (чем больше, тем лучше, но
 всегда учитывайте ограничение вычислений). Кроме того, `min_samples_leaf` (минимальное количество
@@ -411,7 +410,7 @@ or
 комбинацией всех нейронов в предыдущем слое. Для того чтобы обучить сеть
 мы распространяем ошибки обратно слой за слоем (back propagate). В теории MLP может аппроксимировать любые функции.
 
-![mlp](Linear Classifier/assets/mlp.jpg)
+![mlp](NONLinearClassifier/assets/mlp.jpg)
 
 [back to top](#data-science-question-answer)
 
@@ -426,7 +425,7 @@ Conv cлой  - это строительный блок сверточной с
 слои изучают комбинацию низкоуровневых признаков
 и поэтому могут представлять объект более высокого уровня, например форму и части объекта.
 
-![CNN](Linear Classifier/assets/cnn.jpg)
+![CNN](NONLinearClassifier/assets/cnn.jpg)
 
 [back to top](#data-science-question-answer)
 
@@ -437,7 +436,7 @@ RNN-это еще одна парадигма нейронной сети, в к
 причем каждая ячейка принимает в качестве входных данных не только ячейку из предыдущего слоя, но и предыдущую
 клетку внутри того же слоя. Это дает RNN возможность моделировать последовательности.
 
-![RNN](Linear Classifier/assets/rnn.jpeg)
+![RNN](NONLinearClassifier/assets/rnn.jpeg)
 
 Это кажется крутым, но на практике RNN почти не работает из-за взрывающегося/ исчезающего градиента, который
 является причиной последовательного умножения одной и той же матрицы. Чтобы решить эту проблему, мы можем использовать
@@ -454,7 +453,7 @@ RNN-это еще одна парадигма нейронной сети, в к
 LSTM напоминает человеческую память: она забывает старые вещи (old internal state * forget gate)
 и учится на новом входе (input node * input gate)
 
-![lstm](Linear Classifier/assets/lstm.png)
+![lstm](NONLinearClassifier/assets/lstm.png)
 
 [back to top](#data-science-question-answer)
 
@@ -477,7 +476,7 @@ LSTM напоминает человеческую память: она забы
 
 [scikit-learn](http://scikit-learn.org/stable/modules/clustering.html) реализует множество алгоритмов кластеризации.
 
-![clustering](Linear Classifier/assets/clustering.png)
+![clustering](NONLinearClassifier/assets/clustering.png)
 
 [back to top](#data-science-question-answer)
 
@@ -496,7 +495,7 @@ LSTM напоминает человеческую память: она забы
 
 Вот наглядное объяснение PCA:
 
-![pca](Linear Classifier/assets/pca.gif)
+![pca](NONLinearClassifier/assets/pca.gif)
 
 [back to top](#data-science-question-answer)
 
@@ -508,7 +507,7 @@ LSTM напоминает человеческую память: она забы
 * autoencoder всегда состоит из двух частей: кодера и декодера. Кодер будет находить представление меньшего размера (скрытая переменные) исходного входного сигнала, в то время как декодер используется для восстановления из вектора меньшего размера таким образом, чтобы расстояние между оригиналом и реконструкцией было сведено к минимуму
 * Может использоваться для шумоподавления данных и уменьшения размерности
 
-![](Linear Classifier/assets/autoencoder.png)
+![](NONLinearClassifier/assets/autoencoder.png)
 
 
 ### Generative Adversarial Network
@@ -527,14 +526,10 @@ LSTM напоминает человеческую память: она забы
 * Вот некоторые [советы и рекомендации, чтобы заставить GANs работать](https://github.com/soumith/ganhacks)
 * Одно предостережение состоит в том, что состязательная часть является только вспомогательной: конечная цель использования GAN-генерировать данные, которые даже эксперты не могут сказать, являются ли они реальными или поддельными
 
-![gan](Linear Classifier/assets/gan.jpg)
+![gan](NONLinearClassifier/assets/gan.jpg)
 
 [back to top](#data-science-question-answer)
 
-
-## Reinforcement Learning
-
-[TODO]
 
 ## Natural Language Processing
 
@@ -602,6 +597,6 @@ LSTM напоминает человеческую память: она забы
 - непрерывный мешок слов (CBOW): модель предсказывает текущее слово, заданное окном окружающих контекстных слов
 - skip gram: предсказывает окружающие контекстные слова, используя текущее слово
 
-![](Linear Classifier/assets/w2v.png)
+![](NONLinearClassifier/assets/w2v.png)
 
 [back to top](#data-science-question-answer)
