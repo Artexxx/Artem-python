@@ -28,11 +28,9 @@ def relu(x):
     Arguments:
     x -- A scalar or numpy array of any size.
 
-    Return:
-    s -- relu(x)
+    Return: s -- relu(x)
     """
     s = np.maximum(0, x)
-
     return s
 
 
@@ -55,24 +53,23 @@ def load_planar_dataset(seed):
 
     X = X.T
     Y = Y.T
-
     return X, Y
 
 
 def initialize_parameters(layer_dims):
     """
     Arguments:
-    layer_dims -- python array (list) containing the dimensions of each layer in our network
-    
-    Returns:
-    parameters -- python dictionary containing your parameters "W1", "b1", ..., "WL", "bL":
-                    W1 -- weight matrix of shape (layer_dims[l], layer_dims[l-1])
-                    b1 -- bias vector of shape (layer_dims[l], 1)
-                    Wl -- weight matrix of shape (layer_dims[l-1], layer_dims[l])
-                    bl -- bias vector of shape (1, layer_dims[l])
-                    
+    layer_dims (list) содержащий размер каждого слоя.
+
+    returns: parameters (dict) содержащий параметры "W1", "b1", ..., "WL", "bL":
+                    W1 -- weight matrix shape (layers_dims[1], layers_dims[0])
+                    b1 -- bias vector   shape (layers_dims[1], 1)
+                    ...
+                    WL -- weight matrix shape (layers_dims[L], layers_dims[L-1])
+                    bL -- bias vector   shape (layers_dims[L], 1)
+
     Tips:
-    - For example: the layer_dims for the "Planar Data classification model" would have been [2,2,1]. 
+    - For example: the layer_dims for the "Planar Data classification model" would have been [2,2,1].
     This means W1's shape was (2,2), b1 was (1,2), W2 was (2,1) and b2 was (1,1). Now you have to generalize it!
     - In the for loop, use parameters['W' + str(l)] to access Wl, where l is the iterative integer.
     """
@@ -87,26 +84,26 @@ def initialize_parameters(layer_dims):
 
         assert (parameters['W' + str(l)].shape == layer_dims[l], layer_dims[l - 1])
         assert (parameters['W' + str(l)].shape == layer_dims[l], 1)
-
     return parameters
 
 
 def forward_propagation(X, parameters):
     """
-    Implements the forward propagation (and computes the loss) presented in Figure 2.
-    
-    Arguments:
-    X -- input dataset, of shape (input size, number of examples)
-    parameters -- python dictionary containing your parameters "W1", "b1", "W2", "b2", "W3", "b3":
+    Реализует прямое распространение (и вычисляет потери)
+      LINEAR -> RELU -> LINEAR -> RELU -> LINEAR -> SIGMOID
+
+    X -- (matrix) входной набор данных shape (input size, number of examples)
+    Y -- (vector) {0:non-cat, 1: cat}, shape (1, number of examples)
+    parameters (dict) содержащий параметры  "W1", "b1", "W2", "b2", "W3", "b3":
                     W1 -- weight matrix of shape ()
                     b1 -- bias vector of shape ()
                     W2 -- weight matrix of shape ()
                     b2 -- bias vector of shape ()
                     W3 -- weight matrix of shape ()
                     b3 -- bias vector of shape ()
-    
+
     Returns:
-    loss -- the loss function (vanilla logistic loss)
+        loss -- потери функуии (vanilla logistic loss)
     """
 
     # retrieve parameters
@@ -126,21 +123,20 @@ def forward_propagation(X, parameters):
     A3 = sigmoid(Z3)
 
     cache = (Z1, A1, W1, b1, Z2, A2, W2, b2, Z3, A3, W3, b3)
-
     return A3, cache
 
 
 def backward_propagation(X, Y, cache):
     """
-    Implement the backward propagation presented in figure 2.
-    
+    Реализует обратное распространение
+      LINEAR -> RELU -> LINEAR -> RELU -> LINEAR -> SIGMOID
     Arguments:
-    X -- input dataset, of shape (input size, number of examples)
-    Y -- true "label" vector (containing 0 if cat, 1 if non-cat)
-    cache -- cache output from forward_propagation()
-    
+    X -- (matrix) входной набор данных shape (input size, number of examples)
+    Y -- (vector) {0:non-cat, 1: cat}, shape (1, number of examples)
+    cache -- вывод кэша из forward_propagation()
+
     Returns:
-    gradients -- A dictionary with the gradients with respect to each parameter, activation and pre-activation variables
+        gradients -- Словарь с градиентами по каждому параметру, активация и pre-activation переменная
     """
     m = X.shape[1]
     (Z1, A1, W1, b1, Z2, A2, W2, b2, Z3, A3, W3, b3) = cache
@@ -168,41 +164,35 @@ def backward_propagation(X, Y, cache):
 
 def update_parameters(parameters, grads, learning_rate):
     """
-    Update parameters using gradient descent
-    
-    Arguments:
-    parameters -- python dictionary containing your parameters:
+     Обновление параметров с помощью градиентного спуска
+
+     parameters - (dict), содержащий параметры
                     parameters['W' + str(i)] = Wi
                     parameters['b' + str(i)] = bi
-    grads -- python dictionary containing your gradients for each parameters:
+     grads - (dict), содержащий градиенты, (вывод L_model_backward)
                     grads['dW' + str(i)] = dWi
                     grads['db' + str(i)] = dbi
-    learning_rate -- the learning rate, scalar.
-    
-    Returns:
-    parameters -- python dictionary containing your updated parameters 
-    """
+     returns: parameters - (dict), содержащий обновленные параметры
+                   parameters["W" + str(l)] = ...
+                   parameters["b" + str(l)] = ...
+     """
+    L = len(parameters) // 2  # количество слоев в нейронной сети
 
-    n = len(parameters) // 2  # number of layers in the neural networks
-
-    # Update rule for each parameter
-    for k in range(n):
-        parameters["W" + str(k + 1)] = parameters["W" + str(k + 1)] - learning_rate * grads["dW" + str(k + 1)]
-        parameters["b" + str(k + 1)] = parameters["b" + str(k + 1)] - learning_rate * grads["db" + str(k + 1)]
-
+    for l in range(L):
+        parameters["W" + str(l + 1)] = parameters["W" + str(l + 1)] - learning_rate * grads["dW" + str(l + 1)]
+        parameters["b" + str(l + 1)] = parameters["b" + str(l + 1)] - learning_rate * grads["db" + str(l + 1)]
     return parameters
 
 
 def predict(X, y, parameters):
     """
-    This function is used to predict the results of a  n-layer neural network.
-    
-    Arguments:
-    X -- data set of examples you would like to label
-    parameters -- parameters of the trained model
-    
+    Эта функция используется для прогнозирования результатов работы L-слойной нейронной сети.
+
+    X -- набор данных примеров, по которым будет прогноз
+    parameters -- Параметры обучаемой модели
+
     Returns:
-    p -- predictions for the given dataset X
+        p - прогнозы для данного набора данных X
     """
 
     m = X.shape[1]
@@ -225,11 +215,11 @@ def predict(X, y, parameters):
 def compute_cost(a3, Y):
     """
     Implement the cost function
-    
+
     Arguments:
     a3 -- post-activation, output of forward propagation
     Y -- "true" labels vector, same shape as a3
-    
+
     Returns:
     cost - value of the cost function
     """
@@ -237,7 +227,6 @@ def compute_cost(a3, Y):
 
     logprobs = np.multiply(-np.log(a3), Y) + np.multiply(-np.log(1 - a3), 1 - Y)
     cost = 1. / m * np.nansum(logprobs)
-
     return cost
 
 
@@ -266,14 +255,14 @@ def load_dataset():
 
 def predict_dec(parameters, X):
     """
-    Used for plotting decision boundary.
-    
+    Используется для построения границы принятия решений.
+
     Arguments:
-    parameters -- python dictionary containing your parameters 
-    X -- input data of size (m, K)
-    
+    parameters -- Параметры обучаемой модели
+    X -- входные данные,  shape= (m, K)
+
     Returns
-    predictions -- vector of predictions of our model (red: 0 / blue: 1)
+        predictions -- вектор предсказаний модели (red: 0 / blue: 1)
     """
 
     # Predict using forward propagation and a classification threshold of 0.5

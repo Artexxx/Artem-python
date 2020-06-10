@@ -375,7 +375,7 @@ def predict(X, y, parameters):
     p = np.zeros((1, m), dtype=np.int)
 
     # Forward propagation
-    probas, caches=L_model_forward(X, parameters)
+    probas, caches = L_model_forward(X, parameters)
 
     # convert probas ~~> 0/1 predictions
     for i in range(0, probas.shape[1]):
