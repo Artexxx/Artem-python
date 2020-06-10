@@ -1,4 +1,3 @@
-
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
@@ -89,7 +88,7 @@ def load_data():
     classes = np.array(test_dataset["list_classes"][:])  # the list of classes
 
     train_set_y_orig = train_set_y_orig.reshape((1, train_set_y_orig.shape[0]))
-    test_set_y_orig  = test_set_y_orig.reshape((1, test_set_y_orig.shape[0]))
+    test_set_y_orig = test_set_y_orig.reshape((1, test_set_y_orig.shape[0]))
 
     return train_set_x_orig, train_set_y_orig, test_set_x_orig, test_set_y_orig, classes
 
@@ -373,10 +372,10 @@ def predict(X, y, parameters):
 
     m = X.shape[1]
     n = len(parameters) // 2  # количество слоев в нейронной сети
-    p = np.zeros((1, m))
+    p = np.zeros((1, m), dtype=np.int)
 
     # Forward propagation
-    probas, caches = L_model_forward(X, parameters)
+    probas, caches=L_model_forward(X, parameters)
 
     # convert probas ~~> 0/1 predictions
     for i in range(0, probas.shape[1]):
@@ -387,7 +386,7 @@ def predict(X, y, parameters):
 
     # print("predictions: " + str(p))
     # print("true labels: " + str(y))
-    print(f"Accuracy: {np.sum((p == y) / m):.2%} " )
+    print(f"Accuracy: {np.sum((p == y) / m):.2%} ")
     return p
 
 
