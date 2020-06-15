@@ -9,5 +9,7 @@
 |[поиск цветовой маски](colorMask.py)|<img src = "https://user-images.githubusercontent.com/54672403/79115980-f3111600-7d8f-11ea-9876-e630768a6beb.png" width="350" height="170" />| помогает подобрать числа для маски|
 |[рисование](livePainter.py)|<img src = "https://user-images.githubusercontent.com/54672403/79121248-869d1380-7d9d-11ea-9a73-973c5c71bc79.gif" width="350" height="170" />| обнаружение цвета и использование цветного маркера для рисования виртуально |
 |[оцветление плёнок](problematic_photos.ipynb)|<img src = "https://user-images.githubusercontent.com/54672403/83281332-98693780-a1e0-11ea-8cff-0102f69547fa.jpg" width="350" height="170" />| удаление чёрных рамок и работа с цветовыми каналами|
-
+|[построение скелета тела на фото](detectPose_img.py)|<img src = "https://user-images.githubusercontent.com/54672403/84656285-1c2e5e00-af1b-11ea-8023-24919f460a50.png" width="350" height="170" />|детектор ключевых точек человеческих конечностей на фото|
+|[построение скелета тела на видео](detectPose_video.py)|<img src = "https://user-images.githubusercontent.com/54672403/84661911-b4304580-af23-11ea-8885-e940537892a9.gif" width="350" height="170" />|детектор ключевых точек человеческих конечностей на видео|
+|[Тяга штанги в наклоне <br> (поиск ошибок в технике)](detectPose_Notebook.ipynb)|<img src = "https://user-images.githubusercontent.com/54672403/84664002-931d2400-af26-11ea-982e-854a75b9f0c7.gif" width="350" height="170" />|Находит угол, образованный в основании и верхней части позвоночника <br> - большой угол наклона несет в себе риск получения травмы|
 
