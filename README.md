@@ -1,6 +1,6 @@
 ***Artem Projects***
 
-- Сайт, чтобы скачать отдельную папку / файл: [Download Git](https://minhaskamal.github.io/DownGit/#/home)
+- Сайт, чтобы скачать отдельную папку / файл: [Download Git](https://artexxx.github.io/DownGit/#/home)
 
 ```
 ├── algorithms
