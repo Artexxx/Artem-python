@@ -1,5 +1,5 @@
 from settings import BASE_URL, ORIGINALS_URL
-from typing import List, Dict, Any
+from typing import List, Dict
 import requests
 from bs4 import BeautifulSoup
 import re

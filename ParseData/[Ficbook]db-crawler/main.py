@@ -5,9 +5,6 @@ from db.models import Novel
 from data_utils.metrics import Text
 from sqlalchemy import and_
 import time
-import random
-
-TIME_INTERVALS = list(range(1, 2))
 
 
 def main(page_range=(0, 30_000)):
@@ -24,7 +21,7 @@ def main(page_range=(0, 30_000)):
             with session_scope() as sess:
                 sess.add(Novel(**result))
                 print(f"Text {idx}")
-            time.sleep(random.choice(TIME_INTERVALS))
+            time.sleep(.5)
 
 
 def get_text(idx: int):
@@ -59,5 +56,5 @@ def calculate_metrics():
 
 
 if __name__ == '__main__':
-    #calculate_metrics()
-    main((6, 30_000))
+    calculate_metrics()
+    #main((6, 30_000))

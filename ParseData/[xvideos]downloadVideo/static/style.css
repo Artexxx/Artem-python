@@ -1,0 +1,38 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+.header > div {
+    font-size: 3em;
+    text-align: center;
+}
+.container{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+button{
+    float: left;
+}
+
+.container > input {
+    width: 80%;
+    float: left;
+}
+.container > button{
+    width: 15%;
+    float: right;
+}
+.both{
+    clear: both;
+}
+.equals {
+    width: 100%;
+}
+.equals > div {
+    width: 60%;
+    float: left;
+}
+.equals > button{
+    width: 30%;
+    float: right;
+}
