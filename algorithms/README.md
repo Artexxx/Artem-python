@@ -55,6 +55,9 @@ or
 
 [back to top](#data-science-question-answer)
 
+<img width="1105" src="https://user-images.githubusercontent.com/54672403/85617234-9ff8f080-b667-11ea-9f56-fd5d64fea5bb.png">
+
+![ml1](https://user-images.githubusercontent.com/54672403/85617258-a6876800-b667-11ea-9805-bce2026cf5de.png)
 
 ## Statistics and ML In General
 
