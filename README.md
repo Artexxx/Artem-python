@@ -3,20 +3,8 @@
 - Сайт, чтобы скачать отдельную папку / файл: [Download Git](https://artexxx.github.io/DownGit/#/home)
 
 ```
+.
 ├── algorithms
-│   ├── array2D.py
-│   ├── binary_s.py
-│   ├── Graph
-│   │   ├── anime.gif
-│   │   ├── Chinese_postman_problem.ipynb
-│   │   ├── graph
-│   │   └── points
-│   ├── Linear Classifier
-│   │   ├── adaline_gd.py
-│   │   ├── adaline_sgd.py
-│   │   ├── fruits.csv
-│   │   ├── iris.csv
-│   │   ├── Lin├── algorithms
 │   ├── array2D.py
 │   ├── binary_s.py
 │   ├── Graph
@@ -42,6 +30,40 @@
 │   │   ├── plot_decision_regions.py
 │   │   └── wine.csv
 │   ├── Neural Networks
+│   │   ├── Building Deep Neural Network - Step by Step
+│   │   │   ├── datasets
+│   │   │   │   ├── data.mat
+│   │   │   │   ├── test_catvnoncat.h5
+│   │   │   │   └── train_catvnoncat.h5
+│   │   │   ├── Deep Neural Network RESULT.ipynb
+│   │   │   ├── dnn_app_utils_v2.py
+│   │   │   ├── functions required for building a deep NN.ipynb
+│   │   │   ├── Gradient+Checking.ipynb
+│   │   │   ├── gradient_check_utils.py
+│   │   │   ├── Initialization in NN.ipynb
+│   │   │   ├── init_utils.py
+│   │   │   ├── Optimization+methods.ipynb
+│   │   │   ├── opt_utils.py
+│   │   │   ├── Planar data classification with one hidden layer.ipynb
+│   │   │   ├── __pycache__
+│   │   │   │   ├── dnn_app_utils_v2.cpython-36.pyc
+│   │   │   │   ├── gradient_check_utils.cpython-36.pyc
+│   │   │   │   ├── opt_utils.cpython-36.pyc
+│   │   │   │   ├── smile_utils.cpython-36.pyc
+│   │   │   │   ├── testCases_v3_reg_check.cpython-36.pyc
+│   │   │   │   └── testCases_v4_opt.cpython-36.pyc
+│   │   │   ├── Regularization.ipynb
+│   │   │   ├── reg_utils.py
+│   │   │   ├── smile_utils.py
+│   │   │   ├── testCases_palanar.py
+│   │   │   ├── testCases_v2_func.py
+│   │   │   ├── testCases_v3_reg_check.py
+│   │   │   ├── testCases_v4_opt.py
+│   │   │   └── video-dropout
+│   │   │       ├── dropout1_kiank.mp4
+│   │   │       ├── dropout2_kiank.mp4
+│   │   │       ├── opt1.gif
+│   │   │       └── opt2.gif
 │   │   ├── Cats vs Dogs
 │   │   │   ├── cats_and_dogs_small_1_2.h5
 │   │   │   ├── cats_and_dogs_small_2.h5
@@ -70,17 +92,21 @@
 │   │   │   │   └── 6.jpg
 │   │   │   ├── Fruits360.ipynb
 │   │   │   └── fruits_model.h5
-│   │   └── Recognizing Handwritten Digits
-│   │       ├── high-level TensorFlow | Keras.ipynb
-│   │       ├── image_data
-│   │       │   ├── test_images.idx3-ubyte
-│   │       │   ├── test_labels.idx1-ubyte
-│   │       │   ├── train_images.idx3-ubyte
-│   │       │   └── train_labels.idx1-ubyte
-│   │       ├── MLPGradientCheck.py
-│   │       ├── Multi-layer Artificial Neural Network.ipynb
-│   │       ├── NeuralNetMLP.py
-│   │       └── __pycache__
+│   │   ├── Recognizing Handwritten Digits
+│   │   │   ├── high-level TensorFlow | Keras.ipynb
+│   │   │   ├── image_data
+│   │   │   │   ├── test_images.idx3-ubyte
+│   │   │   │   ├── test_labels.idx1-ubyte
+│   │   │   │   ├── train_images.idx3-ubyte
+│   │   │   │   └── train_labels.idx1-ubyte
+│   │   │   ├── MLPGradientCheck.py
+│   │   │   ├── Multi-layer Artificial Neural Network.ipynb
+│   │   │   ├── NeuralNetMLP.py
+│   │   │   └── __pycache__
+│   │   └── Recognizing Sign Language
+│   │       ├── American Sign Language CNN + Keras.ipynb
+│   │       ├── American Sign Language CNN + TensorFlow.ipynb
+│   │       └── American Sign Language LeNet-5 + Keras.ipynb
 │   ├── NONLinearClassifier
 │   │   ├── assets
 │   │   │   ├── autoencoder.png
@@ -190,10 +216,23 @@
 │   │   ├── PidorDetector.py
 │   │   ├── README.md
 │   │   └── requirements.txt
+│   ├── ForexAI
+│   │   ├── data
+│   │   │   ├── dataset_ai_simpleCNN.csv
+│   │   │   ├── eurusd_hour.csv
+│   │   │   └── eurusd_minute.csv
+│   │   ├── dataEGG
+│   │   │   ├── test.tsv
+│   │   │   └── train.tsv
+│   │   ├── GAF_MAT+IResNet_CNN.ipynb
+│   │   └── simpleCNN.ipynb
 │   ├── mastering[CV2]
 │   │   ├── colorMask.py
 │   │   ├── detectAnimeFaces.py
 │   │   ├── detectObj.py
+│   │   ├── detectPose_img.py
+│   │   ├── detectPose_Notebook.ipynb
+│   │   ├── detectPose_video.py
 │   │   ├── detectShape.py
 │   │   ├── livePainter.py
 │   │   ├── matrixImg.py
@@ -294,11 +333,26 @@
 │       └── virus.py
 ├── ParseData
 │   ├── AllTags.py
+│   ├── anime-wallpaper-changer.py
 │   ├── BookMagasineBase
 │   │   ├── database.py
 │   │   ├── main.py
 │   │   └── mydata.db
 │   ├── CarFind.py
+│   ├── [Ficbook]db-crawler
+│   │   ├── data_utils
+│   │   │   ├── constants.py
+│   │   │   ├── __init__.py
+│   │   │   ├── metrics.py
+│   │   │   └── utils.py
+│   │   ├── db
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py
+│   │   │   └── session_manager.py
+│   │   ├── main.py
+│   │   ├── page_parsing.py
+│   │   ├── requirements.txt
+│   │   └── settings.py
 │   ├── FindPremiumCar
 │   │   ├── auto_ru.py
 │   │   ├── autotrade.py
@@ -322,6 +376,14 @@
 │   ├── [xnxx]getPronHref
 │   │   ├── getListVideoHref[MP].py
 │   │   └── getListVideoHref[SE].py
+│   ├── [XV]downloadVideoAPP
+│   │   ├── app.py
+│   │   ├── static
+│   │   │   └── style.css
+│   │   ├── templates
+│   │   │   └── index.html
+│   │   └── utils
+│   │       └── downloadXvideos.py
 │   ├── [XV|Spank]getPronCSV
 │   │   ├── [SpankBang]getCSV.py
 │   │   └── [xvideo]getCSV.py
