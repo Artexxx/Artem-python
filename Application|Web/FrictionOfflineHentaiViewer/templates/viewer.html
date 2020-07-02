@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+  <head>
+    <title>friction</title>
+
+    <link rel="stylesheet" href="/static/lib/photoswipe/photoswipe.css"/>
+    <link rel="stylesheet" href="/static/lib/photoswipe/default-skin/default-skin.css"/>
+    <link rel="stylesheet" href="/static/friction.css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <script src="/static/lib/photoswipe/photoswipe.js"></script>
+    <script src="/static/lib/photoswipe/photoswipe-ui-default.js"></script>
+  </head>
+  <body>
+    <p id="messenger">loading&hellip;</p>
+    <div
+      id="wrapper"
+      class="
+        {% if rotation == 'r' %}rot-right{% endif %}
+        {% if rotation == 'l' %}rot-left{% endif %}
+      "
+    >
+      <!-- begin photoswipe boilierplate -->
+      <div id="pswp" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+          <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+          </div>
+          <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+              <div class="pswp__counter"></div>
+              <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+              <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+              <div class="pswp__preloader">
+                <div class="pswp__preloader__icn">
+                  <div class="pswp__preloader__cut">
+                    <div class="pswp__preloader__donut"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+            <div class="pswp__caption">
+              <div class="pswp__caption__center"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end photoswipe boilierplate -->
+    </div>
+
+    <a id="settings-toggle" class="just-loaded">
+      <span id="show-text">show settings (o)</span>
+      <span id="hide-text">hide settings</span>
+    </a>
+    <form id="settings">
+      <input type="hidden" name="id" value=""/>
+      <input type="hidden" name="salt" value="{{ salt }}"/>
+
+      <p>
+        <label for="filter">filter</label>
+        <input id="filter" type="text" name="f" value="{{ filter }}"/>
+      </p>
+
+      <p>
+        <input id="rot-none" type="radio" name="r" value="n" {% if rotation == "n" %}checked{% endif %}/>
+        <label for="rot-none">no rotation</label>
+        <input id="rot-right" type="radio" name="r" value="r" {% if rotation == "r" %}checked{% endif %}/>
+        <label for="rot-right">rotate right</label>
+        <input id="rot-left" type="radio" name="r" value="l" {% if rotation == "l" %}checked{% endif %}/>
+        <label for="rot-left">rotate left</label>
+      </p>
+
+      <p>
+        <input id="rtl" type="checkbox" name="rtl" {% if rtl %}checked{% endif %}/>
+        <label for="rtl">right-to-left</label>
+      </p>
+
+      <p>
+        <input id="submit" type="submit" value="okay"/>
+      </p>
+    </form>
+    <input type="hidden" id="id" value="{{ id }}">
+    <script src="/static/friction.js"></script>
+  </body>
+</html>
