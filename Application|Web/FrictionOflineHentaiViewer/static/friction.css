@@ -1,0 +1,97 @@
+.pswp__top-bar, .pswp__caption {
+  background: none !important;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+  color: #eee;
+  background-color: #222;
+}
+
+a {
+  text-decoration: none;
+  color: #d6d;
+}
+
+a:hover {
+  color: inherit;
+}
+
+code {
+  opacity: 0.7;
+}
+
+#wrapper {
+  position: absolute;
+  top: -100vw;
+  height: 100vw;
+  width: 100vh;
+  overflow: auto;
+}
+
+#wrapper.rot-right {
+  transform: rotate(90deg);
+  transform-origin: bottom left;
+}
+
+#wrapper.rot-left {
+  transform: rotate(270deg);
+  right: 0;
+  transform-origin: bottom right;
+}
+
+#settings-toggle {
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 1s;
+}
+
+#settings-toggle:hover {
+  opacity: 1;
+  transition: opacity 0;
+}
+
+#settings-toggle.just-loaded, .settings-shown #settings-toggle {opacity: 1}
+.settings-shown #settings-toggle #show-text {display: none}
+#settings-toggle #hide-text {display: none}
+.settings-shown #settings-toggle #hide-text {display: inline}
+
+#settings, #settings-toggle {
+  display: block;
+  color: #ddd;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 2px solid #ccc;
+  border-radius: .4em;
+  z-index: 5000;
+  padding: 0.5em;
+  position: absolute;
+  bottom: .5em;
+  left: .5em;
+}
+
+#settings {
+  opacity: 0;
+  pointer-events: none;
+  bottom: 3em;
+}
+
+.settings-shown #settings {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+p {
+  padding: .25em 0;
+  margin: 0;
+}
+
+#messenger {
+  position: absolute;
+  font-size: 1.2em;
+  top: 20vh;
+  width: 80vw;
+  left: 10vw;
+  text-align: center;
+}
