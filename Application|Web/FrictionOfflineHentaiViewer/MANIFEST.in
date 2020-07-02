@@ -1,0 +1,4 @@
+include README.md
+include nfriction/application.wsgi
+recursive-include nfriction/static *.css *.js *.svg *.gif *.png LICENSE
+recursive-include nfriction/templates *.html

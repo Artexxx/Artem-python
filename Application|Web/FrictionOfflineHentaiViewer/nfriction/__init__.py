@@ -9,7 +9,7 @@ from library import Library, FrictionError
 library = Library(os.getcwd())
 
 all_hrefs = "<br>".join([f'<a href="./?f={title}">{title}</a>'
-                    for (identifier, title) in library.choices.items()])
+                         for (identifier, title) in library.choices.items()])
 
 
 def request_exit(*a):
@@ -35,7 +35,6 @@ app = FrictionApp(__name__)
 Если id не указан, то скрытый запрос перенаправляется на `/items?f=''` (ищем ничего) ~~>`
   функция Library.chose принимает None и создаёт json по первому попавшемуся `identifier`
   ~~> json парсится JS кодом   
-    
 """
 # http://127.0.0.1:4000/?id=...&page=1
 @app.route('/')
@@ -78,7 +77,7 @@ def item():
 
 
 """ Тут будут отображаться все интересные нам объекты (ZIP|DIR|RAR), для поиска и фильтрации"""
-@app.route('/all') #TODO
+@app.route('/all')  # TODO
 def all_items():
     return library.choices
 
