@@ -10,10 +10,23 @@ body {
   background-color: #222;
 }
 
-a {
-  text-decoration: none;
+ul a {
   color: #d6d;
+  display:block;
+  line-height:1.8;
+  text-decoration:none;
+  width:100%;
+  list-style-type: none;
+  text-align:center;
 }
+h3{
+  text-align: center;
+}
+
+li.hide {
+    display: none;
+}
+
 
 a:hover {
   color: inherit;
@@ -88,10 +101,6 @@ p {
 }
 
 #messenger {
-  position: absolute;
   font-size: 1.2em;
-  top: 20vh;
-  width: 80vw;
-  left: 10vw;
   text-align: center;
 }

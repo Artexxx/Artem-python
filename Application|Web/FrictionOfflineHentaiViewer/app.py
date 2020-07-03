@@ -8,8 +8,8 @@ from library import Library, FrictionError
 
 library = Library('/home/artem/Desktop/')
 
-all_hrefs = "<br>".join([f'<a href="./?f={title}">{title}</a>'
-                         for (identifier, title) in library.choices.items()])
+all_hrefs = "<ul>"+"".join([f'<a href="./?f={title}"><li>{title}</li></a>'
+                           for (identifier, title) in library.choices.items()]) + "</ul>"
 
 
 def request_exit(*a):
@@ -62,7 +62,7 @@ def items():
 
     if doujin is None:
         raise FrictionError(
-            "- не смог найти в библиотеке ничего подходящего к твоему фильтру; Попробуй снова.<br><br>" + all_hrefs
+            "<h3>- не смог найти в библиотеке ничего подходящего к твоему фильтру; Попробуй снова.</h3>" + all_hrefs
         )
     return jsonify(doujin.json())
 
@@ -75,12 +75,6 @@ def item():
     return send_file(doujin.pages[int(request.args['page'])])
 
 
-""" Тут будут отображаться все интересные нам объекты (ZIP|DIR|RAR), для поиска и фильтрации"""
-@app.route('/all')  # TODO
-def all_items():
-    return library.choices
-
-
 @app.errorhandler(FrictionError)
 def error(e):
     response = jsonify({'message': e.message})
@@ -89,4 +83,4 @@ def error(e):
 
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(port=4000, debug=True)

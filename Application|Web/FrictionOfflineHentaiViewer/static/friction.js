@@ -8,6 +8,39 @@ var messengerElement = document.getElementById('messenger');
 var gallery;
 var index;
 
+// Live search functions
+function runLiveFilterMessage(){
+  filterElement.oninput = function () {
+    let val = this.value.trim();
+    let elasticItems = document.querySelectorAll('li');
+    if (val != '') {
+      elasticItems.forEach(function (elem) {
+        if (elem.innerText.search(val) == -1) {
+          elem.classList.add('hide');
+          elem.innerHTML = elem.innerText;
+        }
+        else {
+          elem.classList.remove('hide');
+          let str = elem.innerText;
+          elem.innerHTML = insertMark(str, elem.innerText.search(val), val.length);
+        }
+      });
+    }
+    else {
+      elasticItems.forEach(function (elem) {
+        elem.classList.remove('hide');
+        elem.innerHTML = elem.innerText;
+      });
+    }
+  }
+}
+function insertMark(string, pos, len) {
+    // hello world ~~> hello <mark>world</mark>
+    return string.slice(0, pos) + '<mark>' + string.slice(pos, pos + len) + '</mark>' + string.slice(pos + len);
+}
+// End live search functions
+
+
 function handleItems() {
   messengerElement.innerHTML = ''; // Убирается `loading...`
 
@@ -20,9 +53,13 @@ function handleItems() {
 
   if (this.status != 200) {
     messengerElement.innerHTML = resp.message;
+    runLiveFilterMessage();
     document.title = 'sorry :<';
     showSettings();
     return;
+  }
+  else {
+      filterElement.oninput = null
   }
 
   if (!idElement.value) {
