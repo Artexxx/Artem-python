@@ -1,15 +1,18 @@
 # Friction
 
-a tool for viewing items from your massive collection of pornographic manga at
-random
+Инструмент для просмотра элементов из вашей огромной коллекции порнографической манги
 
 ## features
 
-- can scan a library of thousands of mangas in less than a second
-- handles mangas saved as directories full of images, or as .rar/cbr or
-  .zip/cbz archives
-- support for keyboard shortcuts and touch devices via [photoswipe]
-- in-browser rotation, just in case you're lying down and using a widescreen
-  laptop
-- quick filtering, just in case you're in the mood for something specific
-- right-to-left layout, just in case you're a weeb nerd
+- может сканировать большую библиотеку манги менее чем за секунду
+
+- обрабатывает мангу, сохраненную в виде каталогов изображений или в `.rar/cbr`  `.zip/cbz` архивы 
+
+- поддержка сочетаний клавиш и сенсорных устройств с помощью photoswipe
+
+- вращение в браузере, на всякий случай, если вы лежите и используете широкоэкранный ноутбук
+
+- быстрая фильтрация, просто на случай, если вы находитесь в настроении для чего-то конкретного
+
+- раскладка справа налево, просто на случай, если вы мелкий ботаник
+

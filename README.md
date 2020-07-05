@@ -3,7 +3,6 @@
 - Сайт, чтобы скачать отдельную папку / файл: [Download Git](https://artexxx.github.io/DownGit/#/home)
 
 ```
-.
 ├── algorithms
 │   ├── array2D.py
 │   ├── binary_s.py
@@ -45,13 +44,6 @@
 │   │   │   ├── Optimization+methods.ipynb
 │   │   │   ├── opt_utils.py
 │   │   │   ├── Planar data classification with one hidden layer.ipynb
-│   │   │   ├── __pycache__
-│   │   │   │   ├── dnn_app_utils_v2.cpython-36.pyc
-│   │   │   │   ├── gradient_check_utils.cpython-36.pyc
-│   │   │   │   ├── opt_utils.cpython-36.pyc
-│   │   │   │   ├── smile_utils.cpython-36.pyc
-│   │   │   │   ├── testCases_v3_reg_check.cpython-36.pyc
-│   │   │   │   └── testCases_v4_opt.cpython-36.pyc
 │   │   │   ├── Regularization.ipynb
 │   │   │   ├── reg_utils.py
 │   │   │   ├── smile_utils.py
@@ -226,6 +218,27 @@
 │   │   │   └── train.tsv
 │   │   ├── GAF_MAT+IResNet_CNN.ipynb
 │   │   └── simpleCNN.ipynb
+│   ├── FrictionOfflineHentaiViewer
+│   │   ├── app.py
+│   │   ├── library.py
+│   │   ├── __pycache__
+│   │   │   └── library.cpython-36.pyc
+│   │   ├── README.md
+│   │   ├── static
+│   │   │   ├── friction.css
+│   │   │   ├── friction.js
+│   │   │   └── lib
+│   │   │       └── photoswipe
+│   │   │           ├── default-skin
+│   │   │           │   ├── default-skin.css
+│   │   │           │   ├── default-skin.png
+│   │   │           │   ├── default-skin.svg
+│   │   │           │   └── preloader.gif
+│   │   │           ├── photoswipe.css
+│   │   │           ├── photoswipe.js
+│   │   │           └── photoswipe-ui-default.js
+│   │   └── templates
+│   │       └── viewer.html
 │   ├── mastering[CV2]
 │   │   ├── colorMask.py
 │   │   ├── detectAnimeFaces.py
@@ -240,6 +253,8 @@
 │   │   ├── problematic_photos.ipynb
 │   │   ├── README.md
 │   │   └── scanner.py
+│   ├── nhentai
+│   │   └── ImgDirToPDF.py
 │   ├── SocketServer
 │   │   ├── server1.py
 │   │   ├── server2.py
@@ -365,6 +380,7 @@
 │   │       └── index.html
 │   ├── Football_goal.py
 │   ├── GenerateTableHtml.py
+│   ├── GitHub Follow Bot.py
 │   ├── HabrPost.py
 │   ├── ImgSpaсe.py
 │   ├── MagazineAssortment.py
