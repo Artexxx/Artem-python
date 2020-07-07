@@ -1,6 +1,7 @@
 ***Artem Projects***
 
 - Сайт, чтобы скачать отдельную папку / файл: [Download Git](https://artexxx.github.io/DownGit/#/home)
+- Расширение, чтобы быстро передвигаться по директориям: [Octotree](https://addons.opera.com/ru/extensions/details/octotree/)
 
 ```
 ├── algorithms
