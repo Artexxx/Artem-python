@@ -86,7 +86,7 @@
 │   │   │   ├── Fruits360.ipynb
 │   │   │   └── fruits_model.h5
 │   │   ├── Recognizing Handwritten Digits
-│   │   │   ├── high-level TensorFlow | Keras.ipynb
+│   │   │   ├── high-level TensorFlow & Keras.ipynb
 │   │   │   ├── image_data
 │   │   │   │   ├── test_images.idx3-ubyte
 │   │   │   │   ├── test_labels.idx1-ubyte
@@ -179,7 +179,7 @@
 │   │   ├── LinearRegressionGD.py
 │   │   └── Predicting Continuous Target Variables.ipynb
 │   └── рекурсия.py
-├── Application|Web
+├── Application&Web
 │   ├── [app]SinX.py
 │   ├── covid-19
 │   │   ├── corona.py
@@ -401,7 +401,7 @@
 │   │   │   └── index.html
 │   │   └── utils
 │   │       └── downloadXvideos.py
-│   ├── [XV|Spank]getPronCSV
+│   ├── [XV&Spank]getPronCSV
 │   │   ├── [SpankBang]getCSV.py
 │   │   └── [xvideo]getCSV.py
 │   └── YouTubeDownloadMix.py
