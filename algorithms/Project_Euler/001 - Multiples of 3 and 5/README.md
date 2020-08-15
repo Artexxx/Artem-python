@@ -12,7 +12,7 @@ solution (50000000000000000000000000000000000000000) # => 5833333333333333333333
 ```
 *Решение должно работать для действительно больших чисел (более 1 000 000).*
 
-----
+
 ## Частное решение (1)
 
 - найти кратные 3 и 5, вплоть до входного числа
@@ -34,7 +34,7 @@ sum([e for e in range(3, n) if e % 3 == 0 or e % 5 == 0])
 *[-] Проходит все n-чисел*, эффективнее было-бы проскакивать ненужные числа.
 Поэтому более эффективный подход будет опираться на само определение кратности.
 
-----
+
 ## Частное решение (2)
 
 ```python
@@ -74,7 +74,7 @@ def solution(n):
 ```
 *[-] Проходит некоторые числа по 2 раза*, эффективнее было-бы проходить только 1 раз.
 
-----
+
 ## Частное решение (3)
 
 Возьмём массив и вычислим разницу между текущим и предыдущим элементом.
@@ -92,32 +92,25 @@ def solution(number):
     counter = 0
     while 1:
         counter += 3
-        if counter >= number:
-            break
+        if counter >= number: break
         result_sum += counter
         counter += 2
-        if counter >= number:
-            break
+        if counter >= number: break
         result_sum += counter
         counter += 1
-        if counter >= number:
-            break
+        if counter >= number: break
         result_sum += counter
         counter += 3
-        if counter >= number:
-            break
+        if counter >= number: break
         result_sum += counter
         counter += 1
-        if counter >= number:
-            break
+        if counter >= number: break
         result_sum += counter
         counter += 2
-        if counter >= number:
-            break
+        if counter >= number: break
         result_sum += counter
         counter += 3
-        if counter >= number:
-            break
+        if counter >= number: break
         result_sum += counter
     return result_sum
 ```
@@ -131,10 +124,11 @@ def solution(number):
   4   3.49214    314.07%        100000000    2333333316666668
   5  34.0755     3058.33%      1000000000  233333333166666668
 ```
-----
+
+
 ## Общее решение (1)
 
-- Для нахождения суммы применяется арифметическая прогрессия $S = \frac{n(n-1)}{2}$.
+- Для нахождения суммы применяется арифметическая прогрессия $`S = \frac{n(n-1)}{2}`$.
 
 ```python
 def summ(number, d):
