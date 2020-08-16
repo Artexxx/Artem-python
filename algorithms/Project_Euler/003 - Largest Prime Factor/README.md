@@ -1,4 +1,4 @@
-# [Наибольший простой делитель](TODO)
+# [Наибольший простой делитель](https://www.codewars.com/kata/5646ac68901dc5c31a000022/python)
 
 ## [Проблема](https://euler.jakumo.org/problems/view/3.html)
 
