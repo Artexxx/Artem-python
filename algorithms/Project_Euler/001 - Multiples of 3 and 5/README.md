@@ -130,6 +130,11 @@ def solution(number):
 
 - Для нахождения суммы применяется арифметическая прогрессия $`S = \frac{n(n-1)}{2}`$.
 
+TODO $`a^2+b^2=c^2`$
+```math
+a^2+b^2=c^2
+```
+
 ```python
 def summ(number, d):
     n = (number - 1) // d
