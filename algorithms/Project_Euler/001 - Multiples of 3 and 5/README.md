@@ -128,8 +128,7 @@ def solution(number):
 
 ## Общее решение (1)
 
-- Для нахождения суммы применяется арифметическая прогрессия  
-![formula](https://render.githubusercontent.com/render/math?math=S = \frac{n(n-1)}{2})
+- Для нахождения суммы применяется арифметическая прогрессия   <img src ='https://render.githubusercontent.com/render/math?math=S%20=%20%5Cfrac%7Bn(n-1)%7D%7B2%7D'>
 
 ```python
 def summ(number, d):
