@@ -1,6 +1,6 @@
 # [Особая тройка Пифагора](https://www.codewars.com/kata/59c32c609f0cbce0ea000073/python)
 
-## [Проблема](https://euler.jakumo.org/problems/view/8.html)
+## [Проблема](https://euler.jakumo.org/problems/view/9.html)
 
 <img src="http://i.imgur.com/d0minUx.gif" alt="Pythagorean triplet gif">
  

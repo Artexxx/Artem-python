@@ -55,13 +55,13 @@ def solution(n):
 ## Частное решение (2)
 
 - В основе лежит *решето эратосфена* 
-1.5 * n * math.log(n)
 - N-ое простое не превосходит `1.5 * n * math.log(N)` при `N > 1`
 
 <img src="https://i.imgur.com/xGbfnpP.gif" alt="Eratosfen gif">
 
+
 ```python
-def bit_sieve(n):
+def bit_sieve(n) -> list:
     '''
     Решето Эратосфена. В списке bits сбрасываются биты,
     имеющие составные номера, биты с простыми номерами == 1.
