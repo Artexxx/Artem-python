@@ -40,7 +40,7 @@ def solution(n):
     """
     count_primes = 0
     index = 1
-    while count_primes != n and j < 3:
+    while count_primes != n and index < 3:
         index += 1
         if is_prime(index):
             count_primes += 1
@@ -52,8 +52,8 @@ def solution(n):
 
 
 if __name__ == "__main__":
-    # print(solution(int(input().strip())))
-    ### Run Time-Profile Table ###
-    import sys;sys.path.append('..')
-    from time_profile import my_time_this
-    my_time_this(solution, [20_000,  40_000,  80_000, 120_000])
+    print(solution(int(input().strip())))
+    # ### Run Time-Profile Table ###
+    # import sys;sys.path.append('..')
+    # from time_profile import my_time_this
+    # my_time_this(solution, [20_000,  40_000,  80_000, 120_000])
