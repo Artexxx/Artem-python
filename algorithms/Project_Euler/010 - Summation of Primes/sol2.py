@@ -13,6 +13,7 @@
 """
 import math
 
+
 def bit_sieve(n) -> list:
     ''' Решето Эратосфена.
     В списке bits сбрасываются биты, имеющие составные номера, биты с простыми номерами == 1.
@@ -26,6 +27,7 @@ def bit_sieve(n) -> list:
             for j in range(index * index, n + 1, index):  # занулить все ему кратные
                 bits[j] = 0
     return bits
+
 
 def bit_sieve_optimized(n) -> list:
     """ Оптимизированное Решето Эратосфена. """
@@ -60,9 +62,10 @@ def prime_sum(n: int) -> int:
     list_of_primality = bit_sieve_optimized(n)
     return sum((i for (i, isprime) in enumerate(list_of_primality) if isprime))
 
+
 if __name__ == "__main__":
-    # print(prime_sum(int(input().strip())))
-    ### Run Time-Profile Table ###
-    import sys;sys.path.append('..')
-    from time_profile import my_time_this
-    my_time_this(prime_sum, [100_000, 1_000_000, 10_000_000, 50_000_000])
+    print(prime_sum(int(input().strip())))
+    # ### Run Time-Profile Table ###
+    # import sys;sys.path.append('..')
+    # from time_profile import my_time_this
+    # my_time_this(prime_sum, [100_000, 1_000_000, 10_000_000, 50_000_000])
