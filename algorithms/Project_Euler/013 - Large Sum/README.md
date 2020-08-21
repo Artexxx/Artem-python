@@ -25,7 +25,7 @@ def solution2(int_numbers: list) -> int:
     return all_sum
 ```
 
-## Общее решение (2)
+## Общее решение (1)
 
 ```text
   ¹
