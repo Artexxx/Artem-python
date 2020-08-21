@@ -96,7 +96,7 @@ def solution():
 def grid_product(ox, oy, dx, dy, n):
     """
 [1, 2, 3, 0],
-[4, 5, 6, 0],      CONSECUTIVE = 2
+[4, 5, 6, 0],      CONSECUTIVE = 3
 [7, 8, 9, 0],
 [0, 0, 0, 0],
 
