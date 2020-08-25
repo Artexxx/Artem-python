@@ -81,7 +81,7 @@ def solution(N):
 
 
 if __name__ == '__main__':
-    solution(10)
+    solution(90000)
     # ### Run Time-Profile Table ###
     # import sys; sys.path.append('..')
     # from time_profile import my_time_this

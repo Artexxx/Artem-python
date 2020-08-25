@@ -32,7 +32,7 @@ def bit_sieve(n) -> list:
 def bit_sieve_optimized(n) -> list:
     """ Оптимизированное Решето Эратосфена. """
     primes = [True] * n
-    primes[0], primes[1] = False, False  # числа 0 and 1
+    primes[0], primes[1] = False, False  # числа 0 и 1
 
     number_of_multiples = len(primes[4::2])
     primes[4::2] = [False] * number_of_multiples

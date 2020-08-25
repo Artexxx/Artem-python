@@ -1,6 +1,6 @@
 # [Сумма цифр факториала](TODO)
 
-## [Проблема](https://euler.jakumo.org/problems/view/16.html)
+## [Проблема](https://euler.jakumo.org/problems/view/20.html)
 
 >n! означает n × (n − 1) × ... × 3 × 2 × 1
 >

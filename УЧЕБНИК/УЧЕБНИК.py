@@ -436,6 +436,10 @@ class cook():
     history = deque(maxlen=3)
     # [1, 2, 3] + [4] => [2, 3, 4]
 
+    from itertools import accumulate
+    list(accumulate(['i', 'have','no','space']))
+    # Выхлоп / ['i', 'ihave', 'ihaveno', 'ihavenospace'] /
+
     """ Сounter помогает найти количество повторений слова"""
     words = ['spam', 'egg', 'spam', 'counter', 'counter', 'counter']
 

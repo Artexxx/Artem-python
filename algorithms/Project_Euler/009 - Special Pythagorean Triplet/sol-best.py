@@ -38,11 +38,11 @@ def solution(pyth_sum):
 
 
 if __name__ == "__main__":
-    # print(solution(int(input())))
-    ### Run Time-Profile Table ###
-    import sys; sys.path.append('..')
-    from time_profile import my_time_this
-    my_time_this(solution, [12, 234, 100_000_000, 100_000_000**2])
+    print(solution(int(input())))
+    # ### Run Time-Profile Table ###
+    # import sys; sys.path.append('..')
+    # from time_profile import my_time_this
+    # my_time_this(solution, [12, 234, 100_000_000, 100_000_000**2])
 
 
 

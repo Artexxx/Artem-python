@@ -41,8 +41,8 @@ def solution(n):
 
 
 if __name__ == "__main__":
-    # print(solution(int(input().strip())))
-    ### Run Time-Profile Table ###
-    import sys; sys.path.append('..')
-    from time_profile import my_time_this
-    my_time_this(solution, [100_000_000_000_000_000_000, 1_000_000_000_000_000_000_000, 10_000_000_000_000_000_000_000, 100_000_000_000_000_000_000_000])
+    print(solution(int(input().strip())))
+    # ### Run Time-Profile Table ###
+    # import sys; sys.path.append('..')
+    # from time_profile import my_time_this
+    # my_time_this(solution, [100_000_000_000_000_000_000, 1_000_000_000_000_000_000_000, 10_000_000_000_000_000_000_000, 100_000_000_000_000_000_000_000])
