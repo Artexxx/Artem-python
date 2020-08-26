@@ -36,8 +36,14 @@ def sum_of_divisors(n):
 
 
 def is_prime(n: int) -> bool:
-    """Determines if the natural number n is prime."""
+    """
+    Determines if the natural number n is prime.
 
+    >>> is_prime(10)
+    False
+    >>> is_prime(11)
+    True
+    """
     # simple test for small n: 2 and 3 are prime, but 1 is not
     if n <= 3:
         return n > 1
@@ -55,18 +61,19 @@ def is_prime(n: int) -> bool:
 
 
 def bit_sieve_optimized(n) -> list:
-    ''' Решето Эратосфена.
+    """ Решето Эратосфена.
     В списке primes сбрасываются биты, имеющие составные номера, биты с простыми номерами == True.
     i-му по порядку элементу будет соответствовать True, если i -- простое и False иначе.
-
     Сложность: nloglog(n).
-    '''
+
+    >>> bit_sieve_optimized(10)
+    [False, False, True, True, False, True, False, True, False, False]
+    """
     primes = [True] * n
     primes[0], primes[1] = False, False  # числа 0 и 1
 
     number_of_multiples = len(primes[4::2])
     primes[4::2] = [False] * number_of_multiples
-
     for p in range(3, int(math.sqrt(n)) + 1, 2):
         if primes[p]:
             number_of_multiples = len(primes[p * p::p * 2])
