@@ -31,10 +31,11 @@
 """
 import itertools
 
+
 def fibonacci_generator():
     prev, cur = 0, 1
     while True:
-        # prev = fibonacci(i - 1), cur = fibonacci(i)
+        ### prev = fibonacci(i - 1), cur = fibonacci(i) ###
         prev, cur = cur, prev + cur
         yield cur
 

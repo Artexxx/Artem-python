@@ -7,20 +7,19 @@
 
 Какова сумма очков имен в файле?
 """
-import os
-import heapq
+import os, heapq
 
 
 def letter_index_upper(letter) -> int:
     """Возвращает алфавитный индекс заглавной буквы.
-     'A' -> 1, 'Z' -> 26.
+    Например: 'A' -> 1, 'Z' -> 26.
     """
     return ord(letter) - ord('A') + 1
 
 
 def name_score(name, position) -> int:
-    """Возвращает оценку для имени в позиции при сортировке в алфавитном порядке."""
-
+    """Возвращает оценку для имени в позиции при сортировке в алфавитном порядке.
+    """
     score = sum(map(letter_index_upper, name))
     return position * score
 
@@ -39,7 +38,6 @@ def solution() -> int:
     for i in range(1, len(names) + 1):
         # heappop - возращает min элемент, удаляет его из кучи
         total += name_score(heapq.heappop(names), i)
-
     return total
 
 
