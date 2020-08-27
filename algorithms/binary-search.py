@@ -1,6 +1,7 @@
 def binarysearch(mylist, items):
-    """ Возращает индекс числа items в списке mylist
+    """ Возращает индекс числа items в списке mylist.
     Сложность: lg n
+
     [-] список жолжен быть отсортирован (Сложномть сортировки: n lg n )
 
     >>> binarysearch([1, 2, 4, 5, 6, 9], 6)
@@ -11,7 +12,6 @@ def binarysearch(mylist, items):
     while start <= stop:
         mid = (start + stop) // 2
         dogadka = mylist[mid]
-        print(dogadka)
         if dogadka > items:
             stop = mid - 1
         elif dogadka < items:
@@ -21,4 +21,5 @@ def binarysearch(mylist, items):
 
 
 if __name__ == '__main__':
-    print(binarysearch([1, 2, 4, 5, 6, 9], 6))
+    print("App Binary search -> index =", binarysearch([1, 2, 4, 5, 6, 9], 6))
+    print('index =', binarysearch(["john", "mark", "ronald", "sarah"], "sarah"))
