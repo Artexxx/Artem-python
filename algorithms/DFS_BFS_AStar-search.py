@@ -51,7 +51,7 @@ class Maze:
         >>> new_maze = Maze()
         ... print(new_maze)
         """
-        output: str = ""
+        output = ""
         for row in self._grid:
             output += "".join([c.value for c in row]) + "\n"
         return output
@@ -303,9 +303,10 @@ def aStar(initial, end_test, successors, heuristic) -> Node:
 
 
 if __name__ == "__main__":
-    # Тестирование DFS
     m: Maze = Maze()
     print(m)
+
+    # Тестирование DFS
     solution = depth_first_search(m.start, m.end_test, m.successors)
     if solution is None:
         print("Используя поиск в глубину решения не было найдено")
