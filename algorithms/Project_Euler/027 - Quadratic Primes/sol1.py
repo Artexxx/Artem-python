@@ -103,11 +103,8 @@ def solution(LIMIT):
 
 
 if __name__ == '__main__':
-    # print(solution(1000))
-    ### Run Time-Profile Table ###
-    import sys;
-
-    sys.path.append('..')
-    from time_profile import my_time_this
-
-    my_time_this(solution, [10, 100, 1000])
+    print(solution(1000))
+    # ### Run Time-Profile Table ###
+    # import sys; sys.path.append('..')
+    # from time_profile import my_time_this
+    # my_time_this(solution, [10, 100, 1000])
