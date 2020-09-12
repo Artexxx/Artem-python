@@ -13,42 +13,31 @@
 Какова сумма чисел в диагоналях спирали 1001 на 1001, образованной таким же способом?
 """
 
-from math import ceil
 
-
-def diagonal_sum(n):
-
+def spiralDiagonals(n):
     """Возращает сумму чисел в диагоналях спирали N на N.
 
-    >>> diagonal_sum(1001)
+    >>> spiralDiagonals(1001)
     669171001
-    >>> diagonal_sum(500)
+    >>> spiralDiagonals(500)
     82959497
-    >>> diagonal_sum(100)
+    >>> spiralDiagonals(100)
     651897
-    >>> diagonal_sum(50)
+    >>> spiralDiagonals(50)
     79697
-    >>> diagonal_sum(10)
+    >>> spiralDiagonals(10)
     537
     """
-    total = 1
+    solution = 1
+    counter = 1
+    increment = 2
+    while (counter < n ** 2):
+        for _ in range(4):
+            counter += increment
+            solution += counter
+        increment += 2
+    return solution
 
-    for i in range(1, int(ceil(n / 2.0))):
-        odd = 2 * i + 1
-        even = 2 * i
-        total = total + 4 * odd ** 2 - 6 * even
 
-    return total
-
-
-if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) == 1:
-        print(diagonal_sum(1001))
-    else:
-        try:
-            n = int(sys.argv[1])
-            print(diagonal_sum(n))
-        except ValueError:
-            print("Invalid entry - please enter a number")
+if __name__ == '__main__':
+    print(spiralDiagonals(3))

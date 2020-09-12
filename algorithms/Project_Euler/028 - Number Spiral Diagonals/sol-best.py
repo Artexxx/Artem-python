@@ -16,17 +16,16 @@
 
 def spiralDiagonals(n):
     """Возращает сумму чисел в диагоналях спирали N на N.
-    [*] Решение основано на наблюдение
 
-    >>> diagonal_sum(1001)
+    >>> spiralDiagonals(1001)
     669171001
-    >>> diagonal_sum(500)
+    >>> spiralDiagonals(500)
     82959497
-    >>> diagonal_sum(100)
+    >>> spiralDiagonals(100)
     651897
-    >>> diagonal_sum(50)
+    >>> spiralDiagonals(50)
     79697
-    >>> diagonal_sum(10)
+    >>> spiralDiagonals(10)
     537
     """
     s = (n - 1) // 2
