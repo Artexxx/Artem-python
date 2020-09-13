@@ -92,6 +92,7 @@ class ConstraintSatisfactionProblem(Generic[V, D]):
         return None
 
 
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~| Pythagorean Triples Constraint Satisfaction Problem |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 """
 Задача: 
@@ -138,6 +139,8 @@ if __name__ == '__main__':
         print("No solution found!")
     else:
         print(solutionMS)  # RESULTS: (x: 3 y: 4 z: 5) (x: 5 y: 12 z: 13)
+
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~| Magic Square Constraint Satisfaction Problem |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 """
@@ -198,29 +201,23 @@ class MSTableConstraints:
 
     def _check_raws(self):
         for row in range(1, self.__order + 1, self.__n):
-            if ExactLengthExactSum([(self.__table[i]) for i in range(row, row + self.__n)]):
-                ex.append(False)
-            else: ex.append(True)
-        return ex
+            if not ExactLengthExactSum([(self.__table[i]) for i in range(row, row + self.__n)]):
+                return False
+        return True
 
     def _check_columns(self):
-        ex = []
         for column in range(1, self.__n + 1):
             if not ExactLengthExactSum([(self.__table[i]) for i in range(column, order + 1, n)]):
-                ex.append(False)
-            else: ex.append(True)
-        return ex
+                return False
+        return True
 
     def _check_diagonals(self):
         right_diag = [self.__table[diag] for diag in range(1, self.__order + 1, self.__n + 1)]
         left_diag = [self.__table[diag] for diag in range(self.__n, self.__order, self.__n - 1)]
-        return [ExactLengthExactSum(right_diag), ExactLengthExactSum(left_diag)]
+        return ExactLengthExactSum(right_diag) and ExactLengthExactSum(left_diag)
 
     def check_table(self):
-        return all(self._check_raws()) and all(self._check_columns()) and all(self._check_diagonals())
-
-    def check_table_slow(self):
-        return any(self._check_raws()) and any(self._check_columns()) and any(self._check_diagonals())
+        return self._check_raws() and self._check_columns() and self._check_diagonals()
 
 
 def all_diff_constraint_evaluator(values: tuple) -> bool:
@@ -240,19 +237,20 @@ class MagicSquareConstraint(Constraint):
     Значения обеих диагоналей суммируются до магической суммы.
     """
     n = 3
-
+    count = 1
     def satisfied(self, assignment: dict):
         if not all_diff_constraint_evaluator(list(assignment.values())):
             return False
+        MagicSquareConstraint.count +=1
         if len(assignment) < 9:
-            raw_assignment = {i:assignment.get(i, -1) for i in range(1, 10)}
-            MSTableConstraints(assignment, n=MagicSquareConstraint.n)
-
-        if len(assignment) == 9:
-            print(assignment)
+            raw_assignment = {i:assignment.get(i, -1) for i in range(1, MagicSquareConstraint.n**2+1)}
+            raw_table_MS = MSTableConstraints(raw_assignment, n=MagicSquareConstraint.n)
+            return raw_table_MS.check_table()
+        elif len(assignment) == 9:
             table_MS = MSTableConstraints(assignment, n=MagicSquareConstraint.n)
             return table_MS.check_table()
-        return True
+        assert len(assignment) <= MagicSquareConstraint.n**2
+
 
 
 if __name__ == '__main__':
@@ -272,11 +270,12 @@ if __name__ == '__main__':
         domains=name_to_variable_map
     )
     testMSCSP.add_constraint(MagicSquareConstraint(list(range(1, order + 1))))
-    solutionMS = testMSCSP.backtracking_search(assignment={1: 2})
+    solutionMS = testMSCSP.backtracking_search(assignment={1: 4})
     if solutionMS is None:
         print("No solution found!")
     else:
         print(solutionMS)  # RESULTS: {1: 4, 2: 3, 3: 8, 4: 9, 5: 5, 6: 1, 7: 2, 8: 7, 9: 6}
+        print("Число ходов:", MagicSquareConstraint.count)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|Map Coloring Problem |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -337,6 +336,8 @@ if __name__ == '__main__':
 
     solution = map_coloring_csp.backtracking_search(assignment={'Victoria': 'green'})
 
+
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|Eight Queens Problem |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 """Задача:
  Каждая королева должна быть помещена на шахматную доску, не атакуя других.
@@ -371,6 +372,8 @@ if __name__ == "__main__":
     testQuinsCSP = ConstraintSatisfactionProblem(columns, rows)
     testQuinsCSP.add_constraint(QueensConstraint(columns))
     solution = testQuinsCSP.backtracking_search()  # {1: 1, 2: 5, 3: 8, 4: 6, 5: 3, 6: 7, 7: 2, 8: 4}
+
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~|Word Search Constraint Satisfaction Problem |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 """
