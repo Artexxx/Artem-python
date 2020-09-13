@@ -4,12 +4,11 @@
 
 > Начиная с числа 1 и двигаясь дальше вправо по часовой стрелке, образуется следующая спираль 5 на 5:
 >
-
-<p style="text-align:center;font-family:'courier new';"><span style="color:#ff0000;font-family:'courier new';"><b>21</b></span> 22 23 24 <span style="color:#ff0000;font-family:'courier new';"><b>25</b></span><br>
-20 &nbsp;<span style="color:#ff0000;font-family:'courier new';"><b>7</b></span> &nbsp;8 &nbsp;<span style="color:#ff0000;font-family:'courier new';"><b>9</b></span> 10<br>
-19 &nbsp;6 &nbsp;<span style="color:#ff0000;font-family:'courier new';"><b>1</b></span> &nbsp;2 11<br>
-18 &nbsp;<span style="color:#ff0000;font-family:'courier new';"><b>5</b></span> &nbsp;4 &nbsp;<span style="color:#ff0000;font-family:'courier new';"><b>3</b></span> 12<br><span style="color:#ff0000;font-family:'courier new';"><b>17</b></span> 16 15 14 <span style="color:#ff0000;font-family:'courier new';"><b>13</b></span></p>
-
+><p style="text-align:center;font-family:'courier new';"><span style="color:#ff0000;font-family:'courier new';"><b>21</b></span> 22 23 24 <span style="color:#ff0000;font-family:'courier new';"><b>25</b></span><br>
+>20 &nbsp;<span style="color:#ff0000;font-family:'courier new';"><b>7</b></span> &nbsp;8 &nbsp;<span style="color:#ff0000;font-family:'courier new';"><b>9</b></span> 10<br>
+>19 &nbsp;6 &nbsp;<span style="color:#ff0000;font-family:'courier new';"><b>1</b></span> &nbsp;2 11<br>
+>18 &nbsp;<span style="color:#ff0000;font-family:'courier new';"><b>5</b></span> &nbsp;4 &nbsp;<span style="color:#ff0000;font-family:'courier new';"><b>3</b></span> 12<br><span style="color:#ff0000;font-family:'courier new';"><b>17</b></span> 16 15 14 <span style="color:#ff0000;font-family:'courier new';"><b>13</b></span></p>
+>
 >Можно убедиться, что сумма чисел в диагоналях равна `101`.
 >
 >Какова сумма чисел в диагоналях спирали `1001` на `1001`, образованной таким же способом?
