@@ -4,7 +4,7 @@
     Решить судоку.
 Идея:
     Ищем пустую клетку и находим для неё число {1-9}|
-        - проверяем ошибку по строкам и столбцам       |> <повтор если всё хорошо>
+        - проверяем ошибку по строкам и столбцам    |> <повтор если всё хорошо>
         |> стираем значение и возращаемся на шаг назад
 """
 
@@ -45,6 +45,7 @@ def find_empty(bo):
         for j in range(len(bo[i])):
             if bo[i][j] == 0:
                 return i, j
+
 
 def valid(bo, num, pos):
     """
@@ -89,8 +90,9 @@ def solve(bo):
     return False
 
 
-print_board(board)
-solve(board)
-print('________________ Решённая судоку')
-print_board(board)
-print(f'Решено за {tries} подстановок')
+if __name__ == '__main__':
+    print_board(board)
+    solve(board)
+    print('________________ Решённая судоку')
+    print_board(board)
+    print(f'Решено за {tries} подстановок')
