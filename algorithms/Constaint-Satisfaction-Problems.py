@@ -92,33 +92,192 @@ class ConstraintSatisfactionProblem(Generic[V, D]):
         return None
 
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| Simple Example |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-class PositiveConstraint(Constraint):
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~| Pythagorean Triples Constraint Satisfaction Problem |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+"""
+Задача: 
+  Найти все тройки (x, y, z) такие, что x^2 + y^2 = z^2 и x < y < z и max{x, y, z} < 21.
+Переменные:  x, y, z ∈ {1, 2, 3,..., 20}
+Домены: домен каждой переменной равен (1, 2, 3, ..., 20)
+Ограничения:
+    x^2 + y^2 == z^2
+    x < y < z
+"""
+
+
+class PythagoreanTriplesConstraint(Constraint):
     """
-    Простое ограничение, которое проверяет, является ли значение положительным.
+    Ограничения:
+        x^2 + y^2 == z^2
+        x < y < z
+
+    >>>pt_con = PythagoreanTriplesConstraint(['x', 'y', 'z'])
+    >>>pt_con.satisfied(dict(x=3, y=4, z=5))
+    True
     """
 
     def satisfied(self, assignment: dict):
-        for value in assignment.values():
-            if value < 0:
-                return False
+        values = list(assignment.values())
+        pythagorean_triple_constraint = values[0] ** 2 + values[1] ** 2 == values[2] ** 2 if len(values) == 3 else True
+        total_order_constraint = values[0] < values[1] < values[2] if len(values) == 3 else True
+        return pythagorean_triple_constraint and total_order_constraint
+
+
+if __name__ == '__main__':
+    pt_con = PythagoreanTriplesConstraint(['x', 'y', 'z'])
+    pt_con.satisfied(dict(x=3, y=4, z=5))  # => True
+
+    testPTripletCSP = ConstraintSatisfactionProblem(
+        variables=['x', 'y', 'z'],
+        domains=dict(x=list(range(1, 21)),
+                     y=list(range(1, 21)),
+                     z=list(range(1, 21)))
+    )
+    testPTripletCSP.add_constraint(PythagoreanTriplesConstraint(['x', 'y', 'z']))
+    solutionMS = testPTripletCSP.backtracking_search(assignment={'x': 5})
+    if solutionMS is None:
+        print("No solution found!")
+    else:
+        print(solutionMS)  # RESULTS: (x: 3 y: 4 z: 5) (x: 5 y: 12 z: 13)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~| Magic Square Constraint Satisfaction Problem |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+"""
+Задача: 
+  Заполните квадрат n x n различными целыми положительными числами в диапазоне (1, ..., n x n) так чтобы
+  каждая ячейка содержала уникальное целое число, и сумма целых чисел в каждой строке, столбце и диагонали была одинаковой.
+
+Подсказка:
+  Магическую сумма, определяется по формуле n * ((n * n + 1) / 2).
+
+Variable (значения переменных)')
+
+Variables: квадраты на доске.
+Domain: область определения каждой переменной равена (1,..., n x n).
+Constraints:
+    Каждая переменная должна иметь уникальное значение.
+    Значения всех строк суммируются до магической суммы.
+    Значения всех столбцов суммируются до магической суммы.
+    Значения обеих диагоналей суммируются до магической суммы.
+"""
+
+
+class ExactLengthExactSum:
+    """
+    Возращает True если N переменных суммируются до sum_value
+    [*] Возращает True если количество переменных меньше N
+    [*] Так сделано, что при -1 возращает True
+    """
+
+    def __init__(self, number_of_values: int, sum_value) -> None:
+        self.__number_of_values = number_of_values
+        self.__sum_value = sum_value
+
+    def __call__(self, values: tuple) -> bool:
+        if -1 in values: return True
+        if len(values) < self.__number_of_values:
+            return True
+        if len(values) == self.__number_of_values:
+            return sum(values) == self.__sum_value
+        if len(values) > self.__number_of_values:
+            return False
+
+
+class MSTableConstraints:
+    """
+    Делает проверку table, размером NxN, в соответствии с правилами магических квадратов
+    [*] таблица задаётся словарём Пример: {1: 2, 2: 7, 3: 6 ... 8: 3, 9: 8}
+
+    >>> t = {1: 2, 2: 7, 3: 6, 4: 9, 5: 5, 6: 1, 7: 4, 8: 3, 9: 8}
+    >>> MSTableConstraints(t, 3).check_table()
+    True
+    """
+
+    def __init__(self, table: dict, n: int) -> None:
+        self.__table = table
+        self.__n = n
+        self.__order = n * n
+
+    def _check_raws(self):
+        for row in range(1, self.__order + 1, self.__n):
+            if ExactLengthExactSum([(self.__table[i]) for i in range(row, row + self.__n)]):
+                ex.append(False)
+            else: ex.append(True)
+        return ex
+
+    def _check_columns(self):
+        ex = []
+        for column in range(1, self.__n + 1):
+            if not ExactLengthExactSum([(self.__table[i]) for i in range(column, order + 1, n)]):
+                ex.append(False)
+            else: ex.append(True)
+        return ex
+
+    def _check_diagonals(self):
+        right_diag = [self.__table[diag] for diag in range(1, self.__order + 1, self.__n + 1)]
+        left_diag = [self.__table[diag] for diag in range(self.__n, self.__order, self.__n - 1)]
+        return [ExactLengthExactSum(right_diag), ExactLengthExactSum(left_diag)]
+
+    def check_table(self):
+        return all(self._check_raws()) and all(self._check_columns()) and all(self._check_diagonals())
+
+    def check_table_slow(self):
+        return any(self._check_raws()) and any(self._check_columns()) and any(self._check_diagonals())
+
+
+def all_diff_constraint_evaluator(values: tuple) -> bool:
+    seen_values = set()
+    for val in values:
+        if val in seen_values:
+            return False
+        seen_values.add(val)
+    return True
+
+
+class MagicSquareConstraint(Constraint):
+    """
+    Каждая переменная должна иметь уникальное значение.
+    Значения всех строк суммируются до магической суммы.
+    Значения всех столбцов суммируются до магической суммы.
+    Значения обеих диагоналей суммируются до магической суммы.
+    """
+    n = 3
+
+    def satisfied(self, assignment: dict):
+        if not all_diff_constraint_evaluator(list(assignment.values())):
+            return False
+        if len(assignment) < 9:
+            raw_assignment = {i:assignment.get(i, -1) for i in range(1, 10)}
+            MSTableConstraints(assignment, n=MagicSquareConstraint.n)
+
+        if len(assignment) == 9:
+            print(assignment)
+            table_MS = MSTableConstraints(assignment, n=MagicSquareConstraint.n)
+            return table_MS.check_table()
         return True
 
 
 if __name__ == '__main__':
-    pos_con = PositiveConstraint(['a', 'b', 'c', 'd'])
-    pos_con.satisfied(dict(a=-1))  # => False
-    pos_con.satisfied(dict(a=2))  # => True
+    n = 3
+    order = n ** 2
+    magic_sum = n * int((order + 1) / 2)
+    name_to_variable_map = {square: list(range(1, order + 1)) for square in range(1, order + 1)}
 
-    testCSP = ConstraintSatisfactionProblem(
-        variables=['a', 'b', 'c', 'd'],
-        domains=dict(a=[1, 2, 3],
-                     b=[4, 5, 6],
-                     c=[7, 8, 9],
-                     d=[10, 11, 12])
+    ExactLengthExactSum = ExactLengthExactSum(n, magic_sum)
+
+    ms_con = MagicSquareConstraint(list(range(1, order + 1)))
+    ms_con.n = n
+    print(ms_con.satisfied({1: 2, 2: 7, 3: 6, 4: 9, 5: 5, 6: 1, 7: 4, 8: 3, 9: 8}))  # => True
+
+    testMSCSP = ConstraintSatisfactionProblem(
+        variables=list(range(1, order + 1)),
+        domains=name_to_variable_map
     )
-    testCSP.consistent('a', dict(a=1))  # => True
-    testCSP.consistent('b', dict(b=-1))  # => False
+    testMSCSP.add_constraint(MagicSquareConstraint(list(range(1, order + 1))))
+    solutionMS = testMSCSP.backtracking_search(assignment={1: 2})
+    if solutionMS is None:
+        print("No solution found!")
+    else:
+        print(solutionMS)  # RESULTS: {1: 4, 2: 3, 3: 8, 4: 9, 5: 5, 6: 1, 7: 2, 8: 7, 9: 6}
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|Map Coloring Problem |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 """Задача:
@@ -172,7 +331,7 @@ if __name__ == '__main__':
     map_coloring_csp.add_constraint(MapColoringConstraint("Victoria", "Tasmania"))
 
     map_coloring_csp.consistent('Western Australia', {'Western Australia': 'red',
-                                                      'Northern Territory': 'red'})  # => False                                                   'Northern Territory': 'red'})
+                                                      'Northern Territory': 'red'})  # => False
     map_coloring_csp.consistent('Western Australia', {'Western Australia': 'red',
                                                       'Northern Territory': 'blue'})  # => True
 
@@ -283,7 +442,7 @@ class WordSearchConstraint(Constraint[str, List[GridLocation]]):
     def satisfied(self, assignment: Dict[str, List[GridLocation]]) -> bool:
         # если есть какие-либо дубликаты расположения сетки, то есть перекрытие
         all_locations = [locs for values in assignment.values()
-                              for locs in values]
+                         for locs in values]
         return len(set(all_locations)) == len(all_locations)
 
 
