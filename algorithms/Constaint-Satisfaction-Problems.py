@@ -92,7 +92,6 @@ class ConstraintSatisfactionProblem(Generic[V, D]):
         return None
 
 
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~| Pythagorean Triples Constraint Satisfaction Problem |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 """
 Задача: 
@@ -151,7 +150,6 @@ if __name__ == '__main__':
 Подсказка:
   Магическую сумма, определяется по формуле n * ((n * n + 1) / 2).
 
-Variable (значения переменных)')
 
 Variables: квадраты на доске.
 Domain: область определения каждой переменной равена (1,..., n x n).
@@ -167,7 +165,6 @@ class ExactLengthExactSum:
     """
     Возращает True если N переменных суммируются до sum_value
     [*] Возращает True если количество переменных меньше N
-    [*] Так сделано, что при -1 возращает True
     """
 
     def __init__(self, number_of_values: int, sum_value) -> None:
@@ -175,7 +172,6 @@ class ExactLengthExactSum:
         self.__sum_value = sum_value
 
     def __call__(self, values: tuple) -> bool:
-        if -1 in values: return True
         if len(values) < self.__number_of_values:
             return True
         if len(values) == self.__number_of_values:
@@ -188,6 +184,7 @@ class MSTableConstraints:
     """
     Делает проверку table, размером NxN, в соответствии с правилами магических квадратов
     [*] таблица задаётся словарём Пример: {1: 2, 2: 7, 3: 6 ... 8: 3, 9: 8}
+    [*] Строка, столбец или диагональ не проверяются если в них находится хотя-бы один пустой символ (-1)
 
     >>> t = {1: 2, 2: 7, 3: 6, 4: 9, 5: 5, 6: 1, 7: 4, 8: 3, 9: 8}
     >>> MSTableConstraints(t, 3).check_table()
@@ -198,26 +195,46 @@ class MSTableConstraints:
         self.__table = table
         self.__n = n
         self.__order = n * n
+        self.__null_number = -1
 
     def _check_raws(self):
         for row in range(1, self.__order + 1, self.__n):
-            if not ExactLengthExactSum([(self.__table[i]) for i in range(row, row + self.__n)]):
-                return False
+            row_data = [(self.__table[i]) for i in range(row, row + self.__n)]
+            if self.__null_number not in row_data:
+                if not ExactLengthExactSum(row_data):
+                    return False
         return True
 
     def _check_columns(self):
         for column in range(1, self.__n + 1):
-            if not ExactLengthExactSum([(self.__table[i]) for i in range(column, order + 1, n)]):
-                return False
-        return True
+            column_data = [(self.__table[i]) for i in range(column, order + 1, n)]
+            if self.__null_number not in column_data:
+                if not ExactLengthExactSum(column_data):
+                    return False
+        else:
+            return True
 
-    def _check_diagonals(self):
+    def _check_right_diagonal(self):
         right_diag = [self.__table[diag] for diag in range(1, self.__order + 1, self.__n + 1)]
+        if self.__null_number in right_diag:
+            return True
+        else:
+            return ExactLengthExactSum(right_diag)
+
+    def _check_left_diagonal(self):
         left_diag = [self.__table[diag] for diag in range(self.__n, self.__order, self.__n - 1)]
-        return ExactLengthExactSum(right_diag) and ExactLengthExactSum(left_diag)
+        if self.__null_number in left_diag:
+            return True
+        else:
+            return ExactLengthExactSum(left_diag)
 
     def check_table(self):
-        return self._check_raws() and self._check_columns() and self._check_diagonals()
+        return all((self._check_raws(),
+                    self._check_columns(),
+                    self._check_columns(),
+                    self._check_left_diagonal(),
+                    self._check_right_diagonal()
+                    ))
 
 
 def all_diff_constraint_evaluator(values: tuple) -> bool:
@@ -238,19 +255,20 @@ class MagicSquareConstraint(Constraint):
     """
     n = 3
     count = 1
+
     def satisfied(self, assignment: dict):
         if not all_diff_constraint_evaluator(list(assignment.values())):
             return False
-        MagicSquareConstraint.count +=1
+        MagicSquareConstraint.count += 1
         if len(assignment) < 9:
-            raw_assignment = {i:assignment.get(i, -1) for i in range(1, MagicSquareConstraint.n**2+1)}
+            # пустуе клетки заполняются -1 и комюинации с ними не будут проверяться
+            raw_assignment = {i: assignment.get(i, -1) for i in range(1, MagicSquareConstraint.n ** 2 + 1)}
             raw_table_MS = MSTableConstraints(raw_assignment, n=MagicSquareConstraint.n)
             return raw_table_MS.check_table()
         elif len(assignment) == 9:
+            # пустых  клеток нет - можно смело проверять весь квадрат
             table_MS = MSTableConstraints(assignment, n=MagicSquareConstraint.n)
             return table_MS.check_table()
-        assert len(assignment) <= MagicSquareConstraint.n**2
-
 
 
 if __name__ == '__main__':
@@ -259,6 +277,7 @@ if __name__ == '__main__':
     magic_sum = n * int((order + 1) / 2)
     name_to_variable_map = {square: list(range(1, order + 1)) for square in range(1, order + 1)}
 
+    # Так специально сделано, чтобы не передавть n и magic_sum каждый раз
     ExactLengthExactSum = ExactLengthExactSum(n, magic_sum)
 
     ms_con = MagicSquareConstraint(list(range(1, order + 1)))
@@ -270,17 +289,24 @@ if __name__ == '__main__':
         domains=name_to_variable_map
     )
     testMSCSP.add_constraint(MagicSquareConstraint(list(range(1, order + 1))))
-    solutionMS = testMSCSP.backtracking_search(assignment={1: 4})
+    solutionMS = testMSCSP.backtracking_search(assignment={1: 8})
     if solutionMS is None:
         print("No solution found!")
     else:
-        print(solutionMS)  # RESULTS: {1: 4, 2: 3, 3: 8, 4: 9, 5: 5, 6: 1, 7: 2, 8: 7, 9: 6}
-        print("Число ходов:", MagicSquareConstraint.count)
+        print(solutionMS)  # RESULTS: {1: 8, 2: 1, 3: 6, 4: 3, 5: 5, 6: 7, 7: 4, 8: 9, 9: 2}
+        print("Число ходов:", MagicSquareConstraint.count)  # Число ходов: 62
+
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|Map Coloring Problem |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-"""Задача:
- Раскрасить карту в 3 цвета таким образом, чтобы каждая из 7 территорий не соседствовала с территорией того же цвета.
+"""
+Задача:
+    Раскрасить карту в 3 цвета таким образом, чтобы каждая из 7 территорий не соседствовала с территорией того же цвета.
+ 
+Variables: 7 территорий.
+Domains: область определения каждой переменной равен 3 цветам.
+Constraints:
+     Две соседних территории не должны иметь один и тот же цвет.
 """
 
 
@@ -339,9 +365,15 @@ if __name__ == '__main__':
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|Eight Queens Problem |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-"""Задача:
- Каждая королева должна быть помещена на шахматную доску, не атакуя других.
- Королевы могут двигаться вдоль любой строки, столбца, диагонали и не должны иметь возможности атаковать друг друга.
+"""
+Задача:
+    Каждая королева должна быть помещена на шахматную доску, не атакуя других.
+    Королевы могут двигаться вдоль любой строки, столбца, диагонали и не должны иметь возможности атаковать друг друга.
+
+Variables: столбцы доски.
+Domains: 
+    равен строке, в которой каждая королева может быть помещена в столбец, 
+    т. е. область определения каждой переменной равена (1, ..., n).
 """
 
 
@@ -365,24 +397,26 @@ class QueensConstraint(Constraint[int, int]):
 
 
 if __name__ == "__main__":
-    columns: List[int] = [1, 2, 3, 4, 5, 6, 7, 8]
+    columns = [1, 2, 3, 4, 5, 6, 7, 8]
     rows: Dict[int, List[int]] = {}
     for column in columns:
         rows[column] = [1, 2, 3, 4, 5, 6, 7, 8]
     testQuinsCSP = ConstraintSatisfactionProblem(columns, rows)
     testQuinsCSP.add_constraint(QueensConstraint(columns))
-    solution = testQuinsCSP.backtracking_search()  # {1: 1, 2: 5, 3: 8, 4: 6, 5: 3, 6: 7, 7: 2, 8: 4}
+    q_solution = testQuinsCSP.backtracking_search(assignment={1: 4})  # {1: 1, 2: 5, 3: 8, 4: 6, 5: 3, 6: 7, 7: 2, 8: 4}
 
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~|Word Search Constraint Satisfaction Problem |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 """
-Дана сетка букв со скрытыми словами, расположенных по строкам, столбцам и дифгоналям.
+Дана сетка букв со скрытыми словами, расположенных по строкам, столбцам и диагоналям.
 Задача:
     Даны слова, надо их все разместить в сетке
-Примечания:
-    V (переменные) - это слова
-    D (области определения) - возможные их положения
+Variables: это слова
+Domains: оласть определени слова состоит из списока списков возможных положений всех его букв   
+Constraints:
+    Слова должны распологаться в пределах строки, столбца или диагонали в пределах сетки
+     и не должны перекрывать друг друга
 """
 
 
@@ -410,6 +444,22 @@ def generate_domain(word, grid):
     """
     Каждое слово имеет домен (область определения), который представляет собой
     список списков допустимых местоположений для каждой буквы в слове.
+
+    Пример:      |x x x x x|
+        grid  =  |x x x x x|
+        word = "WORD"
+        Существует всего 4 варианта расположения этого слова в таблице 2x4
+        |W O R D x| or |x W O R D|
+        |W O R D x|    |x W O R D|
+
+    >>> grid =  [["x", "x", "x", "x", 'x']]*2
+    >>>generate_domain("WORD", grid])
+    [
+    (row=0, column=0) to (row=0, column=4)
+    (row=0, column=1) to (row=0, column=5)
+    (row=1, column=0) to (row=1, column=4)
+    (row=1, column=1) to (row=1, column=5)
+    ]
     """
     domain = []
     height = len(grid)
