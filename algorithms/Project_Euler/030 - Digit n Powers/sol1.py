@@ -30,8 +30,6 @@ def is_digit_sum(s: str) -> int:
     4151 #=> [1024, 1, 3125, 1]
     """
     i = sum(pow(int(c), 5) for c in s)
-    if i == int(s):
-        print(str(i) + ", ")
     return i if i == int(s) else 0
 
 

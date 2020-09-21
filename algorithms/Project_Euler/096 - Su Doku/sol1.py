@@ -11,8 +11,9 @@
 import numpy as np
 import sys;sys.path.append('../..')
 import importlib
-
 sudoku = importlib.import_module('sudokuSolve[backtracking]')
+
+from timeit import default_timer as timer
 
 with open('p096_sudoku.txt') as f:
     lines = f.read().split()
@@ -29,11 +30,15 @@ def solution(n):
     Решает все пятьдесят головоломок, и возращает сумму трехзначных чисел, находящихся в верхнем левом углу каждого решения.
     """
     result_sum = 0
+    t = timer()
     for grid in grids[:n]:
         g = grid.tolist()
         if not sudoku.solve(g):
             print("*Error* in solve\n", g)
             break
+        print(timer() - t)
+        print(grid.tolist())
+        t = timer()
         first_line = g[0]
         result_sum += first_line[0] * 100 + first_line[1] * 10 + first_line[2]
     return result_sum
