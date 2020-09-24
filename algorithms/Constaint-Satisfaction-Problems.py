@@ -518,3 +518,63 @@ if __name__ == "__main__":
                 (row, col) = (grid_locations[index].row, grid_locations[index].column)
                 grid[row][col] = letter
         display_grid(grid)
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| Verbal Arithmetic |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+"""
+Дана криптографическая головоломка, где нужно найти такие цифры, которые, 
+будучи подставленными вместо букв, сделают математическое утверждение верным 
+Задача:
+    Дано матиматическое выражение, состоящее из слов. Каждая буква в задаче - одна цифра от 0 до 9.
+    Никакие две разные буквы не могут представлять одну и туже цифру. 
+    Если буква повторяется, это означает, что цифра в решении также повторяется.
+Пример:
+    Дано:  SEND + MORE = MONEY
+    Ответ: 9567 + 1085 = 10652
+    
+Variables: это буквы слова
+Domains: область определения каждой буквы состоит из цифр от 0 до 9   
+Constraints:
+    Никакие две разные буквы не могут представлять одну и туже цифру. 
+    При подстановки цифр вместо букв, математичское выражение должно быть истино
+"""
+
+class SendMoreMoneyConstraint(Constraint[str, int]):
+    def __init__(self, letters: List[str]) -> None:
+        super().__init__(letters)
+        self.letters = letters
+
+    def satisfied(self, assignment: Dict[str, int]) -> bool:
+        # Никакие две разные буквы не могут представлять одну и туже цифру.
+        if len(set(assignment.values())) < len(assignment):
+            return False
+
+        if len(assignment) == len(self.letters):
+            s = assignment["S"]
+            e = assignment["E"]
+            n = assignment["N"]
+            d = assignment["D"]
+            m = assignment["M"]
+            o = assignment["O"]
+            r = assignment["R"]
+            y = assignment["Y"]
+            send = s * 1000 + e * 100 + n * 10 + d
+            more = m * 1000 + o * 100 + r * 10 + e
+            money = m * 10000 + o * 1000 + n * 100 + e * 10 + y
+            return send + more == money
+        return True
+
+
+if __name__ == "__main__":
+    letters = ["S", "E", "N", "D", "M", "O", "R", "Y"]
+    possible_digits: Dict[str, List[int]] = {}
+    for letter in letters:
+        possible_digits[letter] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    possible_digits["M"] = [1, 2, 3, 4, 5, 6, 7, 8, 9]  # таким образом, мы не получаем ответов, начинающихся с 0
+    csp = ConstraintSatisfactionProblem(letters, possible_digits)
+    csp.add_constraint(SendMoreMoneyConstraint(letters))
+    solution = csp.backtracking_search()
+    if solution is None:
+        print("No solution found!")
+    else:
+        print(solution)  # {'S': 9, 'E': 5, 'N': 6, 'D': 7, 'M': 1, 'O': 0, 'R': 8, 'Y': 2}
