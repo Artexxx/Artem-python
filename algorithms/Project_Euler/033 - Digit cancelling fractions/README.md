@@ -68,7 +68,7 @@ def cancel_digit_product() -> Fraction:
 Пусть чисдитель и знаменатель будут равны  `1≤n<d≤9` соответственно, где  `n/d<1` ~> `n<d`
 Найдём четыре комбинации возможных уравнений:
 
-<img src='https://user-images.githubusercontent.com/54672403/94723605-adf29780-0361-11eb-8f20-e224c2565368.jpg' width="300px">
+<img src='https://user-images.githubusercontent.com/54672403/94723605-adf29780-0361-11eb-8f20-e224c2565368.jpg' width="250px">
 
 Пройдемся по этим уравнениям:
 
@@ -119,7 +119,7 @@ def solution():
 Но мы можем пойти еще дальше и решить все вручную. 
 Начнем с нашего последнего уравнения:
 
-<img src='https://user-images.githubusercontent.com/54672403/95571697-84a4cc00-0a31-11eb-92b9-3e8d78b84db4.jpg' width="300px">
+<img src='https://user-images.githubusercontent.com/54672403/95571697-84a4cc00-0a31-11eb-92b9-3e8d78b84db4.jpg' width="250px">
 
 Чтобы `c(d - n)` делилось на 9, `c` может быть только `3`, `6` или `9`. 
 Рассмотрим эти три случая:
@@ -155,6 +155,6 @@ def solution():
 
 Что приводит к следующим дробям:
 
-<img src='https://user-images.githubusercontent.com/54672403/95573159-b159e300-0a33-11eb-9ee4-2b5601ffa603.jpg' width="300px">
+<img src='https://user-images.githubusercontent.com/54672403/95573159-b159e300-0a33-11eb-9ee4-2b5601ffa603.jpg' width="330px">
 
 
