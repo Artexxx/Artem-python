@@ -60,13 +60,13 @@ def is_prime(n: int) -> bool:
     return True
 
 
-def bit_sieve_optimized(n) -> list:
+def bit_sieve(n) -> list:
     """ Решето Эратосфена.
     В списке primes сбрасываются биты, имеющие составные номера, биты с простыми номерами == True.
     i-му по порядку элементу будет соответствовать True, если i -- простое и False иначе.
     Сложность: nloglog(n).
 
-    >>> bit_sieve_optimized(10)
+    >>> bit_sieve(10)
     [False, False, True, True, False, True, False, True, False, False]
     """
     primes = [True] * n
