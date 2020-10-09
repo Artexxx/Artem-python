@@ -86,7 +86,7 @@ def cancel_digit_product() -> Fraction:
 Поскольку `n < d` правая часть должна быть положительной. 
 Следовательно, левая сторона тоже должна быть положительной, а это возможно при `c < n`.
 
-<br><img src='https://user-images.githubusercontent.com/54672403/95353411-e9dead00-08cb-11eb-8018-d5712d00a1df.jpg' width="300px">
+<br><img src='https://user-images.githubusercontent.com/54672403/95353411-e9dead00-08cb-11eb-8018-d5712d00a1df.jpg' width="250px">
 
 Из `c < 9` следует `c/9 < 1`. Значение `с/9 - (cn)/(9d)` будет либо отрицательным, либо слишком малым
 А это нам не подходит, потому что значение выражения в левой части содержит целое число
@@ -139,7 +139,7 @@ def solution():
 
 >**Случай 3**, если `c=9`:
 >
-><img src='https://user-images.githubusercontent.com/54672403/95572837-385a8b80-0a33-11eb-934c-a11fc1ee99ae.jpg' width="300px">
+><img src='https://user-images.githubusercontent.com/54672403/95572837-385a8b80-0a33-11eb-934c-a11fc1ee99ae.jpg' width="250px">
 >
 >Чтобы значение `n` было положительным, `5≤d≤9` должно быть истинным. 
 >Единственно возможными способами сделать `n` целым числом являются `d=5` и `d=8`. 
