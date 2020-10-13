@@ -15,7 +15,7 @@ from number_base_alg import bit_sieve, is_prime
 
 
 def is_circular_prime(n: int, n_is_prime: bool) -> bool:
-    def rotations(chars: str) -> str:
+    def rotations(chars: str) -> int:
         for i in range(len(chars)):
             yield int(chars[i:] + chars[:i])
 

@@ -37,7 +37,7 @@ def solution(n):
     17
     >>> solution(600851475143)
     6857
-"""
+    """
     while True:
         p = smallest_prime_factor(n)
         if p < n:
