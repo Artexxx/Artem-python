@@ -41,6 +41,17 @@ def get_factors_comb(n, min_factor, _list_of_factors, result_list_of_factors):
                 if n == factor:
                     return result_list_of_factors
 
+
+## ~~~~~~~~~~~~~~~~~~~~~~~~~~~| Optimized recurcion |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def count_factors_comb_opt(n, min_factor=2):
+    return n >= min_factor and 1 + sum(count_factors_comb_opt(n//temp_factor, temp_factor+1)
+                                       for temp_factor in range(min_factor, int(n**.5)+1) if n % temp_factor == 0)
+
 if __name__ == '__main__':
     _list_of_factors = get_factors_comb(int(input()), 2, [], [])
     print(len(_list_of_factors))
+
+    print(count_factors_comb_opt(48, min_factor=2))
