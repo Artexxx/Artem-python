@@ -5,7 +5,7 @@
 
 **Формат входных данных**
 
-1. N — натуральное число `2<=N<=10**12`.
+N — натуральное число `2<=N<=10**12`.
  
 **Формат выходных данных**
 
@@ -20,13 +20,19 @@
 **Пример запуска программы:**
 <br>
 ```python
->>> solution(48)
+>>> count_factors_comb(48)
+>>> 7 ###  [[2, 3, 8], [2, 4, 6], [2, 24], [3, 16], [4, 12], [6, 8], [48]] ###
 ```
-**Выхлоп:**
-<br>
+
 ```python
->>> 7
+>>> count_factors_comb(24)
+>>> 5 ###   [[2, 3, 4], [2, 12], [3, 8], [4, 6], [1, 24]] ###
 ```
+```python
+>>> count_factors_comb(12)
+>>> 3 ###   [[2, 6], [3, 4], [1, 12]]  ###
+```
+
 ## Нормальное решение (1)
 ```python
 def get_custom_factorization(N, min_lim_factor):
@@ -71,4 +77,14 @@ print(len(_list_of_factors))
   2  0.0386391  3.58%             100000000         1966
   3  0.476018   43.74%          10000000000        10792
   4  6.43207    595.61%       1000000000000        54344
+```
+
+## Улучшенное решение (1)
+```python
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def count_factors_comb_opt(n, min_factor=2):
+    return n >= min_factor and 1 + sum(count_factors_comb_opt(n//temp_factor, temp_factor+1)
+                                       for temp_factor in range(min_factor, int(n**.5)+1) if n % temp_factor == 0)
 ```
