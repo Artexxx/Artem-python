@@ -1,3 +1,6 @@
+Толковый словарь по AI, 550 терминов: 
+http://aikernel.org/doc/137/index.ru.html#L193
+
 # Data Science question-answer
 
 * [Resume](#resume)
