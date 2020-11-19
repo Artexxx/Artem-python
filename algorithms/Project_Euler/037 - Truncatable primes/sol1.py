@@ -10,9 +10,7 @@
 ---  -------  ------------  -------  -----------
   1  1.20824  120.824%           11       748317
 """
-import sys;
-
-sys.path.append('../..')
+import sys; sys.path.append('../..')
 from number_base_alg import is_prime
 
 
