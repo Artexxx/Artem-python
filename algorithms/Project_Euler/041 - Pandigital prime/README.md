@@ -18,13 +18,14 @@ solution  () => 7652413
 _Анализ:_ 9 и 8-значные пан-цифровые числа делятся на 3 и поэтому не могут быть простыми.
 
 ```python
-
-def is_pandigital_prime(n: int, n_is_prime: bool) -> bool:
-    if n_is_prime:
-        str_n = str(n)
-        n_is_pandigital = set(str_n) == set('7654321') and len(str_n) == 7
-        return n_is_pandigital
-    return False
+def permutations(lst):
+    if len(lst) == 0: yield []
+    elif len(lst) == 1: yield lst
+    for i in range(len(lst)):
+        x = lst[i]
+        xs = lst[:i] + lst[i + 1:]
+        for p in permutations(xs):
+            yield [x] + p
 
 
 def solution():
@@ -33,7 +34,8 @@ def solution():
     >>> solution()
     ... 7652413
     """
-    limit = 7654321+1
-    sieve_bit_array = bit_sieve(limit)
-    return max(n for n in range(3, limit) if is_pandigital_prime(n, sieve_bit_array[n]))
+    for perm_lst in permutations(list('7654321')):
+        pandigital = int(''.join(perm_lst))
+        if is_prime(pandigital):
+            return pandigital
 ```
