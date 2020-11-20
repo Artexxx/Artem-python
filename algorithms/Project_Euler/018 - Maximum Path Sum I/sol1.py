@@ -68,4 +68,4 @@ if __name__ == '__main__':
     with open(triangle, "r") as f: triangle = f.readlines()
     raw_triangle = [[int(y) for y in x.rstrip("\r\n").split(" ")] for x in triangle]  # read row triangle
     triangle_with_zeros = [x + [0] * (len(raw_triangle[-1]) - len(x)) for x in raw_triangle]  # add zeros
-    assert maximumPathSumI(triangle_with_zeros) == 1074
+    print(maximumPathSumI(triangle_with_zeros))
