@@ -338,3 +338,57 @@ if __name__ == "__main__":
         print(m)
         print(f"[А*] Потребовалось сделать {len(path)} ходов.\n")
         m.clear(path)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| Двунаправленный поиск в ширину |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+"""
+Учитывая два слова (beginWord и endWord) и список слов, найдите длину кратчайшей последовательности преобразований от beginWord до endWord, такую что:
+За один раз можно изменить только одну букву
+Каждое промежуточное слово должно существовать в списке слов
+
+Например дано:
+    beginWord = "hit"
+    endWord = "cog"
+    список слов = ["hot","dot","dog","lot","log"]
+Поскольку одним из самых коротких преобразований является  "hit" -> "hot" -> "dot" -> "dog" -> "cog", верните его длину 5.
+
+Примечание:
+    - Верните 0, если такой последовательности преобразований не существует
+    - Все слова имеют одинаковую длину.
+    - Все слова содержат только строчные буквы алфавита.
+"""
+
+def ladderLength(beginWord, endWord, wordList):
+    beginSet = set()
+    endSet = set()
+    beginSet.add(beginWord)
+    endSet.add(endWord)
+    result = 2
+    while len(beginSet) != 0 and len(endSet) != 0:
+        if len(beginSet) > len(endSet):
+            beginSet, endSet = endSet, beginSet
+        nextBeginSet = set()
+        for word in beginSet:
+            for ladderWord in wordRange(word):
+                if ladderWord in endSet:
+                    return result
+                if ladderWord in wordList:
+                    nextBeginSet.add(ladderWord)
+                    wordList.remove(ladderWord)
+        beginSet = nextBeginSet
+        result += 1
+    return 0
+
+
+def wordRange(word):
+    for ind in range(len(word)):
+        tempC = word[ind]
+        for c in 'abcdefghijklmnopqrstuvwxyz':
+            if c != tempC:
+                yield word[:ind] + c + word[ind + 1:]
+
+if __name__ == '__main__':
+    beginWord = "hit"
+    endWord = "coc"
+    wordList = ["hot", "dot", "dog", "lot", "log", "cog"]
+    print(ladderLength(beginWord, endWord, wordList))
