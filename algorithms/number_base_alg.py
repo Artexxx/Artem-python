@@ -20,19 +20,20 @@ def sum_of_divisors_range(LIMIT) -> list:
     return sum_of_divisors
 
 
-def sum_of_divisors(n):
-    """Find the sum of divisors for the number
+def divisors(n):
+    """Find the divisors for the number
 
-    >>> sum_of_divisors(220)
-       284     #=>  sum(1, 2, 4, 5, 10, 11, 20, 22, 44, 55 и 110)
+    >>> divisors(220)
+       284     #=> [1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110]
     """
-    total = 0
-    for i in range(1, int(sqrt(n) + 1)):
-        if n % i == 0 and i != sqrt(n):
-            total += i + n // i
-        elif i == sqrt(n):
-            total += i
-    return total - n
+    factors = set()
+    sqrt_n = sqrt(n)
+    for i in range(1, int(sqrt_n + 1)):
+        if n % i == 0:
+            factors.add(i)
+            if i != sqrt(n):
+                factors.add(n//i)
+    return factors
 
 
 def is_prime(n: int) -> bool:
@@ -74,8 +75,8 @@ def bit_sieve(n) -> list:
 
     number_of_multiples = len(primes[4::2])
     primes[4::2] = [False] * number_of_multiples
-    for p in range(3, int(math.sqrt(n)) + 1, 2):
-        if primes[p]:
-            number_of_multiples = len(primes[p * p::p * 2])
-            primes[p * p::p * 2] = [False] * number_of_multiples  # занулить все ему кратные
+    for factor in range(3, int(math.sqrt(n)) + 1, 2):
+        if primes[factor]:
+            number_of_multiples = len(primes[factor * factor::factor * 2])
+            primes[factor * factor::factor * 2] = [False] * number_of_multiples  # занулить все ему кратные
     return primes

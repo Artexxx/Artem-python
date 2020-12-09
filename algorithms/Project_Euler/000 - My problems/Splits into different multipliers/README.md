@@ -79,12 +79,14 @@ print(len(_list_of_factors))
   4  6.43207    595.61%       1000000000000        54344
 ```
 
-## Улучшенное решение (1)
+
 ```python
 from functools import lru_cache
 
 @lru_cache(maxsize=None)
 def count_factors_comb_opt(n, min_factor=2):
-    return n >= min_factor and 1 + sum(count_factors_comb_opt(n//temp_factor, temp_factor+1)
-                                       for temp_factor in range(min_factor, int(n**.5)+1) if n % temp_factor == 0)
+    return n >= min_factor and \
+           1 + sum(count_factors_comb_opt(n//temp_factor, temp_factor+1)
+           for temp_factor in range(min_factor, int(n**.5)+1)
+                if n % temp_factor == 0)
 ```
