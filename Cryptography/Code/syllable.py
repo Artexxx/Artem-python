@@ -1,5 +1,11 @@
-""" Шифр замены слогов используется для увеличения криптостойкости.
-    Может использован во множестве методов шифрования.)"""
+"""
+Шифр замены слогов используется для увеличения криптостойкости.
+Может использован во множестве методов шифрования.)
+
+      Message: rip and tear until
+          Key: None
+Final message: ~P @D 1[[||} U,IL
+"""
 
 SYLLABLES = ('TH', 'EE', 'OO', 'ING', 'ED', 'SS', 'DE', 'RE', 'AR',
              'WH', 'AI', 'IS', 'BE', 'CH', 'SH', 'GH', 'EN', 'OU', 'LL', 'HE', 'US',
@@ -18,12 +24,6 @@ SYMBOLS = ('!!$', '@@2', '#99', '$$!', '^^$', '&<<', '**?', ';;{',
            ';', '"', ',', '<', '>', '?', '/', '~', '`', '|', '\\', '[', ']', '1', '2',
            '3', '4', '5', '6', '7', '8', '9', '0')
 
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not found")
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
-
 
 def encryptDecrypt(mode, message):
     if mode == 'E':
@@ -37,4 +37,10 @@ def encryptDecrypt(mode, message):
     return message
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not found")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

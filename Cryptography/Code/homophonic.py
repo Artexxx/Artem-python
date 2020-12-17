@@ -1,7 +1,11 @@
-""" Омофонический шифр построен на шифре замены.
-    Особенность шифра множество шифр-символов под один символ текста.
-    То-есть буква ’A’ может быть зашифрована разными шифр-символами:
-    ’1’ или ’?’ или ’Z’"""
+"""
+Омофонический шифр построен на шифре замены.
+Особенность шифра - множество шифр-символов под один символ текста.
+То-есть буква ’A’ может быть зашифрована разными шифр-символами:  ’1’ или ’?’ или ’Z’
+      Message: rip and tear until
+          Key: None
+Final message: L$D3{fUl8GА`U№(
+"""
 
 from random import choice
 
@@ -22,18 +26,12 @@ dictHom = {
     'K': [values[46]], 'L': values[47:51],
     'M': values[51:53], 'N': values[53:59],
     'O': values[59:66], 'P': values[66:68],
-    'Q': [values[68]], 'R': values[69:75],
+    'Q': [values[68]],  'R': values[69:75],
     'S': values[75:81], 'T': values[81:90],
     'U': values[90:93], 'V': [values[93]],
     'W': values[94:96], 'X': [values[96]],
     'Y': values[97:99], 'Z': [values[99]]
 }
-
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!")
-    raise SystemExit
-startMessage = input("Write the message: ")
 
 
 def encryptDecrypt(mode, message, final=""):
@@ -49,4 +47,10 @@ def encryptDecrypt(mode, message, final=""):
     return final
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    startMessage = input("Write the message: ")
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

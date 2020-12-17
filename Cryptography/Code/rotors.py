@@ -1,6 +1,11 @@
-""" Роторное шифрование построено на принципе шифра Вернама, то-есть с каждым
-    новым поступающим на вход символом ключ будет изменяться по роторам,
-    имитуруя случайность. """
+"""
+Роторное шифрование построено на принципе шифра Вернама, то-есть с каждым
+новым поступающим на вход символом ключ будет изменяться по роторам, имитуруя случайность.
+
+      Message: rip and tear until
+          Key: None
+Final message: GNSOGBZTTPQAQBD
+"""
 from string import ascii_uppercase
 
 ROTORS = (
@@ -8,12 +13,6 @@ ROTORS = (
     (1, 7, 11, 26, 12, 5, 11, 20, 11, 7, 18, 6, 17, 18, 19, 1, 13, 5, 2, 9, 11, 13, 6, 17, 26, 24),
     (9, 1, 21, 6, 4, 19, 25, 6, 17, 10, 26, 1, 23, 6, 1, 17, 19, 17, 25, 21, 3, 21, 17, 1, 18, 20)
 )
-
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!")
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
 
 
 def encryptDecrypt(mode, message, final=""):
@@ -43,4 +42,10 @@ def encryptDecrypt(mode, message, final=""):
     return final
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

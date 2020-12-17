@@ -1,5 +1,7 @@
-"""  BruteForce шифра Цезаря.
-     Всего существует 25 вариантов дешифровки шифра Цезаря"""
+"""
+BruteForce шифра Цезаря.
+[#] Всего существует 25 вариантов дешифровки шифра Цезаря
+"""
 
 cryptMessage = input("Write the message: ").upper()
 print("All possible variants of decrypt:")

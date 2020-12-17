@@ -1,7 +1,12 @@
-""" Шифр порты -- биграммный метод шифрования.
-    Смысл в шифровании двух символов триадой чисел.
-    Чаще всего представляется в виде таблицы, где по горизонтали и вертикали
-     символы алфавита, а в самой таблице находятся триады чисел """
+"""
+Шифр порты -- биграммный метод шифрования.
+Смысл в шифровании двух символов триадой чисел.
+Чаще всего представляется в виде таблицы, где по горизонтали и вертикали символы алфавита, а в самой таблице находятся триады чисел
+
+      Message: rip and tear until
+          Key: None
+Final message: 451.014.499.018.534.503
+"""
 
 from string import ascii_uppercase
 from re import findall
@@ -29,12 +34,6 @@ for x in coordinateX:
 
 del N, coordinateX, coordinateY, counter, keys
 
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode not in (E/D)")
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
-
 
 def regular(mode, text):
     if mode == 'E':
@@ -58,4 +57,10 @@ def encryptDecrypt(mode, message, final=[]):
     return ".".join(final)
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode not in (E/D)")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

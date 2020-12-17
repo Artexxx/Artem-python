@@ -1,5 +1,11 @@
-""" Шифр Полибия -- шифр замены, часто представляется в
-        виде квадрата с прочертанными по горизонтали и вертикали числами от 1 до 6."""
+"""
+Шифр Полибия -- шифр замены, часто представляется в виде квадрата,
+с прочертанными по горизонтали и вертикали числами от 1 до 6.
+
+      Message: rip and tear until
+          Key: None
+Final message: 36.23.34.11.32.14.42.15.11.36.43.32.42.23.26
+"""
 from re import findall
 
 keysPolibiy = {
@@ -13,12 +19,6 @@ keysPolibiy = {
     '2': '55', '3': '56', '4': '61', '5': '62',
     '6': '63', '7': '64', '8': '65', '9': '66'
 }
-
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!");
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
 
 
 def regular(text):
@@ -39,4 +39,11 @@ def encryptDecrypt(mode, message, final=[]):
     return ".".join(final)
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    startKey = input("Write the message: ").upper()
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

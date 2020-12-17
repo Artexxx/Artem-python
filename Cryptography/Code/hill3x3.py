@@ -1,4 +1,10 @@
-""" Шифр Хилла основан на линейной алгебре и модульной арифметике."""
+"""
+Шифр Хилла основан на линейной алгебре и модульной арифметике.
+
+      Message: rip and tear until
+          Key: DoomSlaye
+Final message: D64BLPKK82N5WBO1MO
+"""
 from re import findall
 
 alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890"
@@ -101,21 +107,6 @@ def getIMatr(algbr):
     ]
 
 
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found")
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
-mainKey = input("Write the key: ").upper()
-
-if checkErrors(mainKey):
-    print(checkErrors(mainKey))
-    raise SystemExit
-
-while len(startMessage) % MatrixLength != 0:
-    startMessage += startMessage[-1]
-
-
 def encryptDecrypt(mode, message, key):
     MatrixMessage, MatrixKey = sliceto(message), sliceto(key)
     if mode == 'E':
@@ -126,4 +117,18 @@ def encryptDecrypt(mode, message, key):
     return final
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage, mainKey))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    mainKey = input("Write the key: ").upper()
+
+    if checkErrors(mainKey):
+        print(checkErrors(mainKey))
+        raise SystemExit
+
+    while len(startMessage) % MatrixLength != 0:
+        startMessage += startMessage[-1]
+    print("Final message:", encryptDecrypt(cryptMode, startMessage, mainKey))

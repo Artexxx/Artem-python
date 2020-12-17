@@ -73,7 +73,7 @@ def forge_bomb(depths):
         os.rename('%d.zip' % (depths + 1), 'bomba.zip')
 
 
-if __name__ == "1__main__":
+if __name__ == "__main__":
     depths = 5
     print("Usage: %s <depths>" % depths)
     if not os.path.isdir(WORKDIR):

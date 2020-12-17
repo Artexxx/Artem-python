@@ -1,7 +1,11 @@
-""" Метод шифрования основан на конструкции шифра Бэкона,
-    Вместо символа A находится символ пробела, а вместо символа B - символ табуляции.
-    Невидимый шифр сочетает в себе элементы криптографии и стеганографии"""
+"""
+Невидимый шифр сочетает в себе элементы криптографии и стеганографии
+Метод шифрования основан на конструкции шифра Бэкона, вместо символа A находится символ пробела, а вместо символа B - символ табуляции.
 
+      Message: rip and tear until
+          Key: None
+Final message:
+"""
 from re import findall
 
 dictKeys = {
@@ -20,12 +24,6 @@ dictKeys = {
     'M': ' \t\t  ', 'Z': '\t\t  \t',
 }
 
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!")
-    raise SystemExit
-fileName = input("Write the fileName: ")
-
 
 def regular(text):
     template = r"[\t ]{5}"
@@ -38,6 +36,7 @@ def encryptDecrypt(mode, file, final=""):
             for symbol in input("Write the message: ").upper():
                 if symbol in dictKeys:
                     final += dictKeys[symbol]
+            print(final)
             f.write(final)
         return "File successfully saved"
     else:
@@ -49,4 +48,10 @@ def encryptDecrypt(mode, file, final=""):
         return final
 
 
-print("Final message:", encryptDecrypt(cryptMode, fileName))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    fileName = input("Write the fileName: ")
+    print("Final message:", encryptDecrypt(cryptMode, fileName))

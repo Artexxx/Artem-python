@@ -1,29 +1,25 @@
-"""  Шифр Цезаря с ключевым словом -- обычный шифр Цезаря.
-     метод шифрования меняет порядок символов в алфавите за счёт ключевого слова
+"""
+Шифр Цезаря с ключевым словом -- обычный шифр Цезаря.
+метод шифрования меняет порядок символов в алфавите за счёт ключевого слова
+
+      Message: rip and tear until
+   Number Key: 3
+   String key: doom
+Final message: NCKXIDQOXNRIQCG
 """
 from string import ascii_uppercase
 
 symbolsAlpha = list(ascii_uppercase)
 
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!")
-    raise SystemExit
-rawStartMessage = input("Write the message: ").upper()
-numberKey = int(input("Write the number key: "))
-stringKey = list(input("Write the string key: ").upper())
-
-startMessage = "".join([w for w in rawStartMessage if w.isalpha()])
 
 def remove(alpha, raw_string):
-    # clear string
-    clear_string = "".join(s for s in raw_string if raw_string.count(s) > 1)
-
-    for symbol in clear_string:
-        if symbol in alpha:
-            alpha.remove(symbol)
-
-    return alpha, clear_string
+    set_string = raw_string
+    for symbol in raw_string:
+        if raw_string.count(symbol) > 1:
+            set_string.remove(symbol)
+    for symbol in set_string:
+        alpha.remove(symbol)
+    return alpha, set_string
 
 
 def insert(alpha_string):
@@ -42,8 +38,7 @@ def replace(alpha, key):
 
 def encryptDecrypt(mode, message, key, final=""):
     alphaS = symbolsAlpha[::]
-    alphaC = replace(insert(remove(symbolsAlpha, stringKey)), key)
-    print(alphaC)
+    alphaC = replace(insert(remove(symbolsAlpha[::], stringKey)), key)
     for symbol in message:
         if mode == 'E':
             final += alphaC[alphaS.index(symbol)]
@@ -52,4 +47,13 @@ def encryptDecrypt(mode, message, key, final=""):
     return final
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage, numberKey))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    rawStartMessage = input("Write the message: ").upper()
+    numberKey = int(input("Write the number key: "))
+    stringKey = list(input("Write the string key: ").upper())
+    startMessage = "".join([w for w in rawStartMessage if w.isalpha()])
+    print("Final message:", encryptDecrypt(cryptMode, startMessage, numberKey))

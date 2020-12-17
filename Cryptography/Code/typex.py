@@ -1,15 +1,14 @@
-""" Шифровальная машина <Typex> основана на роторном шифровании и шифре пар.
-    Фактически является шифровальной машиной <Enigma> с убранным
-    изъяном, который заключался в инволюции (рефлекторах). Именно поэтому
-    <Typex> требует переключателя режимов шифрования"""
+"""
+Шифровальная машина <Typex> основана на роторном шифровании и шифре пар.
+Фактически является шифровальной машиной <Enigma> с убранным изъяном, который заключался в инволюции (рефлекторах).
+Именно поэтому <Typex> требует переключателя режимов шифрования
+
+      Message: rip and tear until
+          Key: None
+Final message: LRKSZQNJYKJDNXR
+"""
 
 from string import ascii_uppercase
-
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!")
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
 
 ROTORS = (
     (10, 24, 14, 12, 23, 2, 7, 15, 24, 2, 7, 5, 22, 6, 2, 1, 22, 12, 6, 9, 7, 2, 11, 23, 14, 2),
@@ -70,4 +69,10 @@ def encryptDecrypt(mode, message):
     return message
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

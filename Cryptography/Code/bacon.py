@@ -1,7 +1,12 @@
-""" Шифр Бэкона -- шифр замены, который можно представить в виде
-        двоичного кода, где A = 0, B = 1. Особенность шифра Бэкона заключается в
-        гибкости использования, что позволяет применять его в различных методах
-        стеганографии"""
+"""
+Шифр Бэкона -- шифр замены, который можно представить в виде двоичного кода, где A = 0, B = 1.
+Особенность шифра Бэкона заключается в гибкости использования, что позволяет применять его в различных методах стеганографии
+
+      Message: rip and tear until
+          Key: None
+Final message: BAAABABAAAABBBBBBABAAAAAAABBABAAABBBBABABAABBAABAAAAAAABAAABBBABABABAAABBABBAABBABAAAABABB
+
+"""
 from re import findall
 
 keysBacon = {
@@ -15,11 +20,6 @@ keysBacon = {
     'V': "BABAB", 'W': "BABBA", 'X': "BABBB",
     'Y': "BBAAA", 'Z': "BBAAB", ' ': "BBABA"
 }
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!");
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
 
 
 def regular(text):
@@ -40,5 +40,10 @@ def encryptDecrypt(mode, message, final=""):
     return final
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
-
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

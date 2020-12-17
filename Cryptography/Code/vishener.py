@@ -1,13 +1,12 @@
-"""Шифр Виженера -- самый знаменитый многоалфавитный шифр.
-Построен на конструкции шифра Цезаря. Представлен в виде квадрата и содержит
-в себе фактически 26 шифров Цезаря с разными смещениями по алфавиту"""
+"""
+Шифр Виженера -- самый знаменитый многоалфавитный шифр.
+Построен на конструкции шифра Цезаря. Представлен в виде квадрата и
+содержит в себе фактически 26 шифров Цезаря с разными смещениями по алфавиту
 
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!")
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
-oneKey = input("Write the key: ").upper()
+      Message: rip and tear until
+          Key: doom guy
+Final message: UWDFTTXRWSODMAHRLZ
+"""
 
 
 def encryptDecrypt(mode, message, key, final=""):
@@ -21,4 +20,11 @@ def encryptDecrypt(mode, message, key, final=""):
     return final
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage, oneKey))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    oneKey = input("Write the key: ").upper()
+    print("Final message:", encryptDecrypt(cryptMode, startMessage, oneKey))

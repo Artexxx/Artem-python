@@ -1,7 +1,11 @@
-""" Псевдосимвольный шифр -- основан на шифре Бэкона.
-    Особенность шифрования заключена в 3х одинаковых внешне символах,
-    но различающихся в кодировке Unicode.
-    Один символ ’A’ взят из латиницы, другой из кириллицы, третий из греческого алфавита.
+"""
+Псевдосимвольный шифр -- основан на шифре Бэкона.
+Особенность шифрования заключена в 3х одинаковых внешне символах, но различающихся в кодировке Unicode.
+Один символ ’A’ взят из латиницы, другой из кириллицы, третий из греческого алфавита.
+
+      Message: rip and tear until
+          Key: None
+Final message: АΑΑAΑΑАΑAΑΑΑAAAАААAАAΑΑΑΑAАAААAAAАΑΑΑΑΑΑAΑАААΑAАAΑΑАAΑ
 """
 from re import findall
 
@@ -16,12 +20,6 @@ keysPsevdo = {
     'V': "ΑАA", 'W': "ΑАА", 'X': "ΑАΑ",
     'Y': "ΑΑA", 'Z': "ΑΑА", ' ': "ΑΑΑ"
 }
-
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not found")
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
 
 
 def regular(text):
@@ -40,4 +38,11 @@ def encryptDecrypt(mode, message, final=""):
                     final += key
     return final
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
+
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not found")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

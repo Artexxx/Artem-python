@@ -1,22 +1,11 @@
-""" Аффинный шифр основан на шифре Цезаря.
-    Особенность метода шифрования заключена в модульной арифметике."""
+"""
+Аффинный шифр основан на шифре Цезаря.
+Особенность метода шифрования заключена в модульной арифметике.
 
-print("Possible Key[a]: 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25.")
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!")
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
-mainKey = input("Write the int keys: ").split()
-for key in mainKey:
-    try:
-        int(key)
-    except:
-        print("Only int numbers!")
-        raise SystemExit
-if len(mainKey) != 2:
-    print("Error: qualitity keys must be 2")
-    raise SystemExit
+      Message: rip and tear until
+          Key: {11 15}
+Final message: UZYQPCWQQHPUQBCQZG
+"""
 
 
 def encryptDecrypt(mode, message, key, final=""):
@@ -30,4 +19,15 @@ def encryptDecrypt(mode, message, key, final=""):
     return final
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage, mainKey))
+if __name__ == '__main__':
+    print("Possible Key[a]: 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25.")
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    numberKeys = input("Write the int keys: ").split()
+    if len(numberKeys) != 2:
+        print("Error: qualitity keys must be 2")
+        raise SystemExit
+    print("Final message:", encryptDecrypt(cryptMode, startMessage, numberKeys))

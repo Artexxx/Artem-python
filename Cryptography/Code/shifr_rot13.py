@@ -1,9 +1,15 @@
-"""Шифр ROT13 – часть шифра Цезаря с позицией 13. Особенность ROT13
-заключена в принципе инволюции, при которой не нужен переключатель режимов
-шифрования/расшифрования"""
+"""
+Шифр ROT13 – часть шифра Цезаря с позицией 13.
+Особенность ROT13 заключена в принципе инволюции, при которой не нужен переключатель режимов шифрования/расшифрования
 
-massage = list(input("WRITE THE MASSAGE ->").upper())
-for sumvol in range(len(massage)):
-    massage[sumvol] = chr(ord(massage[sumvol]) % 26 + ord("A"))  # Шифрование сообщения при помощи таблицы ASCII.
+      Message: rip and tear until
+          Key: None
+Final message: EVCGNAQGGRNEGHAGVY
+"""
 
-print("FINAL MESSAGE:".join(massage))
+message = list(input("WRITE THE MASSAGE ->").upper())
+for sumvol in range(len(message)):
+    message[sumvol] = chr(ord(message[sumvol]) % 26 + ord("A"))
+
+print("Your final message:", "".join(message))
+

@@ -1,13 +1,12 @@
-""" Индексированный шифр
-    метод шифрования создаёт ключ, который будет являться
-    последовательностью символов открытого сообщения без повторений."""
-from re import findall
+"""
+Индексированный шифр
+метод шифрования создаёт ключ, который будет являться последовательностью символов открытого сообщения без повторений.
 
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!")
-    raise SystemExit
-startMessage = input("Write the message: ")
+      Message: rip and tear until
+          Key: None
+Final message: ('rip andteul', '0 1 2 3 4 5 6 3 7 8 4 0 3 9 5 7 1 10')
+"""
+from re import findall
 
 
 def regular(text):
@@ -28,4 +27,10 @@ def encryptDecrypt(mode, message, final="", key=""):
         return final
 
 
-print("Final message: ", encryptDecrypt(cryptMode, startMessage))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    startMessage = input("Write the message: ")
+    print("Final message: ", encryptDecrypt(cryptMode, startMessage))

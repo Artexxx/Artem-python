@@ -1,5 +1,10 @@
-"""Шифр замены – один из самых распространённых методов шифрования. В
-    отличии от шифра Цезаря не имеет конкретного ключа и алгоритма шифрования.)"""
+"""
+Шифр замены – один из самых распространённых методов шифрования. В
+    отличии от шифра Цезаря не имеет конкретного ключа и алгоритма шифрования.)
+      Message: rip and tear until
+          Key: None
+Final message: >(;!?$[%!>]?[(=
+"""
 from string import ascii_uppercase
 
 symbolsAlpha = ascii_uppercase
@@ -8,13 +13,6 @@ symbolsCrypt = (
     '=', '+', '?', ':', ';', '<', '>', '/', '[', ']', '{', '}', '|',
     '.', ',', '~')
 KEYS = dict(zip(symbolsAlpha, symbolsCrypt))
-
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not found")
-    raise SystemExit
-
-startMessage = input("Write the message: ").upper()
 
 
 def encryptDecrypt(mode, message, final=""):
@@ -29,4 +27,11 @@ def encryptDecrypt(mode, message, final=""):
                     final += key
     return final
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
+
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not found")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

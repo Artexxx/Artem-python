@@ -1,14 +1,17 @@
-""" Шифр Хилла основан на линейной алгебре и модульной арифметике."""
+"""
+Шифр Хилла основан на линейной алгебре и модульной арифметике.
+
+MatrixKey = |9 49|
+            |2 11|
+[#] опредилитель матрицы 9*11 - 49*2 (!должен быть == 1)
+
+      Message: rip and tear until
+          Key: [[9, 49], [2, 11]]
+Final message: ZSNNDEBFLBRW
+"""
 
 from re import findall
 from string import ascii_uppercase
-
-"""
-MatrixKey = |9 49|
-            |2 11|
-
-опредилитель матрицы 9*11 - 49*2 (!должен быть == 1)
-"""
 
 matrixLength = 2
 MatrixKey = [[9, 49], [2, 11]]
@@ -23,14 +26,6 @@ iMatrixKey = [
     [-MatrixKey[1][0], MatrixKey[0][0]]]
 
 ALPHA = ascii_uppercase
-
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!")
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
-
-while len(startMessage) % matrixLength != 0: startMessage += 'Z'
 
 
 def regular(text):
@@ -59,9 +54,16 @@ def encryptDecrypt(message, matrix, summ=0, final=""):
     return final
 
 
-if cryptMode == 'E':
-    finalMessage = encryptDecrypt(regular(startMessage), MatrixKey)
-else:
-    finalMessage = encryptDecrypt(regular(startMessage), iMatrixKey)
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
 
-print("Final message:", finalMessage)
+    while len(startMessage) % matrixLength != 0: startMessage += 'Z'
+    if cryptMode == 'E':
+        finalMessage = encryptDecrypt(regular(startMessage), MatrixKey)
+    else:
+        finalMessage = encryptDecrypt(regular(startMessage), iMatrixKey)
+    print("Final message:", finalMessage)

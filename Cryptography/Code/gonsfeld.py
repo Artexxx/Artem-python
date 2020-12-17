@@ -1,13 +1,11 @@
-""" Шифр Гронсфельда -- основан на шифре Виженера и является
-    многоалфавитным методом шифрования.
-    Вместо ключа-слова используются числа."""
+"""
+Шифр Гронсфельда -- основан на шифре Виженера и является многоалфавитным методом шифрования.
+Вместо ключа-слова используются числа.
 
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not found")
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
-keyNumber = input("Write the keyNumber: ")
+      Message: rip and tear until
+          Key: 1648
+Final message: SOTBBTHBUKEZUARBJR
+"""
 
 
 def encryptDecrypt(mode, message, key, final=""):
@@ -21,4 +19,11 @@ def encryptDecrypt(mode, message, key, final=""):
     return final
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage, keyNumber))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not found")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    keyNumber = input("Write the keyNumber: ")
+    print("Final message:", encryptDecrypt(cryptMode, startMessage, keyNumber))
