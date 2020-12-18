@@ -74,20 +74,20 @@ def getKeys(name, pub, priv):
 
 
 '''
-# Передача открытого сообщения и цифровой подписи 
+## Передача открытого сообщения и цифровой подписи  ##
 # Алиса генерирует ключи
-pubA, privA = generateKeys(125,250,50)
+    pubA, privA = generateKeys(125,250,50)
 # Вывод публичных и приватных ключей
-print(getKeys("Alice", pubA, privA))
+    print(getKeys("Alice", pubA, privA))
 # Создание сообщения со стороны Алисы
-mAlice = 111
+    mAlice = 111
 # Создание цифровой подписи со стороны Алисы
-sAlice = encryptDecrypt(mAlice, privA) 
+    sAlice = encryptDecrypt(mAlice, privA) 
 # Создание прообраза сообщения публичным ключом Алисы
-_mAlice = encryptDecrypt(sAlice, pubA)
-print(" m = %s : _m = %s"%(mAlice, _mAlice))
+    _mAlice = encryptDecrypt(sAlice, pubA)
+    print(" m = %s : _m = %s"%(mAlice, _mAlice))
 # Проверка цифровой подписи
-if mAlice == _mAlice: print("Signature is True")
+    if mAlice == _mAlice: print("Signature is True")
 '''
 
 # '''

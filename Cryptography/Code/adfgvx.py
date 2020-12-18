@@ -1,5 +1,11 @@
-""" Шифр ADFGVX состоит из шифров замены и шифров перестановки.
-    Шифр замены – аналогия с шифром Полибия. Шифр перестановки работает по ключу."""
+"""
+Шифр ADFGVX состоит из шифров замены и шифров перестановки.
+Шифр замены – аналогия с шифром Полибия. Шифр перестановки работает по ключу.
+
+      Message: rip and tear until
+          Key: artem
+Final message: FFADGVFFGFDGFGAAGDDXXFAADAXFDD
+"""
 
 from re import findall
 
@@ -18,17 +24,6 @@ keyStageOne = {
     'L': 'DX', 'Y': 'VA',
     'M': 'FA', 'Z': 'VD',
 }
-
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!")
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
-keyStageTwo = list(input("Write the key: ").upper())
-
-for symbol in keyStageTwo:
-    if keyStageTwo.count(symbol) > 1:
-        keyStageTwo.remove(symbol)
 
 
 def regular(text):
@@ -52,7 +47,7 @@ def stageOne(mode, message, final=""):
 def stageTwo(mode, message, final="", listCutWords=[]):
     if mode == 'E':
         while len(message) % len(keyStageTwo) != 0:
-            message += 'XX'
+            message += 'XX'  # 'XX' - это символ из таблицы keyStageOne
         lengthList = len(message) // len(keyStageTwo)
         for _ in range(lengthList):
             listCutWords.append([])
@@ -114,4 +109,16 @@ def encryptDecrypt(mode, message):
     return message
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    keyStageTwo = list(input("Write the key: ").upper())
+
+    for symbol in keyStageTwo:
+        if keyStageTwo.count(symbol) > 1:
+            keyStageTwo.remove(symbol)
+
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

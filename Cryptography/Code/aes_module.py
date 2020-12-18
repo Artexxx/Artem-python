@@ -1,6 +1,8 @@
-""" AES шифрование позволяет зашифровывать файлы любого формата.
-    Библиотека pyAesCrypt использует AES256-CBC.
-    Осторожно: Файл перезаписывается!"""
+"""
+AES шифрование позволяет зашифровывать файлы любого формата.
+Библиотека pyAesCrypt использует AES256-CBC.
+[#] Осторожно: Файл перезаписывается!
+"""
 from pyAesCrypt import encryptFile, decryptFile
 from os import remove
 from os.path import splitext

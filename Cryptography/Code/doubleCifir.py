@@ -1,16 +1,17 @@
-""" Двойная цифирь -- шифр перестановки по определённому ключу.
-    Принцип шифрования – разделение текста на две части в виде таблицы образуя
-    тем самым пары символов. Далее пары символов индексируются и переставляются
-    местами. В итоге индексы будут являться ключами"""
+"""
+Двойная цифирь -- шифр перестановки по определённому ключу.
+Принцип шифрования – разделение текста на две части в виде таблицы образуя тем самым пары символов.
+Далее пары символов индексируются и переставляются местами. В итоге индексы будут являться ключами
+
+      Message: rip and tear until
+          Key: None
+Final message: RPADTA NII N ERUTL
+    Final key: 1.3.5.7.2.0.6.4.8
+
+"""
 
 from re import findall
 from random import choice
-
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!");
-    raise SystemExit
-startMessage = list(input("Write the message: ").upper())
 
 
 def regular(text):
@@ -56,4 +57,10 @@ def encryptDecrypt(mode, message, final='', key=[]):
         return final
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    startMessage = list(input("Write the message: ").upper())
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

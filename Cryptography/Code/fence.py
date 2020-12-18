@@ -1,13 +1,11 @@
-""" Шифр Штакетник относится к шифрам перестановки и является одним из самых
-    лёгких в своём роде.
-    Принцип шифрования – разделение всех символов на чётные и нечётные позиции,
-    а далее совмещение групп символов, сначала чётные, потом нечётные.)"""
+"""
+Шифр Штакетник относится к шифрам перестановки и является одним из самых лёгких в своём роде.
+Принцип шифрования – разделение всех символов на чётные и нечётные позиции, а далее совмещение групп символов, сначала чётные, потом нечётные.
 
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode not in (E/D)")
-    raise SystemExit
-startMessage = input("Write the message: ").upper()
+      Message: rip and tear until
+          Key: None
+Final message: RPADTA NII N ERUTL
+"""
 
 
 def encryptDecrypt(mode, message, final=""):
@@ -23,4 +21,10 @@ def encryptDecrypt(mode, message, final=""):
     return final
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode not in (E/D)")
+        raise SystemExit
+    startMessage = input("Write the message: ").upper()
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

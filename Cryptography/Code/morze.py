@@ -2,6 +2,10 @@
 Азбука Морзе предназначена для передачи инфы по телеграфу.
 тире  - длинный сигнал
 точка - короткий
+
+      Message: rip and tear until
+          Key: None
+Final message: .-. .. .--. .- -. -.. - . .- .-. ..- -. - .. .-..
 """
 CODES = {
     'A': '.-', 'N': '-.', '1': '.----',
@@ -19,12 +23,6 @@ CODES = {
     'M': '--', 'Z': '--..',
 }
 
-codeMode = input("[E]ncode|[D]ecode: ").upper()
-if codeMode not in ['E', 'D']:
-    print("Error: mode is not Found!")
-    raise SystemExit(0)
-startMessage = input("Write the message: ").upper()
-
 
 def encodeDecode(mode, message, final=""):
     if mode == 'E':
@@ -41,4 +39,10 @@ def encodeDecode(mode, message, final=""):
     return final
 
 
-print("Final message:", encodeDecode(codeMode, startMessage))
+if __name__ == '__main__':
+    codeMode = input("[E]ncode|[D]ecode: ").upper()
+    if codeMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit(0)
+    startMessage = input("Write the message: ").upper()
+    print("Final message:", encodeDecode(codeMode, startMessage))

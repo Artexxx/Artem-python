@@ -1,9 +1,15 @@
-""" Шифр Плейфера является биграммным шифром.
-    Особенность шифра заключена в матрице 5x5 в которой мы заменяем символы нашего сообщения.
-    Принцип шифрования – если два символа находятся на одной строке матрицы, значит
+"""
+Шифр Плейфера является биграммным шифром.
+Особенность шифра заключена в матрице 5x5 в которой мы заменяем символы нашего сообщения.
+Принцип шифрования – если два символа находятся на одной строке матрицы, значит
     сместить индексы этих двух символов на одну позицию вперёд в этой же строке.
-    Если символы находятся на разных строках, значит прочертить прямоугольник и
-    заменить символы на другие краи прямоугольника"""
+Если символы находятся на разных строках, значит прочертить прямоугольник и
+    заменить символы на другие края прямоугольника
+
+      Message: rip and tear until
+          Key: MATRIX
+Final message: GPIUDNSTUGAQAOVQD
+"""
 
 from string import ascii_uppercase
 from re import findall
@@ -16,12 +22,6 @@ MATRIX = [
     ['V', 'W', 'X', 'Y', 'Z']
 ]
 addSymbol = 'X'
-
-cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
-if cryptMode not in ['E', 'D']:
-    print("Error: mode is not Found!")
-    raise SystemExit
-startMessage = list(input("Write the message: ").upper())
 
 
 def regular(text):
@@ -68,4 +68,10 @@ def encryptDecrypt(mode, message, final=""):
     return final
 
 
-print("Final message:", encryptDecrypt(cryptMode, startMessage))
+if __name__ == '__main__':
+    cryptMode = input("[E]ncrypt|[D]ecrypt: ").upper()
+    if cryptMode not in ['E', 'D']:
+        print("Error: mode is not Found!")
+        raise SystemExit
+    startMessage = list(input("Write the message: ").upper())
+    print("Final message:", encryptDecrypt(cryptMode, startMessage))

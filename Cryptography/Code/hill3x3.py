@@ -2,7 +2,7 @@
 Шифр Хилла основан на линейной алгебре и модульной арифметике.
 
       Message: rip and tear until
-          Key: DoomSlaye
+          Key: DoomSlayer
 Final message: D64BLPKK82N5WBO1MO
 """
 from re import findall
