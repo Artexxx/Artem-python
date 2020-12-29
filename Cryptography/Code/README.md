@@ -47,9 +47,9 @@
 |Критостойкие|Крутость|модуль|
 | --------    | :---:| :-------:|
 |AES|[max](aes_module.py)|pyAesCrypt|
-|RSA|[max](rsa_module.py)|rsa|
-|RSA|[max](rsa.py)||
-|RSA|[max](rsa_signature.py)||
+|RSA - example|[max](rsa_module.py)|rsa|
+|RSA - code|[max](rsa.py)||
+|RSA-signature|[max](rsa_signature.py)||
 |Великий шифр|[хранение](GreatCipher/greatcipher.py)|memory|
 
 |Для передачи инфы| Код|

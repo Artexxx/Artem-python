@@ -25,12 +25,12 @@ def encryptDecrypt(mode, message, final='', key=[]):
         listHalf = [
             message[len(message) // 2:],
             message[:len(message) // 2]]
-        # keys {0: [ C  A ], 1: [ B  D ], 2: [ S  F ]}
+        # keys {0: [ D A ], 1: [ E B ], 2: [ F C ]} if message is `ABCDEF`
         keys = {x: [listHalf[0][x], listHalf[1][x]] for x in range(len(message) // 2)}
         listKey = [x for x in range(len(keys))]
         print(listKey, keys)
         newList = []
-        # newList [[ S  F ], [ C  A ], [ B  D ]]
+        # newList [[ F C ], [ D A ], [ E B ]] if random key is '2.0.1'
         for _ in range(len(keys)):
             choiceKey = choice(listKey)
             key.append(str(choiceKey))
