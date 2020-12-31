@@ -1,4 +1,4 @@
-# PastebinParse - находит ништяки на сайте pastebin.com
+# PastebinParse - находит заданные слова в файлах на сайте pastebin.com/archive
 import requests
 from bs4 import BeautifulSoup
 import time
@@ -29,18 +29,17 @@ def get_paste_text(id):
 
 
 def contains_interesting_info(text):
-    buzz_word = ['PyQt5.QtWidgets', 'tkinter', ' QApplication(sys.argv)',
-                 'PyQt5.QtGui', 'mysql.connector', 'flask', 'Flask',
-                 'porn','child','loli','childporn', 'child porn', 'cub porn']
+    buzz_word = ['PyQt5.QtWidgets', 'BeautifulSoup', ' QApplication(sys.argv)',
+                 'PyQt5.QtGui', 'mysql.connector', 'flask', 'Flask', 'porn']
     for word in buzz_word:
         if word in text:
             return True
 
 
-def save_pastes(index, text, id = None):
+def save_pastes(index, text, id=None):
     # file_name = id.replace('/','_')
     with open(os.path.join('Pastebin', f"{index}.txt"), 'w') as pasteFile:
-      pasteFile.write(text)
+        pasteFile.write(text)
 
 
 def timer_text():
@@ -52,7 +51,7 @@ def timer_text():
                 text = get_paste_text(paste['id'])
             if contains_interesting_info(text):
                 # save_pastes(paste['id'], index, text)
-                #qsave_pastes(index, text)
+                # qsave_pastes(index, text)
                 print(paste['id'])
                 print(text)
                 print("_" * 100)
@@ -62,6 +61,7 @@ def timer_text():
             seen_paste_ids.add(paste['id'])
             time.sleep(0.15)
         time.sleep(60)
+
 
 os.makedirs('Pastebin', exist_ok=True)
 timer_text()
