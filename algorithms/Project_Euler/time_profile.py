@@ -2,7 +2,7 @@ from tabulate import tabulate
 from timeit import default_timer as timer
 
 
-def my_time_this(function, test_numbers: list):
+def my_time_this(function, test_numbers: list = []):
     """
 Оценивает время работы 1 алгоритма
 
@@ -24,17 +24,28 @@ def my_time_this(function, test_numbers: list):
   4  0.9545     85.897%        10000000    23333331666668
   5  9.6361     868.160%      100000000  2333333316666668
 """
-    def calc_result(function, number):
+
+    def calc_result_with_args(function, number=None):
         t = timer()
         my_time_this.last_result = function(number)
         my_time_this.last_time = timer() - t
 
+    def calc_result_without_args(function):
+        t = timer()
+        my_time_this.result = function()
+        my_time_this.time = timer() - t
+
     data = []
     for index, number in enumerate(test_numbers):
-        calc_result(function, number)
+        calc_result_with_args(function, number)
         if index >= 1:
             slowdown = f"{(my_time_this.last_time - data[-1][1]):.2%}"
         else:
             slowdown = f"{my_time_this.last_time:.3%}"
         data.append([index + 1, my_time_this.last_time, slowdown, number, my_time_this.last_result])
+    else:
+        if not test_numbers:
+            calc_result_without_args(function)
+            data.append([1, my_time_this.time, None, None, my_time_this.result])
+
     print(tabulate(data, headers=["№", "Время", "Замедление", "Число", "Результат"]))

@@ -38,12 +38,12 @@ def has_substring_divisibility(n: str):
 
 
 def find_substring_divisible_pandigitals():
-    pandigital_numbers = [''.join(p) for p in list(itertools.permutations('0123456789')) if p[0] != '0']
-    pandigital_numbers_with_substring_divisibility = [p for p in pandigital_numbers if has_substring_divisibility(p)]
+    pandigital_numbers = (''.join(p) for p in list(itertools.permutations('0123456789')) if p[0] != '0')
+    pandigital_numbers_with_substring_divisibility = filter(has_substring_divisibility, pandigital_numbers)
     return pandigital_numbers_with_substring_divisibility
 
 
-def solution(ass):
+def solution():
     """
     Возращает сумму всех пан-цифровых чисел из цифр от 0 до 9, обладающих свойством - делимость подстрок
     >>> solution()
@@ -53,6 +53,7 @@ def solution(ass):
 
 
 if __name__ == '__main__':
+    ### Run Time-Profile Table ###
     import sys; sys.path.append('..')
     from time_profile import my_time_this
-    my_time_this(solution, [10 ** 6])
+    my_time_this(solution, [])

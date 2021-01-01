@@ -47,7 +47,7 @@ def has_substring_divisibility(n: str):
 
 def find_substring_divisible_pandigitals():
     pandigital_numbers = [''.join(p) for p in list(itertools.permutations('0123456789')) if p[0] != '0']
-    pandigital_numbers_with_substring_divisibility = [p for p in pandigital_numbers if has_substring_divisibility(p)]
+    pandigital_numbers_with_substring_divisibility = filter(has_substring_divisibility, pandigital_numbers)
     return pandigital_numbers_with_substring_divisibility
 
 
@@ -64,4 +64,12 @@ def solution():
   №    Время  Замедление      Число    Результат
 ---  -------  ------------  -------  -----------
  1   4.01282   401.282%        None  16695334890
+```
+
+## Нормальное решение (1)
+
+```
+  №      Время  Замедление    Число      Результат
+---  ---------  ------------  -------  -----------
+  1  0.0103807  1.038%        None     16695334890
 ```
