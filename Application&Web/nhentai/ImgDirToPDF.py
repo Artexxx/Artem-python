@@ -13,10 +13,16 @@ def make_pdf(path, pdf_filename):
             image_list.append(file)
     image_list.sort()
 
-    title_img = Image.open(image_list[0])
-    print('Find Img:', *image_list[:3], '...', *image_list[-2:])
-    pbar = pyprind.ProgBar(len(image_list), bar_char="♡", stream=1)
-
+    try:
+        title_img = Image.open(image_list[0])
+        print('Find images:', *image_list[:3], '...', *image_list[-2:])
+        pbar = pyprind.ProgBar(len(image_list), bar_char="♡", stream=1)
+    except:
+        print("\n\n\033[1;31;48m"  # Red
+              "[#] An error occurred in opening the image, check the path:"
+              "\n\033[1;37;0m"  # End
+              "Your path: ", path)
+        return 0
     im_list = []
     for image in image_list[1:]:
         im = Image.open(image)
@@ -63,10 +69,12 @@ def main():
         path = input('>>> Your img dir: ')
         name = input('>>> Your PDF name: ')
 
+    if "\\" in path:
+        path = path.replace("\\", "/")
     if not path.endswith("/"):
         path += "/"
     if not name.endswith(".pdf"):
-        path += ".pdf"
+        name += ".pdf"
     make_pdf(path, name)
 
 

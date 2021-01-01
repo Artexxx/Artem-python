@@ -46,6 +46,7 @@ def my_time_this(function, test_numbers: list = []):
     else:
         if not test_numbers:
             calc_result_without_args(function)
-            data.append([1, my_time_this.time, None, None, my_time_this.result])
+            slowdown = f"{my_time_this.time:.3%}"
+            data.append([1, my_time_this.time, slowdown, None, my_time_this.result])
 
     print(tabulate(data, headers=["№", "Время", "Замедление", "Число", "Результат"]))

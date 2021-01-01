@@ -67,9 +67,42 @@ def solution():
 ```
 
 ## Нормальное решение (1)
+```python
+from itertools import product
 
+
+def distinct_digits(iterable):
+    return filter(lambda s: len(frozenset(s)) == len(s), iterable)
+
+
+def three_digit_multiples(p):
+    return map(lambda n: str(n).zfill(3), range(p, 1000, p))
+
+
+def two_digit_overlaps(heads, tails):
+    for head, tail in product(heads, tails):
+        if head[-2:] == tail[:2]:
+            yield head + tail[2:]
+
+
+def substring_divisible_pandigitals():
+    tails = distinct_digits(three_digit_multiples(17))
+    for p in [13, 11, 7, 5, 3, 2, 1]:
+        heads = distinct_digits(three_digit_multiples(p))
+        tails = distinct_digits(two_digit_overlaps(heads, tails))
+    return tails
+
+
+def solution():
+    """
+    Возращает сумму всех пан-цифровых чисел из цифр от 0 до 9, обладающих свойством - делимость подстрок
+    >>> solution()
+    ... 16695334890 # sum{1406357289, 1430952867, 1460357289, 4106357289, 4130952867, 4160357289}
+    """
+    return sum(map(int, substring_divisible_pandigitals()))
+```
 ```
   №      Время  Замедление    Число      Результат
 ---  ---------  ------------  -------  -----------
-  1  0.0103807  1.038%        None     16695334890
+  1  0.0050144  0.501%                 16695334890
 ```
