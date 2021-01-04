@@ -57,3 +57,23 @@
 |Азбука Морзе|[тут](morze.py)
 |ASCII кодировка|[тут](ascii.py)
 |Двоичный код|[тут](binary.py)
+
+----
+#### Дополнительная информация
+Криптография является одной из старейших наук и до сих пор в ней
+находится очень много нераскрытых, а в некоторых случаях пугающих
+тайн, которые порождают человеческий интерес
+
+Дело «Тамам Шуд»: [wikipedia.org/wiki/%D0%9..](https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%BB%D0%BE_%C2%AB%D0%A2%D0%B0%D0%BC%D0%B0%D0%BC_%D0%A8%D1%83%D0%B4%C2%BB)
+
+Дело YOGTZE:  [wikipedia.org/wiki/%D0%9..](https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%BB%D0%BE_YOGTZE)
+
+G-AGWH Star Dust:  [wikipedia.org/wiki/G-AGWH_S..](https://ru.wikipedia.org/wiki/G-AGWH_Star_Dust#STENDEC)
+
+Исчезновение Фредерика Валентича:  [wikipedia.org/wiki/%D0%9..](https://ru.wikipedia.org/wiki/%D0%98%D1%81%D1%87%D0%B5%D0%B7%D0%BD%D0%BE%D0%B2%D0%B5%D0%BD%D0%B8%D0%B5_%D0%A4%D1%80%D0%B5%D0%B4%D0%B5%D1%80%D0%B8%D0%BA%D0%B0_%D0%92%D0%B0%D0%BB%D0%B5%D0%BD%D1%82%D0%B8%D1%87%D0%B0)
+
+Зодиак:  [wikipedia.org/wiki/%D0%9..](https://ru.wikipedia.org/wiki/%D0%97%D0%BE%D0%B4%D0%B8%D0%B0%D0%BA_(%D1%83%D0%B1%D0%B8%D0%B9%D1%86%D0%B0))
+
+Записки Рикки Маккормика:  [wikipedia.org/wiki/%D0%97.](https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%BF%D0%B8%D1%81%D0%BA%D0%B8_%D0%A0%D0%B8%D0%BA%D0%BA%D0%B8_%D0%9C%D0%B0%D0%BA%D0%BA%D0%BE%D1%80%D0%BC%D0%B8%D0%BA%D0%B0)
+
+Криптограммы Бейла:  [wikipedia.org/wiki/%D0%9A%..](https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%B8%D0%BF%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B_%D0%91%D0%B5%D0%B9%D0%BB%D0%B0)
