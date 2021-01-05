@@ -36,21 +36,17 @@ def two_digit_overlaps(heads, tails):
             yield head + tail[2:]
 
 
-def substring_divisible_pandigitals():
-    tails = distinct_digits(three_digit_multiples(17))
-    for p in [13, 11, 7, 5, 3, 2, 1]:
-        heads = distinct_digits(three_digit_multiples(p))
-        tails = distinct_digits(two_digit_overlaps(heads, tails))
-    return tails
-
-
 def solution():
     """
     Возращает сумму всех пан-цифровых чисел из цифр от 0 до 9, обладающих свойством - делимость подстрок
     >>> solution()
     ... 16695334890 # sum{1406357289, 1430952867, 1460357289, 4106357289, 4130952867, 4160357289}
     """
-    return sum(map(int, substring_divisible_pandigitals()))
+    tails = distinct_digits(three_digit_multiples(17))
+    for p in [13, 11, 7, 5, 3, 2, 1]:
+        heads = distinct_digits(three_digit_multiples(p))
+        tails = distinct_digits(two_digit_overlaps(heads, tails))
+    return sum(map(int, tails))
 
 
 if __name__ == '__main__':
