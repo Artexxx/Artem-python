@@ -1,12 +1,12 @@
 """
 ~~~~~~~~~~ nuitka ~~~~~~~~~~~~~~
-$ nuitka codewars2.py
-$ ./codewars2.exe
+$ nuitka SpankbangScrapper.py
+$ ./SpankbangScrapper.exe
 
 ~~~~~~~~~~ cython3 ~~~~~~~~~~~~~~
-$ cython3 codewars2.py --embed
-$ gcc $(python3-config --includes) codewars2.c -lpython3.6m -o codewars2.exe
-$ ./codewars2.exe
+$ cython3 SpankbangScrapper.py --embed
+$ gcc $(python3-config --includes) SpankbangScrapper.c -lpython3.6m -o SpankbangScrapper.exe
+$ ./SpankbangScrapper.exe
 """
 from bs4 import BeautifulSoup
 import multiprocessing as mp
@@ -64,10 +64,10 @@ class SpankbangScrapper:
         all_urls = self._get_all_urls()
         pool = mp.Pool()
         print('Начало сбора данных, на 3000 видео ~ 10m');start_time = time.time()
-        parse_jobs = [pool.apply_async(self._create_data_list, args=(url,)) for url in all_urls]
+        parse_pages = [pool.apply_async(self._create_data_list, args=(url,)) for url in all_urls]
         csv_data = []
-        for job in parse_jobs:
-            video_result = job.get()
+        for page in parse_pages:
+            video_result = page.get()
             csv_data.append(video_result)
         print('Время парсинга: %.1f s' % (time.time() - start_time,))
         return csv_data

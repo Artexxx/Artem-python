@@ -38,11 +38,12 @@ def progress(count, total, status=''):
     sys.stdout.write('[%s] %s%s ...%s\r' % (bar, percents, '%', status))
     sys.stdout.flush()
 
+
 driver = webdriver.Chrome()
 driver.get(url)
 print("[#] sleep 1..."); time.sleep(5)
 print("[#] You must be 18+ to view this community...")
-yes_btn = driver.find_elements_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div[1]/div/div/div[2]/a[2]')[0]
+yes_btn = driver.find_elements_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div[1]/div/div/div[2]/button')[0]
 yes_btn.click()
 
 SCROLL_PAUSE_TIME = 5
