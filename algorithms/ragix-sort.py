@@ -26,7 +26,7 @@ def radix_sort(lst):
         placement *= RADIX
 
 
-def radix_sorted(arr, radix=10):
+def radix_sort(arr, radix=10):
     max_length = False
     tmp, digit = -1, 1
 

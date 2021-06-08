@@ -1,8 +1,9 @@
 """
 Шифр замены – один из самых распространённых методов шифрования. В
     отличии от шифра Цезаря не имеет конкретного ключа и алгоритма шифрования.)
-      Message: rip and tear until
-          Key: None
+
+Message: rip and tear until
+    Key: !@#$%^&*()-=+?:;<>/[]{}|.,~
 Final message: >(;!?$[%!>]?[(=
 """
 from string import ascii_uppercase
