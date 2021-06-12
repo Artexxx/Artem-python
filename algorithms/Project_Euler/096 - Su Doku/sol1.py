@@ -11,7 +11,7 @@
 import numpy as np
 import sys;sys.path.append('../..')
 import importlib
-sudoku = importlib.import_module('sudokuSolve[backtracking]')
+sudoku = importlib.import_module('sudoku-solver[backtracking]')
 
 from timeit import default_timer as timer
 
