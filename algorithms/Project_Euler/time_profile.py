@@ -69,7 +69,7 @@ class TimeProfile:
 
             if self._result_stats:
                 if self.DynamicPrintStatFlag:
-                    self._dynamic_print_stats(self._result_stats)
+                    pass
                 else:
                     self._print_stats(self._result_stats)
 

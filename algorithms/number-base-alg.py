@@ -62,10 +62,10 @@ def is_prime(n: int) -> bool:
 
 
 def bit_sieve(n) -> list:
-    """ Решето Эратосфена.
-    В списке primes сбрасываются биты, имеющие составные номера, биты с простыми номерами == True.
-    i-му по порядку элементу будет соответствовать True, если i -- простое и False иначе.
-    Сложность: nloglog(n).
+    """ Sieve of Eratosthenes
+     Generate boolean array of length N, where prime indices are True.
+
+    The time complexity of this algorithm is O(nloglog(n).
 
     >>> bit_sieve(10)
     [False, False, True, True, False, True, False, True, False, False]
@@ -78,5 +78,5 @@ def bit_sieve(n) -> list:
     for factor in range(3, int(math.sqrt(n)) + 1, 2):
         if primes[factor]:
             number_of_multiples = len(primes[factor * factor::factor * 2])
-            primes[factor * factor::factor * 2] = [False] * number_of_multiples  # занулить все ему кратные
+            primes[factor * factor::factor * 2] = [False] * number_of_multiples
     return primes
