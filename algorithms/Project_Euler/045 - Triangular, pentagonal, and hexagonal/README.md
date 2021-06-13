@@ -37,40 +37,51 @@ solution  () =>
 Найдите следующее треугольное число, являющееся также пятиугольным и шестиугольным.
 """
 
+def generate_polygonal(type_number):
+    """Генерирует фиругные числа
 
-def solution():
+    >>> generate_polygonal(type_number=3)
+    ...:  1 3 6 10 15 21 28 36 ...
+    >>> generate_polygonal(type_number=4)
+    ...:  1 4 9 16 25 36 49 64 ...
+    """
+    c = type_number - 2
+    a = b = 1
+    while True:
+        yield a
+        b += c
+        a += b
+
+
+def is_triangle(num):
+    n = ((1 + 8 * num) ** 0.5 - 1) / 2
+    return n.is_integer()
+
+
+def solution(start_number=40755):
     """
     Возращает следующее треугольное число, являющееся также пятиугольным и шестиугольным.
+
     >>> solution()
     ...: 1533776805
     """
 
-    def is_pentagonal(num):
-        n = int((2 * num / 3) ** 0.5) + 1
-        return n * (3 * n - 1) / 2 == num
+    hexagonal = generate_polygonal(type_number=6)
+    pentagonal = generate_polygonal(type_number=5)
+    h = next(hexagonal)
+    p = next(pentagonal)
 
-    def is_hexagonal(num):
-        n = int((num / 2) ** 0.5) + 1
-        return n * (2 * n - 1) == num
-    
-    index = 285
     while True:
-        index += 4
-        triangle_candidate = index * (index + 1) // 2
-        if is_pentagonal(triangle_candidate) and is_hexagonal(triangle_candidate):
-            return triangle_candidate
-
-
-if __name__ == '__main__':
-    ### Run Time-Profile Table ###
-    import sys; sys.path.append('..')
-    from time_profile import my_time_this
-    my_time_this(solution)
-
+        while p < h:
+            p = next(pentagonal)
+        if p == h and p > start_number and is_triangle(p) :
+            return p
+        h = next(hexagonal)
 ```
 
-```text
-  №      Время  Замедление    Число      Результат
----  ---------  ------------  -------  -----------
-  1  0.0047666  0.477%                  1533776805
+    Время  Замедление         Число       Результат
+---------  ------------  ----------  --------------
+5.28e-05   0.005%                 1           40755
+0.0097281  0.968%             40755      1533776805 (Ответ)
+1.92689    191.716%      1533776805  57722156241751
 ```
