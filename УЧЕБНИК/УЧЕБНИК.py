@@ -21,7 +21,7 @@ class extraHacks(): # Экстра-фишки 3.7+
     bit >> bit.bit_length()-2 & 0b11
 
     from dataclasses import dataclass
-    @dataclass
+    @dataclass # (frozen=True) запрет на изменение полей
     class Edge: # создаёт автоматически метод  __init__(), который создайт экземпляры
         u: int  # >>> print(Edge('NodeA', 'NodeB'))
         v: int  # ... NodeA -> NodeB
