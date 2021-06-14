@@ -1,6 +1,7 @@
 import requests, random, time, os
-from colorama import Fore
 from random import randint
+from colorama import Fore, init
+init(autoreset=True)
 
 
 def banner():

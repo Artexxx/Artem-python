@@ -6,6 +6,7 @@ import sys
 from zipfile import ZipFile
 from os import mkdir
 from threading import Thread
+from colorama import init, Fore; init(autoreset=True)
 
 raw_banner = '''
     ░░███████╗░██╗░██████╗░░░██╗░░██╗░░█████╗░░░█████╗░░██╗░░██╗░
@@ -19,9 +20,9 @@ raw_banner = '''
 banner = ""
 for i in raw_banner:
     if i not in "\n █░":
-        banner += f"\u001b[34m{i}\u001b[0m"
+        banner += f"{Fore.BLUE}{i}\u001b[0m"
     elif i == "░":
-        banner += f"\u001b[36m{i}\u001b[0m"
+        banner += f"{Fore.CYAN}{i}\u001b[0m"
     elif i == "█":
         banner += f"\u001b[41m{i}\u001b[0m"
     else:

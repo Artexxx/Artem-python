@@ -1,3 +1,4 @@
+import math
 import sys
 import time
 import threading
@@ -157,14 +158,13 @@ class TimeProfile:
 
 
 if __name__ == '__main__':
-    import time
+    #~~~~~~~~~~~~~~~~~~~~| Test TimeProfile |#~~~~~~~~~~~~~~~~~~~~#
     def slow_func(number):
         time.sleep(0.05)
-        return number**3
-
+        return int(number*math.pi)
     TimeProfile(slow_func, [10_000, 100_000, 1_000_000, 10_000_000, 100_000_000], DynamicTimer=True)
 
+    #~~~~~~~~~~~~~~~~~~~~| Test  ParallelTimer |#~~~~~~~~~~~~~~~~~~~~#
     with ParallelTimer() as ptimer:
-        for i in range(10):
+        for i in range(5):
             time.sleep(0.05)
-

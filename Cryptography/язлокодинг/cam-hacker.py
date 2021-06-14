@@ -1,4 +1,5 @@
 import requests, re
+from colorama import Fore, init;init(autoreset=True)
 
 citi = ['US', 'US', 'JP', 'IT', 'KR', 'FR', 'DE', 'TW', 'RU', 'GB', 'NL', 'CZ', 'TR', 'AT', 'CH', 'ES', 'CA', 'SE',
         'IL', 'PL', 'IR', 'NO', 'RO', 'IN', 'VN', 'BE', 'BR', 'BG', 'ID', 'DK', 'AR', 'MX', 'FI', 'CN', 'CL', 'ZA',
@@ -11,38 +12,38 @@ count_page = [720, 232, 159, 141, 120, 107, 92, 82, 81, 66, 58, 54, 48, 44, 39, 
               5, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
               16]
 
-print("""
-\033[1;31m1)\033[1;37mUnited States                \033[1;31m31)\033[1;37mMexico                \033[1;31m61)\033[1;37mMoldova
-\033[1;31m2)\033[1;37mJapan                        \033[1;31m32)\033[1;37mFinland               \033[1;31m62)\033[1;37mNicaragua
-\033[1;31m3)\033[1;37mItaly                        \033[1;31m33)\033[1;37mChina                 \033[1;31m63)\033[1;37mMalta
-\033[1;31m4)\033[1;37mKorea                        \033[1;31m34)\033[1;37mChile                 \033[1;31m64)\033[1;37mTrinidad And Tobago
-\033[1;31m5)\033[1;37mFrance                       \033[1;31m35)\033[1;37mSouth Africa          \033[1;31m65)\033[1;37mSoudi Arabia
-\033[1;31m6)\033[1;37mGermany                      \033[1;31m36)\033[1;37mSlovakia              \033[1;31m66)\033[1;37mCroatia
-\033[1;31m7)\033[1;37mTaiwan                       \033[1;31m37)\033[1;37mHungary               \033[1;31m67)\033[1;37mCyprus
-\033[1;31m8)\033[1;37mRussian Federation           \033[1;31m38)\033[1;37mIreland               \033[1;31m68)\033[1;37mPakistan
-\033[1;31m9)\033[1;37mUnited Kingdom               \033[1;31m39)\033[1;37mEgypt                 \033[1;31m69)\033[1;37mUnited Arab Emirates
-\033[1;31m10)\033[1;37mNetherlands                 \033[1;31m40)\033[1;37mThailand              \033[1;31m70)\033[1;37mKazakhstan
-\033[1;31m11)\033[1;37mCzech Republic              \033[1;31m41)\033[1;37mUkraine               \033[1;31m71)\033[1;37mKuwait
-\033[1;31m12)\033[1;37mTurkey                      \033[1;31m42)\033[1;37mSerbia                \033[1;31m72)\033[1;37mVenezuela
-\033[1;31m13)\033[1;37mAustria                     \033[1;31m43)\033[1;37mHong Kong             \033[1;31m73)\033[1;37mGeorgia
-\033[1;31m14)\033[1;37mSwitzerland                 \033[1;31m44)\033[1;37mGreece                \033[1;31m74)\033[1;37mMontenegro
-\033[1;31m15)\033[1;37mSpain                       \033[1;31m45)\033[1;37mPortugal              \033[1;31m75)\033[1;37mEl Salvador
-\033[1;31m16)\033[1;37mCanada                      \033[1;31m46)\033[1;37mLatvia                \033[1;31m76)\033[1;37mLuxembourg
-\033[1;31m17)\033[1;37mSweden                      \033[1;31m47)\033[1;37mSingapore             \033[1;31m77)\033[1;37mCuracao
-\033[1;31m18)\033[1;37mIsrael                      \033[1;31m48)\033[1;37mIceland               \033[1;31m78)\033[1;37mPuerto Rico
-\033[1;31m19)\033[1;37mIran                        \033[1;31m49)\033[1;37mMalaysia              \033[1;31m79)\033[1;37mCosta Rica
-\033[1;31m20)\033[1;37mPoland                      \033[1;31m50)\033[1;37mColombia              \033[1;31m80)\033[1;37mBelarus
-\033[1;31m21)\033[1;37mIndia                       \033[1;31m51)\033[1;37mTunisia               \033[1;31m81)\033[1;37mAlbania
-\033[1;31m22)\033[1;37mNorway                      \033[1;31m52)\033[1;37mEstonia               \033[1;31m82)\033[1;37mLiechtenstein
-\033[1;31m23)\033[1;37mRomania                     \033[1;31m53)\033[1;37mDominican Republic    \033[1;31m83)\033[1;37mBosnia And Herzegovia
-\033[1;31m24)\033[1;37mViet Nam                    \033[1;31m54)\033[1;37mSloveania             \033[1;31m84)\033[1;37mParaguay
-\033[1;31m25)\033[1;37mBelgium                     \033[1;31m55)\033[1;37mEcuador               \033[1;31m85)\033[1;37mPhilippines
-\033[1;31m26)\033[1;37mBrazil                      \033[1;31m56)\033[1;37mLithuania             \033[1;31m86)\033[1;37mFaroe Islands
-\033[1;31m27)\033[1;37mBulgaria                    \033[1;31m57)\033[1;37mPalestinian           \033[1;31m87)\033[1;37mGuatemala
-\033[1;31m28)\033[1;37mIndonesia                   \033[1;31m58)\033[1;37mNew Zealand           \033[1;31m88)\033[1;37mNepal
-\033[1;31m29)\033[1;37mDenmark                     \033[1;31m59)\033[1;37mBangladeh             \033[1;31m89)\033[1;37mPeru
-\033[1;31m30)\033[1;37mArgentina                   \033[1;31m60)\033[1;37mPanama                \033[1;31m90)\033[1;37mUruguay
-                                                        \033[1;31m91)\033[1;37mExtra
+print(f"""
+{Fore.RED}1){Fore.RESET}United States                {Fore.RED}31){Fore.RESET}Mexico                {Fore.RED}61){Fore.RESET}Moldova
+{Fore.RED}2){Fore.RESET}Japan                        {Fore.RED}32){Fore.RESET}Finland               {Fore.RED}62){Fore.RESET}Nicaragua
+{Fore.RED}3){Fore.RESET}Italy                        {Fore.RED}33){Fore.RESET}China                 {Fore.RED}63){Fore.RESET}Malta
+{Fore.RED}4){Fore.RESET}Korea                        {Fore.RED}34){Fore.RESET}Chile                 {Fore.RED}64){Fore.RESET}Trinidad And Tobago
+{Fore.RED}5){Fore.RESET}France                       {Fore.RED}35){Fore.RESET}South Africa          {Fore.RED}65){Fore.RESET}Soudi Arabia
+{Fore.RED}6){Fore.RESET}Germany                      {Fore.RED}36){Fore.RESET}Slovakia              {Fore.RED}66){Fore.RESET}Croatia
+{Fore.RED}7){Fore.RESET}Taiwan                       {Fore.RED}37){Fore.RESET}Hungary               {Fore.RED}67){Fore.RESET}Cyprus
+{Fore.RED}8){Fore.RESET}Russian Federation           {Fore.RED}38){Fore.RESET}Ireland               {Fore.RED}68){Fore.RESET}Pakistan
+{Fore.RED}9){Fore.RESET}United Kingdom               {Fore.RED}39){Fore.RESET}Egypt                 {Fore.RED}69){Fore.RESET}United Arab Emirates
+{Fore.RED}10){Fore.RESET}Netherlands                 {Fore.RED}40){Fore.RESET}Thailand              {Fore.RED}70){Fore.RESET}Kazakhstan
+{Fore.RED}11){Fore.RESET}Czech Republic              {Fore.RED}41){Fore.RESET}Ukraine               {Fore.RED}71){Fore.RESET}Kuwait
+{Fore.RED}12){Fore.RESET}Turkey                      {Fore.RED}42){Fore.RESET}Serbia                {Fore.RED}72){Fore.RESET}Venezuela
+{Fore.RED}13){Fore.RESET}Austria                     {Fore.RED}43){Fore.RESET}Hong Kong             {Fore.RED}73){Fore.RESET}Georgia
+{Fore.RED}14){Fore.RESET}Switzerland                 {Fore.RED}44){Fore.RESET}Greece                {Fore.RED}74){Fore.RESET}Montenegro
+{Fore.RED}15){Fore.RESET}Spain                       {Fore.RED}45){Fore.RESET}Portugal              {Fore.RED}75){Fore.RESET}El Salvador
+{Fore.RED}16){Fore.RESET}Canada                      {Fore.RED}46){Fore.RESET}Latvia                {Fore.RED}76){Fore.RESET}Luxembourg
+{Fore.RED}17){Fore.RESET}Sweden                      {Fore.RED}47){Fore.RESET}Singapore             {Fore.RED}77){Fore.RESET}Curacao
+{Fore.RED}18){Fore.RESET}Israel                      {Fore.RED}48){Fore.RESET}Iceland               {Fore.RED}78){Fore.RESET}Puerto Rico
+{Fore.RED}19){Fore.RESET}Iran                        {Fore.RED}49){Fore.RESET}Malaysia              {Fore.RED}79){Fore.RESET}Costa Rica
+{Fore.RED}20){Fore.RESET}Poland                      {Fore.RED}50){Fore.RESET}Colombia              {Fore.RED}80){Fore.RESET}Belarus
+{Fore.RED}21){Fore.RESET}India                       {Fore.RED}51){Fore.RESET}Tunisia               {Fore.RED}81){Fore.RESET}Albania
+{Fore.RED}22){Fore.RESET}Norway                      {Fore.RED}52){Fore.RESET}Estonia               {Fore.RED}82){Fore.RESET}Liechtenstein
+{Fore.RED}23){Fore.RESET}Romania                     {Fore.RED}53){Fore.RESET}Dominican Republic    {Fore.RED}83){Fore.RESET}Bosnia And Herzegovia
+{Fore.RED}24){Fore.RESET}Viet Nam                    {Fore.RED}54){Fore.RESET}Sloveania             {Fore.RED}84){Fore.RESET}Paraguay
+{Fore.RED}25){Fore.RESET}Belgium                     {Fore.RED}55){Fore.RESET}Ecuador               {Fore.RED}85){Fore.RESET}Philippines
+{Fore.RED}26){Fore.RESET}Brazil                      {Fore.RED}56){Fore.RESET}Lithuania             {Fore.RED}86){Fore.RESET}Faroe Islands
+{Fore.RED}27){Fore.RESET}Bulgaria                    {Fore.RED}57){Fore.RESET}Palestinian           {Fore.RED}87){Fore.RESET}Guatemala
+{Fore.RED}28){Fore.RESET}Indonesia                   {Fore.RED}58){Fore.RESET}New Zealand           {Fore.RED}88){Fore.RESET}Nepal
+{Fore.RED}29){Fore.RESET}Denmark                     {Fore.RED}59){Fore.RESET}Bangladeh             {Fore.RED}89){Fore.RESET}Peru
+{Fore.RED}30){Fore.RESET}Argentina                   {Fore.RED}60){Fore.RESET}Panama                {Fore.RED}90){Fore.RESET}Uruguay
+                                                        {Fore.RED}91){Fore.RESET}Extra
 """)
 num = int(input('Number:'))
 try:

