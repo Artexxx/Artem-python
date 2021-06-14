@@ -1,9 +1,54 @@
 import sys
 import time
+import threading
+import itertools
+
 from tabulate import tabulate
-from itertools import cycle
 from timeit import default_timer as timer
 import os
+
+
+class ParallelTimer:
+    timer_is_running = False
+    _timer_has_run_FLAG = False
+
+    timer_time = 0.0
+
+    def start_parallel_timer(self):
+        self._timer_has_run_FLAG = True
+        self.timer_is_running = True
+
+        self.parallel_timer_task = threading.Thread(target=self._parallel_timer)
+        self.parallel_timer_task.start()
+
+    def stop_parallel_timer(self):  # FIXME (How stop parallel task?)
+        self._timer_has_run_FLAG = False
+        self.parallel_timer_task.join()
+
+        while self.timer_is_running:
+            time.sleep(0.05)
+        print(f"\rТаймер закончил работу, время = {self.timer_time:.3}s", end='\n\n')
+
+    def _parallel_timer(self):
+        t = timer()
+        self.timer_time = 0.0
+        phases = itertools.cycle(['◑', '◒', '◐', '◓'])
+
+        while self._timer_has_run_FLAG:
+            sys.stdout.write(f"\rВремя работы {next(phases)} {self.timer_time:.4}s")
+            sys.stdout.flush()
+            time.sleep(0.05)
+            self.timer_time = timer() - t
+        else:
+            self.timer_is_running = False
+
+    def __enter__(self):
+        self.start_parallel_timer()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.stop_parallel_timer()
+        return self
 
 
 class TimeProfile:
@@ -29,33 +74,32 @@ class TimeProfile:
      5  9.6361     868.160%      100000000  2333333316666668
     """
     _last_time = 0
-    _result_stats = []
     _timer_has_run_FLAG = False
-    _timer_is_running = False
+    timer = ParallelTimer()
 
-    def __init__(self, function, args_list: list = [], DynamicPrintStat=False, DynamicTimer=False):
+    def __init__(self, function, args_list: list = [], DynamicPrint=False, DynamicTimer=False):
         self.function = function
         self.args_list = args_list
-        self.DynamicPrintStatFlag = DynamicPrintStat
+        self.DynamicPrintStatFlag = DynamicPrint
         self.DynamicTimerFlag = DynamicTimer
         self.run()
 
-    def run(self, *args, **kwargs):
-        self._result_stats = []
+    def run(self):
+        result_stats = []
         try:
             if self.DynamicTimerFlag:
-                self._start_parrallel_timer()
+                self.timer.start_parallel_timer()
 
             if self.args_list:
 
                 for arg in self.args_list:
-                    self._result_stats.append(
+                    result_stats.append(
                         self._get_stats(self.function, arg=arg)
                     )
                     if self.DynamicPrintStatFlag:
-                        self._dynamic_print_stats(self._result_stats)
+                        self.dynamic_print_stats(result_stats)
             else:
-                self._result_stats.append(
+                result_stats.append(
                     self._get_stats(self.function, arg=None)
                 )
 
@@ -65,26 +109,31 @@ class TimeProfile:
 
         finally:
             if self.DynamicTimerFlag:
-                self._stop_parrallel_timer()
+                self.timer.stop_parallel_timer()
 
-            if self._result_stats:
+            if result_stats:
+                if len(result_stats) > 1:
+                    result_stats = self.numerate_data(result_stats)
+
                 if self.DynamicPrintStatFlag:
                     pass
                 else:
-                    self._print_stats(self._result_stats)
+                    self.print_stats(result_stats)
 
-    def _print_stats(self, data):
-        print(tabulate(data, headers=["Время", "Замедление", "Число", "Результат"]))
+    @staticmethod
+    def print_stats(data):
+        """Arg: data (list of dicts)"""
+        print(tabulate(data, headers='keys'))
 
-    def _dynamic_print_stats(self, data):  # FIXME (работает только в терминале)
+    @classmethod
+    def dynamic_print_stats(cls, data):  # FIXME (работает только в терминале)
+        """Arg: data (list of dicts)"""
         os.system('cls' if os.name == 'nt' else 'clear')
-        self._print_stats(data)
+        cls.print_stats(data)
 
-    def _get_stats(self, function, arg=None) -> list:
+    def _get_stats(self, function, arg=None) -> dict:
         """
         Возвращает статистику по запуску функуии
-
-        return: ["Время работы":, "Замедление", "Аргумент", "Результат"]
         """
         t = timer()
         if arg:
@@ -92,49 +141,30 @@ class TimeProfile:
         else:
             result = function()
         time = timer() - t
-
         slowdown = f"{time - self._last_time:.3%}"
         self._last_time = time
-        return [time, slowdown, arg, result]
+        return {"Время": time, "Замедление": slowdown, "Аргумент": arg,  "Результат": result}
 
-    def _start_parrallel_timer(self):
-        self._timer_has_run_FLAG = True
-        self._timer_is_running = True
-
-        import threading
-        self.parrallel_timer_task = threading.Thread(target=self._parrallel_timer)
-        self.parrallel_timer_task.start()
-
-    def _stop_parrallel_timer(self):  # FIXME
-        self._timer_has_run_FLAG = False
-        self.parrallel_timer_task.join()
-
-        while self._timer_is_running:
-            time.sleep(0.1)
-
-        return 1
-
-    def _parrallel_timer(self):
-        t = timer()
-        self._timer_time = 0.0
-        phases = cycle(['◑', '◒', '◐', '◓'])
-
-        while self._timer_has_run_FLAG:
-            sys.stdout.write(f"\rВремя работы {next(phases)} {self._timer_time:.4}s")
-            sys.stdout.flush()
-            time.sleep(0.05)
-            self._timer_time = timer() - t
-
-        self._timer_is_running = False
-        print(f"\rТаймер закончил работу, время = {self._timer_time:.3}s", end='\n\n')
-        return 1
+    @staticmethod
+    def numerate_data(data):
+        """
+        Нумерует словари
+        Arg: data (list of dicts)
+        """
+        for index, d in enumerate(data):
+            data[index] = {'№': index+1, **d}
+        return data
 
 
 if __name__ == '__main__':
     import time
-
     def slow_func(number):
-        time.sleep(1.1123123123)
+        time.sleep(0.05)
         return number**3
 
     TimeProfile(slow_func, [10_000, 100_000, 1_000_000, 10_000_000, 100_000_000], DynamicTimer=True)
+
+    with ParallelTimer() as ptimer:
+        for i in range(10):
+            time.sleep(0.05)
+

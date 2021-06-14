@@ -27,7 +27,7 @@ class extraHacks(): # Экстра-фишки 3.7+
         v: int  # ... NodeA -> NodeB
         def __str__(self): return f"{self.u} -> {self.v}"
 
-    old = {**dict1, **dict1} # раньше объединение двух словарей в один новый словарь так
+    old = {**dict1, **dict1} # раньше объединение двух словарей в один новый словарь
     new = dict1 | dict2 # сейчас то же самое можно сделать так (python 3.9)
 
     import pdb; pdb.set_trace() # раньше отладка делалась так
@@ -57,13 +57,13 @@ class format():  #  форматирование - подстановка зна
     # Выхлоп / a = 123 + $c /
 
     """Метод format подставляет те значения которые мы передали аргументами на то место где фигурные скобки"""
-    template = "{m} oralcumshot {a}"       # шаблон
-    template.format(a="Artem", m="Masha")  # можем указывать пустые скобки
-    # Выхлоп / Artem oralcumshot Masha /
+    template = "{m} and {a}"       # шаблон
+    template.format(a="cat", m="dog")  # можем указывать пустые скобки
+    # Выхлоп / cat and dog /
 
     "{:.3}".format(0.3141932) # округляет до 3х знаков после запятой
     # Выхлоп / 0.314 /
-    '{:,}'.format(1234) # делает число читаемым
+    '{:,}'.format(1234)
     #  Выхлоп / 1,234/
     "int: {0:d};  hex: {0:#x};  oct: {0:#o};  bin: {0:#b}".format(42)
     #  Выхлоп / int: 42;  hex: 0x2a;  oct: 0o52;  bin: 0b101010/
@@ -256,8 +256,8 @@ class str():  #  работа с текстом
     str_.split('i', 1)  #  Выхлоп/  ['th', 's is my line..wow!!!'] /
     str_.split('w')     #  Выхлоп/ ['this is my line..', 'o', '!!!']  /
 
-    """Функция eval() интерпретирует строку как код. 
-          Если вы импортировали eval(input()) и os, человек может ввести input() os.system('rm -R *'),
+    """eval() интерпретирует строку как код. 
+          Если вы импортировали eval(input()) и os, человек может ввести os.system('rm -R *'),
           который удалит все ваши файлы в вашем домашнем каталоге"""
     eval("1+1")  # Выхлоп /2/
 
@@ -307,7 +307,8 @@ class setAndDict():
     d1.keys() - d2.keys()  #=>  set() ключи 1 словаря без ключей 2
     d1.items() & d2.items()  #=>  {('ZZZ', 30)} общие пары
 
-    """ update() обновляет/дополняет словарь <смотри collections.ChainMap>, перезаписывая существующие ключи новыми значениями. Если ключ в словаре отсутствует, то он добавляется."""
+    """ update() обновляет/дополняет словарь <смотри collections.ChainMap>,
+     перезаписывая существующие ключи новыми значениями. Если ключ в словаре отсутствует, то он добавляется."""
     d1.update({"ZZZ": 31}) # {'AAA': 30, 'ZZZ': 0}
     d1.update([('BBB', 30), ('CCC', 30)]) # {'AAA': 30, 'ZZZ': 0, 'BBB': 30, 'CCC': 30}
 
@@ -329,13 +330,20 @@ class setAndDict():
     sorted(list_to_be_sorted, key=lambda k: (k['name'], k['age']))# по 2 ключам
     # Выхлоп / [{'name': 'Bart', 'age': 10}, {'name': 'Homer', 'age': 39}]/
 
+    import collections
+    """defaultdict() - подкласс словаря
+    Попытка доступа к отсутствующему ключу его создаёт и инициализирует,
+     используя принятую по умолчанию фабрику, то есть в данном примере list()"""
+    dd = collections.defaultdict(list)
+    dd['colors'] += ['red', 'green', 'blue']
+    # Выхлоп / defaultdict(list, {'colors': ['red', 'green', 'blue']})/
 
 
 # ----------------------------------------------------------------------------------------------------------------------
 class pyautogui():
 
     pyautogui.moveTo(90, 300,duration = 1 ) ,""" moveTo(x,y,) /  перемещает курсор мыши в кординаты x,y  /,
-                                                            / co скоростью duration  /"""
+                                                             / co скоростью duration  /"""
 
     pyautogui.click(420,100,duration=1) , """ click(x,y,), /  перемещает курсор мыши в кординаты x,y и кликает левой /
                                                         / co скоростью duration  /
@@ -348,7 +356,7 @@ class pyautogui():
                                                                          / co скоростью interval  /"""
 
     pyautogui.press("enter") ,""" press("enter") /  нажимает 1 клавишу   /,
-                                               /  pyautogui.hotkey("crtl","shift") комбиинирует 2 клавиши /"""
+                                                /  pyautogui.hotkey("crtl","shift") комбиинирует 2 клавиши /"""
 
     pyautogui.keyDown("shift") # нажимает клавишу
     time.sleep(5)              # время задержки
@@ -370,10 +378,10 @@ class TryExcept():
         raise
 
 # ----------------------------------------------------------------------------------------------------------------------
-class file(): # работа с файлами
+class file(): # Работа с файлами
 
     a=open("text.txt","w") , """создаёт файл text.txt"""
-    a.close() # close
+    a.close()
 
     open("text.txt", "rb"), """читает файл text.txt на уровне байт
                                 / read1=file.read()/"""
@@ -398,33 +406,29 @@ class file(): # работа с файлами
 # ----------------------------------------------------------------------------------------------------------------------
 class os():
     import os
-
-    # описание методов
-
-    os.path.isdir("C:\питон37"),"""Выхлоп /  True /"""
-    os.path.isfile("C:\питон37"),"""Выхлоп /  False /"""
-    os.listdir("C:\питон37"),"""Показывает все (даже скрытые) файлы которые есть в директории"""
-    os.path.exists("name_file"),"""/ True or False /показывает существует или нет этот файл"""
+    os.path.isdir(r"C:\Users"), """Выхлоп /  True /"""
+    os.path.isfile(r"C:\Users"),"""Выхлоп /  False /"""
+    os.listdir(r"C:\Users"),"""Показывает все (даже скрытые) файлы которые есть в директории"""
+    os.path.exists("test.txt"),"""/ True or False /показывает существует или нет этот файл"""
 
     for current_dir, dirs, files in os.walk("."):""" возвращает кортеж из 3 элементов                """
-         print(current_dir, dirs, files) ,     """    1 - строковое представление текущей директории   """
-                                               """    2 - список из всех подпапок                      """
-                                               """    3 - список всех файлов                            """
+         print(current_dir, dirs, files) ,     """    1 - строковое представление текущей директории """
+                                               """    2 - список из всех подпапок                    """
+                                               """    3 - список всех файлов                         """
 
-    os.path.expanduser("~") """получаем корневую директорию /home/artem/"""
-    os.getcwd(), """выводит путь до текущей папки / C:\ю1\ /"""
-    os.path.abspath("name_file"),"""выводит полный путь до текущей папки / C:\ю1\.name_file /"""
+    os.path.expanduser("~") """Возвращает корневую директорию C:/Users/admin"""
+    os.getcwd(), """Выводит путь до текущей папки / C:/Users/admin/Desktop /"""
+    os.path.abspath("your_text"),"""Тоже самое, что os.getcwd() + '/your_text' -> C:/Users/admin/Desktop/your_text"""
 
-    os.system("C:\питон37"),"""иметация терминала  /os.system("ping google.com") -проврка интернета
-                                                  /os.system("type файл") -просмотр файла"""
+    os.system("C:\питон37"),"""Имитация терминала  /os.system("ping google.com")
+                                                  /os.system("type test.txt") - просмотр файла"""
 
-    os.path.getsize("файл"),"""размер файла в байтах"""
+    os.path.getsize("test.txt"),"""Размер файла в байтах"""
 
-    os.path.join(dir, name),"""было (  C:\Users стало -> C:\Users\ю1\ name  )"""
-    os.chdir("direktoria"),"""может перемещать по директориям БЫЛО(  C:\Users\ю1 стало -> C:\Users\ю1\ directoria  ) """
+    os.path.join(r'C:\Users', 'admin'),"""(  C:/Users стало -> C:/Users/admin  )"""
+    os.chdir("direktoria"), """Может перемещать по директориям БЫЛО(  C:/Users/admin стало -> C:/Users/admin/directoria  ) """
 
-    os.path.splitext(dir)[1] ==  ,"""/.py/смотрит на расширение файла"""
-    os.path.splitext(path)    ,  """ / разбивает путь на пару (root, ext), где ext начинается с точки/"""
+    os.path.splitext(r'C:\Users\admin\file.cp') """ / Разбивает путь на пару (root, ext), где ext начинается с точки /( C:/Users/admin/file', '.py')"""
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -547,9 +551,8 @@ class cook():
     list(accumulate(['i', 'have','no','space']))
     # Выхлоп / ['i', 'ihave', 'ihaveno', 'ihavenospace'] /
 
-    """ Сounter помогает найти количество повторений слова"""
+    """ Сounter помогает найти количество повторений"""
     words = ['spam', 'egg', 'spam', 'counter', 'counter', 'counter']
-
     word_count = collections.Counter()
     for word in words:
         word_count[word] += 1

@@ -5,26 +5,17 @@ from math import sqrt
 def gcd(a, b):
     """Computes the greatest common divisor of the integers a and b
     >>> gcd(12, 18)
-        6
+    ... 6
     """
     while b: a, b = b, a % b
     return abs(a)
-
-
-def sum_of_divisors_range(LIMIT) -> list:
-    """Find the sum of proper divisors for each number"""
-    sum_of_divisors = [0] * LIMIT
-    for i in range(1, len(sum_of_divisors)):
-        for j in range(i * 2, len(sum_of_divisors), i):
-            sum_of_divisors[j] += i
-    return sum_of_divisors
 
 
 def divisors(n):
     """Find the divisors for the number
 
     >>> divisors(220)
-       284     #=> [1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110]
+    ...  {1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110, 220}
     """
     factors = set()
     sqrt_n = sqrt(n)
@@ -41,9 +32,9 @@ def is_prime(n: int) -> bool:
     Determines if the natural number n is prime.
 
     >>> is_prime(10)
-    False
+    ... False
     >>> is_prime(11)
-    True
+    ... True
     """
     # simple test for small n: 2 and 3 are prime, but 1 is not
     if n <= 3:
@@ -68,7 +59,7 @@ def bit_sieve(n) -> list:
     The time complexity of this algorithm is O(nloglog(n).
 
     >>> bit_sieve(10)
-    [False, False, True, True, False, True, False, True, False, False]
+    ... [False, False, True, True, False, True, False, True, False, False]
     """
     primes = [True] * n
     primes[0], primes[1] = False, False  # числа 0 и 1

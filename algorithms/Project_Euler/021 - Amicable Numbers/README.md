@@ -59,7 +59,7 @@ def solution(LIMIT):
         for j in range(i * 2, len(sum_of_divisors), i):
             sum_of_divisors[j] += i
 
-    # Найдите все дружественные пары в пределах досягаемости
+    # Находим все дружественные пары в пределах досягаемости
     total = 0
     for i in range(1, len(sum_of_divisors)):
         j = sum_of_divisors[i]
