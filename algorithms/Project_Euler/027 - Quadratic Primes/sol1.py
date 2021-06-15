@@ -92,7 +92,7 @@ def solution(LIMIT):
                             or temp_prime_formula > primesRange[-1]
                             and is_prime(temp_prime_formula)
                     ):
-                        break  # нам нужно n
+                        break
                     # assert n > LIMIT
                 if n > solution.n:
                     solution.n = n

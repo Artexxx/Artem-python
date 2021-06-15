@@ -70,7 +70,7 @@ def solution(words: list):
     """
     Возращает количество треугольных слов
     >>> solution()
-    ... 162
+    162
     """
     return sum(1
                for word in words

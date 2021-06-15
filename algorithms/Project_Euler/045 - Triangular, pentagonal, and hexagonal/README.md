@@ -41,9 +41,9 @@ def generate_polygonal(type_number):
     """Генерирует фиругные числа
 
     >>> generate_polygonal(type_number=3)
-    ...:  1 3 6 10 15 21 28 36 ...
+    1 3 6 10 15 21 28 36
     >>> generate_polygonal(type_number=4)
-    ...:  1 4 9 16 25 36 49 64 ...
+    1 4 9 16 25 36 49 64
     """
     c = type_number - 2
     a = b = 1
@@ -63,7 +63,7 @@ def solution(start_number=40755):
     Возращает следующее треугольное число, являющееся также пятиугольным и шестиугольным.
 
     >>> solution()
-    ...: 1533776805
+    1533776805
     """
 
     hexagonal = generate_polygonal(type_number=6)

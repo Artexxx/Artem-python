@@ -5,7 +5,7 @@ def binary_search(list_, item):
     [-] список должен быть отсортирован, cложномть сортировки: n lg n
 
     >>> binary_search([1, 2, 4, 5, 6, 9], 6)
-    ... 4
+    4
     """
     start = 0
     stop = len(list_)
@@ -32,7 +32,7 @@ def binary_search_recursive(list_, start, stop, item):
     >>> list_names = ["john", "mark", "ronald", "sarah"]
     >>> start, stop = 0, len(list_names)
     >>> binary_search_recursive(list_names, start, stop, "sarah")
-    ... 4
+    4
     """
 
     while start <= stop:

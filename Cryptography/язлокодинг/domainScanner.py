@@ -13,7 +13,7 @@
 Выхлоп:
     webmin.benz303.github.com
     status.github.com
-   ...    ...     ...     ...
+           ...
     ivan7645.github.com
     codespaces.github.com
     mroonga.github.com

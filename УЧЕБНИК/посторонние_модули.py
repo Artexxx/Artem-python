@@ -330,9 +330,9 @@ class cv2():
     imgResize = cv2.resize(img, (100, 100))              # изменит размер
     mini = cv2.resize(img, dsize=(0, 0), fx=0.5, fy=0.5) # уменьшит размер в 2 раза
 
-    imgCropped = img[0:700, 500:900]        # обрезать
+    imgCropped = img[0:700, 500:900] # обрезать
 
-    """ запуск онлайн камеры"""
+    """ Запуск онлайн камеры"""
     cap = cv2.VideoCapture(0)
     while True:
         success, img = cap.read()
@@ -341,7 +341,7 @@ class cv2():
     cap.release()
     cv2.destroyAllWindows()
 
-    """ создать пустую картинку (h = 480, w = 640)"""
+    """ Создать пустую картинку (h = 480, w = 640)"""
     img = np.zeros((480, 640, 3))  # 480 таблиц по 640 строк и 3 столбцам
     img[:] = 0, 255, 70  # покрасить всё изображение
     cv2.line(img, (0, 0), (300, 300), (0, 0, 255), 10)        # нарисовать линию (закруглена)
@@ -350,11 +350,11 @@ class cv2():
     # написать текст размером=2 и толщиной=3
     cv2.putText(img, "ass", (100, 100), cv2.FONT_HERSHEY_COMPLEX, 2, (0, 0, 255), 3)
 
-    """ склеить 2 фотки"""
+    """ Склеить 2 фотки"""
     imgVert = np.vstack((img, img))
     imgHor = np.hstack((img, img))
 
-    """" создать track bar"""
+    """" Создать track bar"""
     def empty(): ...
     cv2.namedWindow("TrackBars")
     cv2.resizeWindow('TrackBars', 640, 200)

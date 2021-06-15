@@ -19,7 +19,7 @@ def is_double_base_palindrome(num: int) -> bool:
     Возвращает True, если число `num` по основанию {10} и {2} является полиндромом.
     num (int) - натуральное число в 10 системе счисления
     >>> is_double_base_palindrome(585)
-    ... True #585 = 1001001001 (binary)
+    True #585 = 1001001001 (binary)
     """
     num_str = str(num)
     bin_num_str = bin(num)[2:]

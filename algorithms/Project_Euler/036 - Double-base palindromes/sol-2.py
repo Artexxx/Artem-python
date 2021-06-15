@@ -20,15 +20,14 @@ import itertools
 def make_bit_palindrome(x: int, base: int, oddPalindrome: bool) -> int:
     """Создаёт 10-тичное число, которое палиндром в 2-ой системе, дублируюя x в 2-ой; если x c нечетным количеством знаков, то `средний бит` пропускается
 
-    5 - 101 (binary)
-    >>> make_bit_palindrome(5, 2, oddPalindrome=False)
-    ... 45 # 101101 (binary)
-    585 - 1001001001 (binary)
-    >>> make_bit_palindrome(585, 2, oddPalindrome=False)
-    ... 599625 # 0b10010010011001001001 (binary)
-    251 - 11111011 (binary)
-    >>> make_bit_palindrome(251, 2, oddPalindrome=True)
-    ... 32223 # 111110111011111 (binary)
+    >>> make_bit_palindrome(5, 2, oddPalindrome=False) # 5 - 101 (binary)
+    45 # 101101 (binary)
+
+    >>> make_bit_palindrome(585, 2, oddPalindrome=False) # 585 - 1001001001 (binary)
+    599625 # 0b10010010011001001001 (binary)
+
+    >>> make_bit_palindrome(251, 2, oddPalindrome=True) # 251 - 11111011 (binary)
+    32223 # 111110111011111 (binary)
     """
     res = x
     if oddPalindrome:

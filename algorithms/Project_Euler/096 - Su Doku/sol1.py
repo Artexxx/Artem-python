@@ -18,11 +18,11 @@ from timeit import default_timer as timer
 with open('p096_sudoku.txt') as f:
     lines = f.read().split()
 
-grids = np.empty(shape=(50, 9, 9), dtype='uint8')
+boards = np.empty(shape=(50, 9, 9), dtype='uint8')
 for i in range(50):
     for row in range(9):
         for col in range(9):
-            grids[i, row, col] = lines[i * 11 + row + 2][col]
+            boards[i, row, col] = lines[i * 11 + row + 2][col]
 
 
 def solution(n):
@@ -31,7 +31,7 @@ def solution(n):
     """
     result_sum = 0
     t = timer()
-    for grid in grids[:n]:
+    for grid in boards[:n]:
         g = grid.tolist()
         if not sudoku.solve(g):
             print("*Error* in solve\n", g)

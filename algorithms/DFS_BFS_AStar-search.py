@@ -48,8 +48,6 @@ class Maze:
     def __str__(self) -> str:
         """
         Выводит красиво отформатированную версию лабиринта для печати
-        >>> new_maze = Maze()
-        ... print(new_maze)
         """
         output = ""
         for row in self._grid:
@@ -101,9 +99,6 @@ class Maze:
 class Node():
     """
     Помогает при переходе из одного состояния (клетки) в другое:
-
-    >>> current_node.state() #=> MazeLocation(row=9, column=9)
-    ... current_node.parent.state() #=> MazeLocation(row=9, column=8)
     """
 
     def __init__(self, state, parent, cost: float = 0.0, heuristic: float = 0.0):

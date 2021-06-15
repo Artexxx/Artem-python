@@ -27,7 +27,7 @@ def is_double_base_palindrome(num: int) -> bool:
     Возвращает True, если число `num` по основанию {10} и {2} является полиндромом.
     num (int) - натуральное число в 10 системе счисления
     >>> is_double_base_palindrome(585)
-    ... True #585 = 1001001001 (binary)
+    True #585 = 1001001001 (binary)
     """
     num_str = str(num)
     bin_num_str = bin(num)[2:]
@@ -59,13 +59,15 @@ def make_bit_palindrome(x: int, base: int, oddPalindrome: bool) -> int:
 
     5 - 101 (binary)
     >>> make_bit_palindrome(5, 2, oddPalindrome=False)
-    ... 45 # 101101 (binary)
+    45 # 101101 (binary)
+    
     585 - 1001001001 (binary)
     >>> make_bit_palindrome(585, 2, oddPalindrome=False)
-    ... 599625 # 0b10010010011001001001 (binary)
+    599625 # 0b10010010011001001001 (binary)
+    
     251 - 11111011 (binary)
     >>> make_bit_palindrome(251, 2, oddPalindrome=True)
-    ... 32223 # 111110111011111 (binary)
+    32223 # 111110111011111 (binary)
     """
     res = x
     if oddPalindrome:

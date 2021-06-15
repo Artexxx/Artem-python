@@ -19,9 +19,9 @@ def generate_polygonal(type_number):
     """Генерирует фиругные числа
 
     >>> generate_polygonal(type_number=3)
-    ...:  1 3 6 10 15 21 28 36 ...
+    1 3 6 10 15 21 28 36 ...
     >>> generate_polygonal(type_number=4)
-    ...:  1 4 9 16 25 36 49 64 ...
+    1 4 9 16 25 36 49 64 ...
     """
     c = type_number - 2
     a = b = 1
@@ -46,7 +46,7 @@ def solution():
     """
     Возращает разность пары пятиугольных чисел p и q, для которых сумма и разность являются пятиугольными числами.
     >>> solution()
-    ...: 5482660 # diff{7042750 1560090}
+    5482660 # diff{7042750 1560090}
     """
     p, q = next(generate_pentagonals_pair())
     return p - q

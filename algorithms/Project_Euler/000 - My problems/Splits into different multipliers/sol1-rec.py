@@ -15,7 +15,7 @@ def get_custom_factorization(N, min_lim_factor):
     Возвращает множители числа N в пределе [min_lim_factor: sqrt(N)]
 
     >>> get_custom_factorization(48, min_lim_factor=4)
-    ... [4, 6, 48] # нет 2 и 3
+    [4, 6, 48] # нет 2 и 3
     """
     result_factors = []
     i = 1

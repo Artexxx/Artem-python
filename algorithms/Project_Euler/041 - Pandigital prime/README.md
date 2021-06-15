@@ -32,7 +32,7 @@ def solution():
     """
     Возращает нибольшее n-значное пан-цифровое простое число
     >>> solution()
-    ... 7652413
+    7652413
     """
     for perm_lst in permutations(list('7654321')):
         pandigital = int(''.join(perm_lst))

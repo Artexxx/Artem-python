@@ -5,25 +5,44 @@ from math import sqrt
 def gcd(a, b):
     """Computes the greatest common divisor of the integers a and b
     >>> gcd(12, 18)
-    ... 6
+    6
     """
     while b: a, b = b, a % b
     return abs(a)
 
 
-def divisors(n):
+def divisors(n) -> list:
     """Find the divisors for the number
 
     >>> divisors(220)
-    ...  {1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110, 220}
+    [1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110, 220]
     """
-    factors = set()
+    factors = list()
     sqrt_n = sqrt(n)
     for i in range(1, int(sqrt_n + 1)):
         if n % i == 0:
-            factors.add(i)
-            if i != sqrt(n):
-                factors.add(n//i)
+            factors.append(i)
+            if i != sqrt_n:
+                factors.append(n//i)
+    return factors
+
+
+def factorint(n):
+    """Return a list of n's prime factors
+
+    >>> factorint(220)
+    [2, 2, 5, 11] # 2*2*5*11 == 220
+    """
+    i = 2
+    factors = []
+    while i * i <= n:
+        if n % i != 0:
+            i += 1
+        else:
+            n //= i
+            factors.append(i)
+    if n > 1:
+        factors.append(n)
     return factors
 
 
@@ -32,9 +51,9 @@ def is_prime(n: int) -> bool:
     Determines if the natural number n is prime.
 
     >>> is_prime(10)
-    ... False
+    False
     >>> is_prime(11)
-    ... True
+    True
     """
     # simple test for small n: 2 and 3 are prime, but 1 is not
     if n <= 3:
@@ -59,7 +78,7 @@ def bit_sieve(n) -> list:
     The time complexity of this algorithm is O(nloglog(n).
 
     >>> bit_sieve(10)
-    ... [False, False, True, True, False, True, False, True, False, False]
+    [False, False, True, True, False, True, False, True, False, False]
     """
     primes = [True] * n
     primes[0], primes[1] = False, False  # числа 0 и 1

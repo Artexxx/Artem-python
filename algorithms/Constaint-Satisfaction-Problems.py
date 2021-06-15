@@ -187,7 +187,7 @@ class MSTableConstraints:
     [*] Строка, столбец или диагональ не проверяются если в них находится хотя-бы один пустой символ (-1)
 
     >>> t = {1: 2, 2: 7, 3: 6, 4: 9, 5: 5, 6: 1, 7: 4, 8: 3, 9: 8}
-    >>> MSTableConstraints(t, 3).check_table()
+    ... MSTableConstraints(t, 3).check_table()
     True
     """
 
@@ -315,7 +315,7 @@ class MapColoringConstraint(Constraint[str, str]):
     Проверяет, имеют ли две территории один и тот же цвет.
 
     >>> mcc = MapColoringConstraint('a', 'b')
-    ... mcc.satisfied(dict(a='blue', b='red'))  # => True
+    mcc.satisfied(dict(a='blue', b='red'))  # => True
     >>> mcc.satisfied(dict(a='orange', b='orange'))  # => False
     """
 

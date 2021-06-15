@@ -64,9 +64,9 @@ def is_goldbach(n):
 
 
 def solution(start=1):
-    """Находит следующее нечетное составное число, которое нельзя записать в виде суммы простого числа и удвоенного квадрата
     """
-    start += 2 if start%2 else 1; assert start % 2 != 0
+    Находит следующее нечетное составное число, которое нельзя записать в виде суммы простого числа и удвоенного квадрата
+    """
     for n in itertools.count(start=start, step=2):
         if not is_goldbach(n):
             return n
@@ -77,4 +77,4 @@ if __name__ == '__main__':
     ### Run Time-Profile Table ###
     import sys; sys.path.append('..')
     from time_profile import TimeProfile
-    TimeProfile(solution, [1, 5777, 5993], DynamicTimer=True, DynamicPrintStat=True)
+    TimeProfile(solution, [3, 5779], DynamicTimer=True)
