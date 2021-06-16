@@ -11,7 +11,7 @@ from string import ascii_uppercase
 message = input("Write the message: ").upper()
 
 alphaDefault = ascii_uppercase
-alphaReverse = alphaDefault[::-1]
+alphaReverse = alphaDefault.
 
 final = ""
 for symbolMessage in message:

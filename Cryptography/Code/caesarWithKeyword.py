@@ -8,6 +8,7 @@
 Final message: NCKXIDQOXNRIQCG
 """
 from string import ascii_uppercase
+from copy import copy
 
 symbolsAlpha = list(ascii_uppercase)
 
@@ -37,8 +38,8 @@ def replace(alpha, key):
 
 
 def encryptDecrypt(mode, message, key, final=""):
-    alphaS = symbolsAlpha[::]
-    alphaC = replace(insert(remove(symbolsAlpha[::], stringKey)), key)
+    alphaS = symbolsAlpha.copy()
+    alphaC = replace(insert(remove(symbolsAlpha.copy(), stringKey)), key)
     for symbol in message:
         if mode == 'E':
             final += alphaC[alphaS.index(symbol)]

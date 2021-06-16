@@ -24,7 +24,7 @@ class extraHacks(): # Экстра-фишки 3.7+
     @dataclass # (frozen=True) запрет на изменение полей
     class Edge: # создаёт автоматически метод  __init__(), который создайт экземпляры
         u: int  # >>> print(Edge('NodeA', 'NodeB'))
-        v: int  # ... NodeA -> NodeB
+        v: int  # NodeA -> NodeB
         def __str__(self): return f"{self.u} -> {self.v}"
 
     old = {**dict1, **dict1} # раньше объединение двух словарей в один новый словарь

@@ -1,3 +1,4 @@
+import collections
 import math
 from math import sqrt
 
@@ -27,7 +28,7 @@ def divisors(n) -> list:
     return factors
 
 
-def factorint(n):
+def prime_factorization1(n):
     """Return a list of n's prime factors
 
     >>> factorint(220)
@@ -44,6 +45,36 @@ def factorint(n):
     if n > 1:
         factors.append(n)
     return factors
+
+
+def memoize(f):
+    cache = {}
+
+    def wrapper(*args):
+        if not args in cache:
+            cache[args] = f(*args)
+            # print(f"[#] F(",int(*args), ')\t => \t', dict(cache[args])) # TEST OUTPUT
+        return cache[args]
+
+    return wrapper
+
+
+@memoize
+def prime_factorization2(n):
+    """Return a Counter dict of n's prime factors
+
+     >>> prime_factorization(220)
+    {2: 2, 5: 1, 11: 1} # 2 * 2 * 5 * 11
+    """
+    for i in range(2, math.floor(math.sqrt(n) + 1)):
+        if n % i == 0:
+            old_factorization = prime_factorization2(n / i).copy()
+            old_factorization[i] += 1
+            return old_factorization
+    # Нет делителей -> x простое число
+    res = collections.defaultdict(int)
+    res[n] = 1
+    return res
 
 
 def is_prime(n: int) -> bool:

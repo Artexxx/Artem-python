@@ -44,6 +44,10 @@ def memoize(f):
 
 @memoize
 def prime_factorization(x):
+    """
+     >>> prime_factorization(220)
+    {2: 2, 5: 1, 11: 1} # 2 * 2 * 5 * 11
+    """
     for i in range(2, math.floor(math.sqrt(x) + 1)):
         if x % i == 0:
             old_factorization = prime_factorization(x / i).copy()
@@ -81,8 +85,7 @@ def solution(N):
 
 
 if __name__ == '__main__':
-    solution(90000)
-    # ### Run Time-Profile Table ###
-    # import sys; sys.path.append('..')
-    # from time_profile import my_time_this
-    # my_time_this(solution, [50, 250, 500, 1000, 3000, ])
+    ### Run Time-Profile Table ###
+    import sys; sys.path.append('..')
+    from time_profile import TimeProfile
+    TimeProfile(solution, [50, 250, 500, 1000, 3000, ])
