@@ -5,12 +5,11 @@
 
 Какое число является N-ым простым числом?
 
-  №     Время  Замедление      Число    Результат
----  --------  ------------  -------  -----------
-  1  0.246657  24.666%         20000       224737
-  2  0.694757  44.81%          40000       479909
-  3  1.95447   125.97%         80000      1020379
-  4  3.67302   171.85%        120000      1583539
+  №       Время  Замедление      Аргумент    Результат
+---  ----------  ------------  ----------  -----------
+  1   0.0920908  9.209%             10001       104743 (ответ)
+  2   2.86101    276.891%          100001      1299721
+  3  92.5656     8970.461%        1000001     15485867
 """
 from math import sqrt
 
@@ -27,16 +26,8 @@ def is_prime(n):
 def solution(n):
     """Возвращает N-е простое число.
 
-    >>> solution(6)
-    13
-    >>> solution(1)
-    2
-    >>> solution(3)
-    5
-    >>> solution(20)
-    71
-    >>> solution(100)
-    541
+    >>> solution(10001)
+    104743
     """
     count_primes = 0
     index = 1
@@ -52,8 +43,9 @@ def solution(n):
 
 
 if __name__ == "__main__":
-    print(solution(int(input().strip())))
-    # ### Run Time-Profile Table ###
-    # import sys;sys.path.append('..')
-    # from time_profile import my_time_this
-    # my_time_this(solution, [20_000,  40_000,  80_000, 120_000])
+    # print(solution(int(input().strip())))
+    ### Run Time-Profile Table ###
+    import sys;sys.path.append('..')
+    from time_profile import TimeProfile
+    TimeProfile(solution, [10001, 100001, 1000001])
+

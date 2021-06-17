@@ -6,57 +6,53 @@
 Какое число является N-ым простым числом?
 
 
-  №     Время  Замедление      Число    Результат
----  --------  ------------  -------  -----------
-  1  0.652925  65.293%        200000      2750125
-  2  0.99529   34.24%         300000      4256193
-  3  1.36281   36.75%         400000      5800051
-  4  2.15794   79.51%         600000      8960445
+  №      Время  Замедление      Аргумент    Результат
+---  ---------  ------------  ----------  -----------
+  1  0.0153429  1.534%             10001       104743 (ответ)
+  2  0.254947   23.960%           100001      1299721
+  3  3.19012    293.517%         1000001     15485867
 """
 import math
 
 
 def bit_sieve(n) -> list:
-    ''' Решето Эратосфена.
-    В списке bits сбрасываются биты, имеющие составные номера, биты с простыми номерами == 1.
-    i-му по порядку элементу будет соответствовать 1, если i -- простое и 0 иначе.
-
+    """
+    Решето Эратосфена.
     Сложность: nloglog(n).
-    '''
-    bits = [1] * (n + 1)
+    """
+    bits = [True] * (n + 1)
     for index in range(2, int(math.sqrt(n))):
-        if bits[index]:  # если i -- простое
+        if bits[index]:  # если i - простое
             for j in range(index * index, n + 1, index):  # занулить все ему кратные
-                bits[j] = 0
+                bits[j] = False
     return bits
 
 
 def solution(n):
     """Возвращает N-е простое число.
 
-    >>> solution(6)
-    13
-    >>> solution(1)
-    2
-    >>> solution(3)
-    5
-    >>> solution(20)
-    71
-    >>> solution(100)
-    541
+    >>> solution(10001)
+    104743
     """
     # N-ое простое не превосходит 1,5 N ln( N ) при N > 1:
     sieve = bit_sieve(int(1.5 * n * math.log(n)) + 1)
-    index = 0
-    while n:
-        n -= sieve[index]
+
+    count_primes = 0
+    index = 1
+    while count_primes != n and index < 3:
         index += 1
-    return index + 1
+        if sieve[index]:
+            count_primes += 1
+    while count_primes != n:
+        index += 2
+        if sieve[index]:
+            count_primes += 1
+    return index
 
 
 if __name__ == "__main__":
-    print(solution(int(input().strip())))
-    # ### Run Time-Profile Table ###
-    # import sys;sys.path.append('..')
-    # from time_profile import my_time_this
-    # my_time_this(solution, [200_000, 300_000, 400_000, 600_000])
+    # print(solution(int(input().strip())))
+    ### Run Time-Profile Table ###
+    import sys;sys.path.append('..')
+    from time_profile import TimeProfile
+    TimeProfile(solution, [10001, 100001, 1000001])

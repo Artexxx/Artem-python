@@ -48,33 +48,56 @@ b = prime
 
 
 ```python
+def primes_sieve(n) -> list:
+    ''' Решето Эратосфена.
+
+    >>> primes_sieve(50)
+    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+    '''
+    primes = [True] * n
+    primes[0], primes[1] = False, False  # числа 0 и 1
+
+    number_of_multiples = len(primes[4::2])
+    primes[4::2] = [False] * number_of_multiples
+
+    for p in range(3, int(math.sqrt(n)) + 1, 2):
+        if primes[p]:
+            number_of_multiples = len(primes[p * p::p * 2])
+            primes[p * p::p * 2] = [False] * number_of_multiples  # занулить все ему кратные
+    return [i for (i, isprime) in enumerate(primes) if isprime]
+
+
 def solution(LIMIT):
-    primesRange = bit_sieve_optimized(LIMIT)
+    """ Возращает произведение коэффициентов a и b квадратичного выражения, согласно которому можно получить максимальное
+        количество простых чисел для последовательных значений n, начиная с значения n=0.
+
+    >>> solution(1000)
+    -59231
+    >>> solution(200)
+    -4925
+    """
+    primes = primes_sieve(LIMIT)
 
     class solution:
         n = 0
         a = 0
         b = 0
 
-    for i in range(0, len(primesRange)):
-        b = primesRange[i]
+    for i in range(0, len(primes)):
+        b = primes[i]
         for a in range(LIMIT * -1 + 1, LIMIT):
             if not (b == 2 and a % 2 != 0):
                 for n in itertools.count(1):
                     temp_prime_formula = n ** 2 + a * n + b
-                    if not (temp_prime_formula in primesRange
-                            or temp_prime_formula > primesRange[-1]
-                            and is_prime(temp_prime_formula)
-                    ):
-                        break  # нам нужно n
+                    if not (temp_prime_formula in primes):
+                        break
                     # assert n > LIMIT
                 if n > solution.n:
                     solution.n = n
                     solution.a = a
                     solution.b = b
-
+    print(f"n^2 + an + b = n^2+{solution.a}*n+{solution.b}")
     return solution.a * solution.b
-
 ```
 ```text
   №      Время  Замедление      Число    Результат

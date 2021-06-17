@@ -56,9 +56,7 @@ __Идея:__ Если вывести формулу треугольниног�
 <img src="https://user-images.githubusercontent.com/54672403/99879115-9e822300-2c1b-11eb-8e34-50a638023e1f.jpg">
 
 ``` python
-as_int = lambda n: n == int(n)
-
-isTrNumber = lambda t: as_int((sqrt(1 + 8*t) - 1) / 2)
+isTrNumber = lambda t: ((sqrt(1 + 8*t) - 1) / 2).is_integer()
 
 
 def word_value(word):

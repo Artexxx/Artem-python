@@ -19,12 +19,6 @@ def spiralDiagonals(n):
 
     >>> spiralDiagonals(1001)
     669171001
-    >>> spiralDiagonals(500)
-    82959497
-    >>> spiralDiagonals(100)
-    651897
-    >>> spiralDiagonals(50)
-    79697
     >>> spiralDiagonals(10)
     537
     """

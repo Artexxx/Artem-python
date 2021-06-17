@@ -17,40 +17,19 @@
 простых чисел для последовательных значений n, начиная со значения n=0.
 
 
-  №      Время  Замедление      Число    Результат
----  ---------  ------------  -------  -----------
-  1  9.52e-05   0.010%             10          -21
-  2  0.0071047  0.70%             100        -1455
-  3  0.808275   80.12%           1000       -59231
+  №      Время  Замедление      Аргумент    Результат
+---  ---------  ------------  ----------  -----------
+  1  7.64e-05   0.008%                10          -15
+  2  0.0039259  0.385%               100        -1411
+  3  0.727217   72.329%             1000       -59231
 """
 import itertools, math
 
 
-def is_prime(n: int) -> bool:
-    """Determines if the natural number n is prime."""
-
-    # simple test for small n: 2 and 3 are prime, but 1 is not
-    if n <= 3: return n > 1
-
-    # check if multiple of 2 or 3
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-
-    # search for subsequent prime factors around multiples of 6
-    max_factor = int(math.sqrt(n))
-    for i in range(5, max_factor + 1, 6):
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-    return True
-
-
-def bit_sieve_optimized(n) -> list:
+def primes_sieve(n) -> list:
     ''' Решето Эратосфена.
-    В списке primes сбрасываются биты, имеющие составные номера, биты с простыми номерами == True.
-    i-му по порядку элементу будет соответствовать True, если i -- простое и False иначе.
-    Сложность: nloglog(n).
 
-    >>> bit_sieve_optimized(50)
+    >>> primes_sieve(50)
     [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
     '''
     primes = [True] * n
@@ -68,30 +47,27 @@ def bit_sieve_optimized(n) -> list:
 
 def solution(LIMIT):
     """ Возращает произведение коэффициентов a и b квадратичного выражения, согласно которому можно получить максимальное
-        количество простых чисел для последовательных значений n, начиная со значения n=0.
+        количество простых чисел для последовательных значений n, начиная с значения n=0.
 
     >>> solution(1000)
     -59231
     >>> solution(200)
     -4925
     """
-    primesRange = bit_sieve_optimized(LIMIT)
+    primes = primes_sieve(LIMIT)
 
     class solution:
         n = 0
         a = 0
         b = 0
 
-    for i in range(0, len(primesRange)):
-        b = primesRange[i]
+    for i in range(0, len(primes)):
+        b = primes[i]
         for a in range(LIMIT * -1 + 1, LIMIT):
             if not (b == 2 and a % 2 != 0):
                 for n in itertools.count(1):
                     temp_prime_formula = n ** 2 + a * n + b
-                    if not (temp_prime_formula in primesRange
-                            or temp_prime_formula > primesRange[-1]
-                            and is_prime(temp_prime_formula)
-                    ):
+                    if not (temp_prime_formula in primes):
                         break
                     # assert n > LIMIT
                 if n > solution.n:
@@ -103,8 +79,8 @@ def solution(LIMIT):
 
 
 if __name__ == '__main__':
-    print(solution(1000))
-    # ### Run Time-Profile Table ###
-    # import sys; sys.path.append('..')
-    # from time_profile import my_time_this
-    # my_time_this(solution, [10, 100, 1000])
+    # print(solution(1000))
+    ### Run Time-Profile Table ###
+    import sys; sys.path.append('..')
+    from time_profile import TimeProfile
+    TimeProfile(solution, [10, 100, 1000])

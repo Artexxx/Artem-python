@@ -13,9 +13,7 @@ n-ый член последовательности треугольных чи
 """
 from math import sqrt
 
-as_int = lambda n: n == int(n)
-
-isTrNumber = lambda t: as_int((sqrt(1 + 8*t) - 1) / 2)
+isTrNumber = lambda t: ((sqrt(1 + 8*t) - 1) / 2).is_integer()
 
 
 def word_value(word):

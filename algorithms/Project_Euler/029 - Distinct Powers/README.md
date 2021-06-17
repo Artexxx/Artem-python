@@ -35,7 +35,7 @@ def solution(n):
     for a in range(2, N):
         for b in range(2, N):
             currentPow = a ** b  # вычисляет текущую степень
-            collectPowers.add(currentPow)  # добавлеям результат в множество
+            collectPowers.add(currentPow)
     return len(collectPowers)
 ```
 ```text

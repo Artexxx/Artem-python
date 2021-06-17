@@ -27,16 +27,6 @@ def solution(n):
 
     >>> solution(100)
     9183
-    >>> solution(50)
-    2184
-    >>> solution(20)
-    324
-    >>> solution(5)
-    15
-    >>> solution(2)
-    1
-    >>> solution(1)
-    0
     """
     collectPowers = set()
 
@@ -44,7 +34,7 @@ def solution(n):
     for a in range(2, N):
         for b in range(2, N):
             currentPow = a ** b  # вычисляет текущую степень
-            collectPowers.add(currentPow)  # добавлеям результат в множество
+            collectPowers.add(currentPow)
     return len(collectPowers)
 
 

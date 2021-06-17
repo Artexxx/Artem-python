@@ -17,7 +17,7 @@ def sum_digit_power(number, degree) -> int:
     """
     Возвращает сумму циф числа `number`, которые были возведены в степень `degree`
 
-    >>> sum_digit_power(4151)
+    >>> sum_digit_power(4151, 5)
     4151 #=> sum(1024, 1, 3125, 1)
     """
     return sum(pow(int(digit), degree) for digit in str(number))

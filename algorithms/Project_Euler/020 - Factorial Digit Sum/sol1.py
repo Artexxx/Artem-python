@@ -12,7 +12,6 @@ n! означает n × (n − 1) × ... × 3 × 2 × 1
   2   0.0029291  0.29%           1000        10539
   3   0.431312   42.84%         10000       149346
   4   7.3457     891.43%        50000       903555
-
 """
 
 
@@ -28,7 +27,7 @@ def split_and_add(number):
     while number > 0:
         last_digit = number % 10
         sum_of_digits += last_digit
-        number = number // 10  # Удаление last_digit из заданного числа
+        number = number // 10
     return sum_of_digits
 
 

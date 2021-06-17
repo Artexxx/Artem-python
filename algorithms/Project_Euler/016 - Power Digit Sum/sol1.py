@@ -28,7 +28,7 @@ def solution(power):
 
 
 def solution2(power):
-    """Аналогичное решение без использования строк"""
+    """Аналогичное решение, без использования строк"""
     num = 2 ** power
     result_num = 0
     while num:
