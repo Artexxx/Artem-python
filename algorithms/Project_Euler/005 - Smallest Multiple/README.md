@@ -19,17 +19,6 @@ solution(22) # => 232792560
     - смотри 3 Решение
 
 ``` python
-def is_prime(n):
-    if n == 0 or n == 1:
-        return False
-    i = 2
-    while i ** 2 <= n:
-        if n % i == 0:
-            return False
-        i += 1
-    return True
-
-
 def primes_mutiples_until(end):
     """
     Разделяет все числа от [1 до end] на простые и составные.
@@ -90,7 +79,7 @@ def solution(end):
 import math
 
 def primeFactors(x) -> list:
-    """ Возращает простые чисела, образующие х
+    """ Возращает простые числа, образующие х
 
     >>> primeFactors(24)
     [2, 2, 2, 3]

@@ -63,7 +63,7 @@ def memoize(f):
 def prime_factorization2(n):
     """Return a Counter dict of n's prime factors
 
-     >>> prime_factorization(220)
+     >>> prime_factorization2(220)
     {2: 2, 5: 1, 11: 1} # 2 * 2 * 5 * 11
     """
     for i in range(2, math.floor(math.sqrt(n) + 1)):

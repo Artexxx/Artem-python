@@ -12,16 +12,31 @@
   5  4.16e-05  0.00%              50                       354176514770971052160
   6  7.13e-05  0.00%             100  793262935946950851294251337219553320468480
 """
+import math
 
 
-def is_prime(n):
-    if n == 0 or n == 1:
+def is_prime(n: int) -> bool:
+    """
+    Determines if the natural number n is prime.
+
+    >>> is_prime(10)
+    False
+    >>> is_prime(11)
+    True
+    """
+    # simple test for small n: 2 and 3 are prime, but 1 is not
+    if n <= 3:
+        return n > 1
+
+    # check if multiple of 2 or 3
+    if n % 2 == 0 or n % 3 == 0:
         return False
-    i = 2
-    while i ** 2 <= n:
-        if n % i == 0:
+
+    # search for subsequent prime factors around multiples of 6
+    max_factor = int(math.sqrt(n))
+    for i in range(5, max_factor + 1, 6):
+        if n % i == 0 or n % (i + 2) == 0:
             return False
-        i += 1
     return True
 
 
