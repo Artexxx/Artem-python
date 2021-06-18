@@ -17,28 +17,28 @@
   0.193  19,332%               4       134043 (Ответ)
 """
 
-def solution(LIMIT=10**6):
+
+def solution(LIMIT=10 ** 6):
     """Находит первое из первых четырех последовательных чисел, каждое из которых имеет четыре отличных друг от друга простых множителя.
     """
-    sieve = [0] * (LIMIT+1)
+    sieve = [0] * (LIMIT + 1)
     len_sequence = 0
 
-    for n in range(2, LIMIT+1):
-        if sieve[n] == 0:  # n is prime
+    for n in range(2, LIMIT + 1):
+        if sieve[n] == 0:  # `n` is prime
             sieve[n::n] = [x + 1 for x in sieve[n::n]]
+            continue
+
         if sieve[n] == 4:
             len_sequence += 1
             if len_sequence == 4:
-                return n - 3  # нужно первое число
+                return n - 3  # need the first number
         else:
             len_sequence = 0
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     ### Run Time-Profile Table ###
     import sys; sys.path.append('..')
     from time_profile import TimeProfile
-    import cProfile
-    with cProfile.Profile() as pr:
-        TimeProfile(solution)
-    pr.print_stats()
+    TimeProfile(solution)

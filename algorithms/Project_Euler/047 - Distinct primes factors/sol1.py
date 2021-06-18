@@ -67,8 +67,5 @@ if __name__ == '__main__':
     ### Run Time-Profile Table ###
     import sys; sys.path.append('..')
     from time_profile import TimeProfile
-    import cProfile
-    with cProfile.Profile() as pr:
-        TimeProfile(solution, [1, 134043+1, 238203+1])
-    pr.print_stats()
+    TimeProfile(solution, [1, 134043+1, 238203+1])
 

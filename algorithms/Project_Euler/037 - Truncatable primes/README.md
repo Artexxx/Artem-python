@@ -13,7 +13,7 @@ solution  ()  # =>  748317 # {23, 37, 53, 73, 313, 317, 373, 797, 3137, 3797, 73
 ```
 
 
-## Нормальное решение (1)
+## Частное решение (1)
 
 ```python
 def is_truncable_prime(num):
@@ -43,8 +43,62 @@ def solution():
         temp_candidate += 2
     return result_sum
 ```
-```
+```text
   №    Время  Замедление      Число    Результат
 ---  -------  ------------  -------  -----------
   1  1.20824  120.824%           11       748317
  ```
+
+## Нормальное решение (1)
+
+```python
+def is_left_truncatable(num):
+    count_dig = len(str(num)) - 1
+    div = 10
+    for _ in range(count_dig):
+        if not is_prime(num % div):
+            return False
+        div *= 10
+    return True
+
+
+def generate_right_truncatable():
+    # Простые числа до 10.
+    digits_to_start = [2, 3, 5, 7]
+    # Многозначное простое число не может оканчивать на  0, 2, 4, 6, 8, и 5.
+    digits_to_add = [1, 3, 7, 9]
+
+    candidates = digits_to_start
+    while candidates:
+        prime = candidates.pop()
+        for digit in digits_to_add:
+            temp = prime * 10 + digit
+            if is_prime(temp):
+                candidates.append(temp)
+                yield temp
+
+
+def solution():
+    """
+    Возращает сумму единственных одиннадцати простых чисел, из которых можно выбрасывать цифры как справа налево, так и слева направо, но числа при этом остаются простыми.
+
+    >>> solution()
+    748317 # = {23, 37, 53, 73, 313, 317, 373, 797, 3137, 3797, 739397}
+    """
+    result_sum = 0
+    count_truncable_primes = 0
+
+    for num in generate_right_truncatable():
+        if is_left_truncatable(num):
+            result_sum += num
+            count_truncable_primes += 1
+            if count_truncable_primes == 11: break
+    return result_sum
+```
+```text
+
+  №    Время  Замедление      Число    Результат
+---  -------  ------------  -------  ----------- <824 function calls>
+  1  0.002    0.2%          11       748317     (ответ)
+ ```
+
