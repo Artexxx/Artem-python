@@ -1,5 +1,5 @@
 # [Кратные из переставленных цифр Body:](TODO)
-## [Проблема](https://euler.jakumo.org/problems/view/51.html)
+## [Проблема](https://euler.jakumo.org/problems/view/52.html)
 
 
 Найдите такое наименьшее натуральное число x, чтобы 2x, 3x, 4x, 5x и 6x состояли из одних и тех же цифр.          
