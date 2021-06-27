@@ -137,6 +137,23 @@ class Hand:
         return max_rank
 
     @staticmethod
+    def high_rank_not_repeat(cards) -> int:
+        """
+        Возвращает наибольший ранг не повторяющейся карты.
+        # нужно для сравнения пар
+
+        Hand(5♠, 5♦, 7♥, 7♠, J♦) => 11
+        """
+        ranks = (c.rank for c in cards)
+        C = Counter(ranks)
+        max_rank = 0
+
+        for rank, count in C.items():
+            if count == 1:
+                max_rank = max(rank, max_rank)
+        return max_rank
+
+    @staticmethod
     def number_of_pairs(cards) -> int:
         """
         Возвращает количество различных пар.
@@ -244,17 +261,19 @@ class Hand:
         if score_h1 > score_h2:
             return True
         elif score_h1 == score_h2:
-            if self.high_rank_in_pairs(self.cards) > self.high_rank_in_pairs(other.cards):
-                return True
-            # руки с повторяющимися картами
-            elif flag:
-                if self.high_rank_in_pairs(self.cards) > self.high_rank_in_pairs(other.cards):
+            if flag:
+                hr_in_pairs_1 = self.high_rank_in_pairs(self.cards)
+                hr_in_pairs_2 = self.high_rank_in_pairs(other.cards)
+                if hr_in_pairs_1 > hr_in_pairs_2:
                     return True
-            # руки без повторов
+                elif hr_in_pairs_1 == hr_in_pairs_2:
+                    if self.high_rank_not_repeat(self.cards) > self.high_rank_not_repeat(other.cards):
+                        return True
+
             else:
                 if self.high_card(self.cards) > self.high_card(other.cards):
                     return True
-        else:
+        else:  # score_h1 < score_h2
             return False
 
     def __repr__(self):
@@ -275,6 +294,9 @@ def solution():
 
 if __name__ == '__main__':
     ### Run Time-Profile Table ###
-    import sys;sys.path.append('..')
+    import sys;
+
+    sys.path.append('..')
     from time_profile import TimeProfile
+
     TimeProfile(solution)
