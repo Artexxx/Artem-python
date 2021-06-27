@@ -137,7 +137,7 @@ class TimeProfile:
         Возвращает статистику по запуску функуии
         """
         t = timer()
-        if arg:
+        if arg != None:
             result = function(arg)
         else:
             result = function()
