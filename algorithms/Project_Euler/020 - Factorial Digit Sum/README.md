@@ -40,18 +40,23 @@ def factorial(n):
     return fact
 
 
-def split_and_add(number):
-    sum_of_digits = 0
-    while number > 0:
-        last_digit = number % 10
-        sum_of_digits += last_digit
-        number = number // 10  # Удаление last_digit из заданного числа
-    return sum_of_digits
+def sum_of_digits(n):
+    """
+    >>> sum_of_digits(123)
+    6
+    >>> sum_of_digits(100000)
+    1
+    """
+    s = 0
+    while n != 0:
+        n, last_digit = divmod(n, 10)
+        s += last_digit
+    return s
 
 
 def solution(n):
     f = factorial(n)
-    result = split_and_add(f)
+    result = sum_of_digits(f)
     return result
 
 ```

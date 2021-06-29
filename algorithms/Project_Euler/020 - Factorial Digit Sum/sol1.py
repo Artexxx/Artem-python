@@ -22,34 +22,33 @@ def factorial(n):
     return fact
 
 
-def split_and_add(number):
-    sum_of_digits = 0
-    while number > 0:
-        last_digit = number % 10
-        sum_of_digits += last_digit
-        number = number // 10
-    return sum_of_digits
+def sum_of_digits(n):
+    """
+    >>> sum_of_digits(123)
+    6
+    >>> sum_of_digits(100000)
+    1
+    """
+    s = 0
+    while n != 0:
+        n, last_digit = divmod(n, 10)
+        s += last_digit
+    return s
 
 
 def solution(n):
     """Возращает сумму цифр в числе n!
     >>> solution(100)
-    648
-    >>> solution(50)
-    216
-    >>> solution(10)
-    27
+    648 #9332621544...0000
     >>> solution(5)
-    3
+    3 #120
     >>> solution(3)
-    6
-    >>> solution(2)
-    2
+    6 #6
     >>> solution(1)
-    1
+    1 #1
     """
     f = factorial(n)
-    result = split_and_add(f)
+    result = sum_of_digits(f)
     return result
 
 
