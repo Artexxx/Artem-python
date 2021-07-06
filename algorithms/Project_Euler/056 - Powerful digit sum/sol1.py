@@ -11,6 +11,25 @@
 """
 
 
+def fast_power(base, power, /):
+    """
+    Идея состоит в том, чтобы делить степень пополам на каждом шагу. т.к 3 ^ 10 = 9 ^ 5
+    """
+
+    result = 1
+    while power != 0:
+        if power % 2 == 0:
+            power = power // 2
+            base = base * base
+        else:
+            power = power - 1
+            result = result * base
+
+            power = power // 2
+            base = base * base
+    return result
+
+
 def sum_of_digits(n):
     """
     >>> sum_of_digits(123)
@@ -30,7 +49,7 @@ def solution(LIM=100):
     """
     Возвращает максимальную сумму цифр числа из чисел вида (a)^b, где a, b < `LIM`?
     """
-    return max(sum_of_digits(a ** b)
+    return max(sum_of_digits(fast_power(a, b))
                for a in range(0, LIM)
                for b in range(0, LIM))
 

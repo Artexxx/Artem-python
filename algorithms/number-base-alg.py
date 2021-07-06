@@ -71,7 +71,7 @@ def prime_factorization2(n):
             old_factorization = prime_factorization2(n / i).copy()
             old_factorization[i] += 1
             return old_factorization
-    # Нет делителей -> x простое число
+    # No divisors -> x is a prime number
     res = collections.defaultdict(int)
     res[n] = 1
     return res

@@ -91,15 +91,15 @@ __Вывод формулы:__
 
 ```python
 def solution(n):
-    solution = 1
-    counter = 1
-    increment = 2
-    while (counter < n ** 2):
+    result = 1
+    number = 1
+    step = 2
+    while (number < n ** 2):
         for _ in range(4):
-            counter += increment
-            solution += counter
-        increment += 2
-    return solution
+            number += step
+            result += number
+        step += 2
+    return result
 ```
 
 ## Общее решение (1)
