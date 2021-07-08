@@ -22,14 +22,10 @@ def solution(n):
 
     >>> solution(10)
     10
-    >>> solution(15)
-    10
     >>> solution(2)
     2
     >>> solution(1)
     0
-    >>> solution(34)
-    44
     """
     if n <= 1: return 0
     a, b = 0, 2

@@ -14,6 +14,7 @@
   6  4.28e-05  0.00%              80  32433859254793982911622772305630400
 """
 
+
 def gcd(x, y):
     """ Euclidean GCD Algorithm """
     return x if y == 0 else gcd(y, x % y)

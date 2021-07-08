@@ -23,16 +23,10 @@ def solution(n):
 
     >>> solution(10)
     10
-    >>> solution(15)
-    10
     >>> solution(2)
     2
     >>> solution(1)
     0
-    >>> solution(34)
-    44
-    >>> solution(3.4)
-    2
     """
     getcontext().prec = 100
     phi = (Decimal(5) ** Decimal(0.5) + 1) / Decimal(2)

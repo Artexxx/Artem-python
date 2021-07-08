@@ -21,13 +21,16 @@
 
 import sys
 
+
 def memoize(f):
     cache = {}
+
     def wrapper(*args):
         if not args in cache:
             cache[args] = f(*args)
             # print(f"[+] F(", int(*args), ')\t => \t', dict(cache)) # TEST OUTPUT
         return cache[args]
+
     return wrapper
 
 
@@ -42,20 +45,21 @@ def collatz_chain_length(x):
 
 
 def solution(n):
-    """Возвращает число меньше n, которое генерирует самую длинную последовательность Коллатца
+    """
+    Возвращает число меньше n, которое генерирует самую длинную последовательность Коллатца
 
-       n → n/2 (n - четное)
-       n → 3n + 1 (n - нечетное)
+    n → n/2 (n - четное)
+    n → 3n + 1 (n - нечетное)
 
-       >>> solution(1000000)
-        837799
-       >>> solution(200)
-        171
-       >>> solution(5000)
-        3711
-       >>> solution(15000)
-        13255
-       """
+    >>> solution(1000000)
+    837799
+    >>> solution(200)
+    171
+    >>> solution(5000)
+    3711
+    >>> solution(15000)
+    13255
+    """
     sys.setrecursionlimit(3000)
     return max(range(1, n), key=collatz_chain_length)
 

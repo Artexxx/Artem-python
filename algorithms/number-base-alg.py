@@ -112,7 +112,7 @@ def bit_sieve(n) -> list:
     [False, False, True, True, False, True, False, True, False, False]
     """
     primes = [True] * n
-    primes[0], primes[1] = False, False  # числа 0 и 1
+    primes[0], primes[1] = False, False
 
     number_of_multiples = len(primes[4::2])
     primes[4::2] = [False] * number_of_multiples

@@ -20,14 +20,8 @@ def solution(n):
 
     >>> solution(10)
     10
-    >>> solution(15)
-    10
-    >>> solution(2)
-    2
     >>> solution(1)
     0
-    >>> solution(34)
-    44
     """
     a, b = 1, 2
     result_sum = 0

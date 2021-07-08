@@ -52,3 +52,4 @@ if __name__ == '__main__':
     with cProfile.Profile() as pr:
         solution(10000)
     pr.print_stats()
+
