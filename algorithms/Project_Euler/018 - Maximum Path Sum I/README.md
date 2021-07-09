@@ -72,15 +72,16 @@ solution (triangle)  # => 1074
 
 - `current` представляет собой массив с одним элементом, представляющим текущее значение в строке
 
-- `northWest` представляет собой массив, детализирующий возможные значения числа в предыдущей строке и предыдущем индексе
+- `north_west` представляет собой массив, детализирующий возможные значения числа в предыдущей строке и предыдущем индексе
 
-- `northEast` возможные значения в предыдущей строке и с тем же индексом.
+- `north_east` возможные значения в предыдущей строке и с тем же индексом.
 
 ```python
 def num_to_array(triangle):
     """
-    3 становится [3], 7 становится [7]. Это немного облегчает суммирование чисел через строки треугольника,
-    так как больше нет необходимости проверять, описывает ли предыдущая строка массив или целое число.
+    Идея:
+        3 становится [3], 7 становится [7]. Это немного облегчает суммирование чисел через строки треугольника,
+        так как больше нет необходимости проверять, описывает ли предыдущая строка массив или целое число.
     """
     res = triangle.copy()
     for i in range(len(triangle)):
@@ -88,27 +89,31 @@ def num_to_array(triangle):
             if num: res[i][j] = [num]
     return res
 
-# Для каждого числа в array прибавляет currentValue
-currentSum = lambda array, currentValue: [num + currentValue for num in array]
+
+# Для каждого числа в `array` прибавляет `current_value`
+current_sum = lambda array, current_value: [num + current_value for num in array]
 
 
-def maximumPathSumI(triangle):
+def solution(triangle):
+    """Находит максимальную сумму в треугольнике, как описано в постановке задачи выше.
+
+    >>> solution(triangle)
+    1074
+    """
     result_sum = num_to_array(triangle)
     for i in range(1, len(triangle)):
         for j in range(len(triangle[i])):
             current = result_sum[i][j]
             if (current):
-                northWest = result_sum[i - 1][j - 1]
-                northEast = result_sum[i - 1][j]
+                north_west = result_sum[i - 1][j - 1]
+                north_east = result_sum[i - 1][j]
 
                 result_sum[i][j] = []
-                currentValue = current[0]
-                if (northWest):
-                    result_sum[i][j] = [*result_sum[i][j], *currentSum(northWest, currentValue)]
-                if (northEast):
-                    result_sum[i][j] = [*result_sum[i][j], *currentSum(northEast, currentValue)]
-        print(result_sum[i])
-
+                current_value = current[0]
+                if (north_west):
+                    result_sum[i][j] = [*result_sum[i][j], *current_sum(north_west, current_value)]
+                if (north_east):
+                    result_sum[i][j] = [*result_sum[i][j], *current_sum(north_east, current_value)]
     flatten_result_sum = []
     for arr in result_sum[-1]:
         flatten_result_sum.extend(arr)
@@ -116,14 +121,14 @@ def maximumPathSumI(triangle):
 ```
 
 ```python
-testTriangle = [
+test_triangle = [
   [3, 0, 0, 0],
   [7, 4, 0, 0],
   [2, 4, 6, 0],
   [8, 5, 9, 3]
-];
-
-maximumPathSumI(testTriangle);
+]
+solution(test_triangle)
+#Выхлоп: 23
 ```
 
 | Строка | Сумма                                       |

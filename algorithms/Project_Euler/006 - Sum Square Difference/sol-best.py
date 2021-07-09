@@ -41,11 +41,11 @@ def solution(n):
     return int(square_of_sum - sum_of_squares)
 
 
-optimized_solution = lambda n: (n ** 4 / 4) + (n ** 3 / 6) - (n ** 2 / 4) - (n / 6)
+optimized_solution = lambda n: int((n ** 4 / 4) + (n ** 3 / 6) - (n ** 2 / 4) - (n / 6))
 
 if __name__ == "__main__":
-    print(solution(int(input().strip())))
-    # ### Run Time-Profile Table ###
-    # import sys;sys.path.append('..')
-    # from time_profile import my_time_this
-    # my_time_this(optimized_solution, [10_000, 100_000, 1_000_000, 10_000_000])
+    # print(solution(int(input().strip())))
+    ### Run Time-Profile Table ###
+    import sys;sys.path.append('..')
+    from time_profile import TimeProfile
+    TimeProfile(optimized_solution, [10_000, 100_000, 1_000_000, 10_000_000])

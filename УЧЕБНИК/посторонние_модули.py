@@ -65,7 +65,6 @@ class numpy():
     df[:, [0, 1]] # Возвращает 2 столбца
     img[:, :, 0] или img[..., 0] # Возвращает красный канал изображения
 
-
     """ Найти процент совпадений двух массивов"""
     x = np.array([1, 2, 1, 2, 1, 1])
     y = np.array([1, 2, 1, 1, 1, 1])
@@ -73,17 +72,18 @@ class numpy():
 
     """ Создать массив изменённый по условию"""
     np.where(x > 0.5, True, False)
-    # Выхлоп / array([False, True, False, True, False, False]) /
+    # Выхлоп / np.array[1, 2, 1, 2, 1, 1] -> array[False, True, False, True, False, False] /
 
     """ Символы без повторений"""
     set_a = np.unique(x)
-    # Выхлоп / array([1, 2]) /
+    # Выхлоп /np.array[1, 2, 1, 2, 1, 1] -> array([1, 2]) /
     
     """Создать матрицу элементы | на диагонали -1 | остальные 0.5|"""
     x = -1.5 * np.eye(4, 5, 0) + 0.5 * np.ones((4, 5))
 
     """Превращает массив в одномерный"""
     x.flatten()
+    x.ravel()
     np.concatenate(x, axis=0)
     # Выхлоп / np.array[[1, 2, 3],[4, 5, 6]] -> array[1, 2, 3, 4, 5, 6]/
 
@@ -93,7 +93,7 @@ class numpy():
 
     """Превращает широкий массив в длинный """
     x[:, np.newaxis] или x.reshape(6, 1)
-    # Выхлоп / array([[1],[2],[1],[2],[1],[1]])
+    # Выхлоп / array[[1],[2],[1],[2],[1],[1]] /
 
     """ Транспонирование (или смена порядка осей в случае, когда размерность массива больше двух)."""
     x.T или x.transpose(*axes)
@@ -138,6 +138,16 @@ class numpy():
     r, g, b = np.dsplit(img, 3)
     img = np.dstack((r,g,b)) # объединить назад
 
+    """Векторизация Numpy с помощью функции numpy.vectorize то же самое, что и `map`"""
+    cube = lambda x: x**3
+    cube = np.vectorize(cube, otypes=[float])
+    # Выхлоп / cube(np.arange(2,5)) -> array[8, 27, 64] /
+
+    """Универсальная функция"""
+    # nin, nout: Количество входных и выходных аргументов для этой функции.
+    add = lambda x1, x2: x1 + x2
+    add = np.frompyfunc(add, nin=2, nout=1)
+    # Выхлоп / add([75, 10], [25, 40]) -> array[100, 50] /  add([75, 10], 25) -> array[100, 35]
 
 # -------------------------------------------------------------------------------------------
 class pandas():
@@ -146,7 +156,6 @@ class pandas():
     index_col = 0 # чтобы 0 столбец стал индексами | df = df.set_index('Test1')
     parse_dates = ["date"] # привести столбцы к типу дата
 
-    """ махинации с столбцами """
     df.apply(pd.to_numeric, errors='coerce')
     df.apply(np.sqrt) # np.diff - считает разность между ближайшими наблюдениями ( полезно с датами) [1, 2, 5] --> [1, 3]
     df.pct_change()   # Процентное изменение между текущим и предыдущим элементом
@@ -161,28 +170,28 @@ class pandas():
     df.drop_duplicates() # удалить повторяющиеся строки subset = ['Test1', 'Test2']
     df.unique(), df.nunique()
     df.groupby('legs').size()  # группирует и выводит количество
-'=   df['CountryRegion'].value_counts()
+    df['CountryRegion'].value_counts()
     _.get_group('XL')
 
-    """ отфильтровать 'Name' по значению столбца 'Age' """
+    """Отфильтровать 'Name' по значению столбца 'Age' """
     df.loc[df.Age <= 18.0, ['Name']]
     df.Age == 18.00 # возращает булевый массив
     df.query("lunch == 'standard' | gender == @temp") # temp -- переменная
     df.filter(like='bbi', axis=0) # нечёткий поиск по строкам( индексам )
 
-    """ узнать инфу о таблице"""
+    """Вывести инфу о таблице"""
     df['lunch'].describe()
     # unique    2
     # top    standard
     # freq    645
 
-    """ группировка """
+    """Группировка """
     df.groupby(['gender', 'race/ethnicity'], as_index=False).aggregate({'math score': 'mean'})
     df.groupby('gender').aggregate({'math score': ['mean', 'max'], 'reading score': 'min'})
-    #  math score  <mean | max>        | reading score <min>
+    #  math score  <mean | max>       | reading score <min>
     # female | 63.633205 | 194.095945 | 206.733938     as_index = False (заменяет строковые индексы на числа )
 
-    """ получить по 5 отличниковв разного пола """
+    """Получить по 5 отличниковв разного пола """
     df.sort_values(['gender', 'math score'], ascending=False).groupby('gender').head(5)
 
     df.hist(
@@ -240,7 +249,7 @@ class tensorflow():
     tf.cast(t_a, tf.int64) # изменяет dtype тензора
     tf.transpose(t)        # транспонирование
     tf.reshape(t, shape=(5, 6)) # изменение размера
-    tf.multiply(t1, t2).numpy() # умножение матриц !простое!
+    tf.multiply(t1, t2).numpy() # умножение матриц
     tf.split(t, 3) # разделяет вектор на 3 части (только раные отрезки)
     C = tf.concat([a, a, a, a], axis=0) # склеивает несколько векторов (по горизонтали) или матриц (по вертикали)
     tf.stack([A, B], axis=1) # склеивает несколько матриц (по горизонтали)
@@ -435,12 +444,10 @@ with fileinput.input(files="mail.py") as f:
 import argparse
 parser = argparse.ArgumentParser(description="Search some file")
 parser.add_argument(dest='filenames', metavar='filename', nargs='*')
-parser.add_argument('-p', '--pat', metavar='pattern', required=True, dest='patterns',
-                    action='append', help="text pattern to search for")
+parser.add_argument('-p', '--pat', metavar='pattern', required=True, dest='patterns', action='append', help="text pattern to search for")
 parser.add_argument('-v', dest='verbose', action='store_true', help="verbose mode")
 parser.add_argument('-o', dest='outfile', action='store', help="output file")
-parser.add_argument('--speed', dest='speed', action='store', choices={'slow', 'fast'},
-                    default="slow", help="search speed")
+parser.add_argument('--speed', dest='speed', action='store', choices={'slow', 'fast'}, default="slow", help="search speed")
 args = parser.parse_args()
 print(args)
 print(args.filenames)
@@ -452,7 +459,6 @@ print(args.speed)
 # -------------------------------------------------------------------------------------------
 import sqlite3
 import os
-
 
 def create_SQL_table():
     """ Создаёт новую базу данных в каталоге `movieclassifier`"""
@@ -484,6 +490,7 @@ def get_data(path='reviews.sqlite'):
     results = c.fetchall()
     conn.close()
     return results
+
 """ Получение данных порциями (по 1000)"""
 c.execute('SELECT * from review_db'), batch_size=1000
 results = c.fetchmany(batch_size)

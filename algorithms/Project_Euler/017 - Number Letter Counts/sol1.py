@@ -7,39 +7,43 @@
 Примечание: Не считайте пробелы и дефисы. Например, число 342 (three hundred and forty-two) состоит из 23 букв,
 число 115 (one hundred and fifteen) - из 20 букв. Использование "and" при записи чисел соответствует правилам британского
 английского.
+
+- Числа от 0 до 19 записываются в одно слово:
+        zero, one, two, three, ... eighteen, nineteen
+
+- Десятки (числа от 20 до 99 кратные 10) образуются с помощью числительного суффикса -ty и записываются также одно слово:
+   twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety
+[#] Примечание: если последние цифра не равна 0, то мы дописываем two, three, four etc.
+   twenty three, twenty four, twenty five ... ninety nine
+
+- Сотни (числа от 200-900 кратные 100) образуются так: перед hundred ставим two, three, four etc.
+   one hundred, two hundred, three hundred, ..., eight hundred, nine hundred
+[#] Примечание: если последние две цифры не 00, то мы пишем слово "and"
+    one hundred and one, one hundred and twenty three ... nine hundred and ninety nine
+
+- Тысячи (числа от 1000 до 999999 кратные 1000) образуются так: перед thousand ставим two, three, four и переходим к сотням
+    one thousand ten, one thousand one hundred, two thousand three hundred and forty five
 """
 
-ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-        "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
 TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
 
 
-def to_english(n):
+def convert_numbers_to_words(n) -> str:
     """
-    - For the numbers 0 to 19, we write the single word:
-      {zero, one, two, three, four, five, six, seven, eight, nine,
-      ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen}.
-    - For the numbers 20 to 99, we write the word for the tens place:
-      {twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety}.
-      Subsequently if the last digit is not 0, then we write the word for the ones place (one to nine).
-    - For the numbers 100 to 999, we write the ones word for the hundreds place followed by "hundred":
-      {one hundred, two hundred, three hundred, ..., eight hundred, nine hundred}.
-      Subsequently if the last two digits are not 00, then we write the word "and"
-      followed by the phrase for the last two digits (from 01 to 99).
-    - For the numbers 1000 to 999999, we write the word for the three digits starting at the
-      thousands place and going leftward, followed by "thousand". Subsequently if the last three
-      digits are not 000, then we write the phrase for the last three digits (from 001 to 999).
+    param: n [int] - число, которое преобразуется в слово
+    FIXME: Работает только с числами до миллиона
     """
     if 0 <= n < 20:
         return ONES[n]
     elif 20 <= n < 100:
         return TENS[n // 10] + (ONES[n % 10] if (n % 10 != 0) else "")
     elif 100 <= n < 1000:
-        return ONES[n // 100] + "hundred" + (("and" + to_english(n % 100)) if (n % 100 != 0) else "")
+        return ONES[n // 100] + "hundred" + (("and" + convert_numbers_to_words(n % 100)) if (n % 100 != 0) else "")
     elif 1000 <= n < 1000000:
-        return to_english(n // 1000) + "thousand" + (to_english(n % 1000) if (n % 1000 != 0) else "")
+        return convert_numbers_to_words(n // 1000) + "thousand" + (convert_numbers_to_words(n % 1000) if (n % 1000 != 0) else "")
     else:
-        raise ValueError()
+        raise ValueError(f"Число {n=} больше миллиона")
 
 
 def solution(n):
@@ -51,7 +55,7 @@ def solution(n):
     >>> solution(5)
     19
     """
-    return sum(len(to_english(i)) for i in range(1, n+1))
+    return sum(len(convert_numbers_to_words(i)) for i in range(1, n+1))
 
 
 if __name__ == "__main__":

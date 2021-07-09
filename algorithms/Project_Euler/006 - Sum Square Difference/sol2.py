@@ -10,11 +10,13 @@
 
 Найдите разность между суммой квадратов и квадратом суммы первых n натуральных чисел.
 
-
+  №      Время  Замедление      Аргумент     Результат
+---  ---------  ------------  ----------  ------------
+  1  4.39e-05   0.004%               100      25164150
+  2  0.0017182  0.167%              1000  250166416500
 """
 
 import sys
-sys.setrecursionlimit(1000000)
 
 
 def solution(n):
@@ -34,8 +36,8 @@ def solution(n):
 
 
 if __name__ == "__main__":
-    print(solution(int(input().strip())))
-    # ### Run Time-Profile Table ###
-    # sys.path.append('..')
-    # from time_profile import my_time_this
-    # my_time_this(solution, [100, 1000, 10000])
+    #print(solution(int(input().strip())))
+    ## Run Time-Profile Table ###
+    sys.path.append('../')
+    from time_profile import TimeProfile
+    TimeProfile(solution, [100, 1000])
