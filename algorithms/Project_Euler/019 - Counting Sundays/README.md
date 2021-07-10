@@ -17,20 +17,20 @@
 ## Частное решение (1)
 
 ```python
-isLeap = lambda year: year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+is_leap = lambda year: year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
 def solution():
     months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
     # 1900 не является особенным, так что мы можем использовать математику
-    day = 365 % 7  # 0 => mon, 6 => sun
+    day = 365 % 7  # 0 = понедельник, 6 = воскресенье
     sundays = 0
     for i in range(1901, 2001):
       for m in months:
         if day == 6:
           sundays += 1
-        # Check for leap year
-        if m == 28 and isLeap(i):
+        # Проверка на високосный год
+        if m == 28 and is_leap(i):
                 m += 1
         day = (m % 7 + day) % 7
     return sundays

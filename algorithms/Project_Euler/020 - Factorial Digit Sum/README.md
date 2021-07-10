@@ -17,7 +17,7 @@ solution   (10)  # => 27 = 3 + 6 + 2 + 8 + 8 + 0 + 0
 
 ```python
 from functools import reduce
-solution1 = lambda n: reduce(int.__add__, map(int, str(reduce(int.__mul__, map(int, range(1, n))))))
+solution1 = lambda n: reduce(int.__add__, map(int, str(reduce(int.__mul__, map(int, range(1, n+1))))))
 
 from math import factorial
 solution2 = lambda n: sum(map(int, str(factorial(n))))

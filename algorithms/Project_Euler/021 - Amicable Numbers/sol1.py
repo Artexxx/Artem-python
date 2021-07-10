@@ -37,8 +37,6 @@ def solution(LIMIT):
     504
     >>> solution(100)
     0
-    >>> solution(50)
-    0
     """
     total = 0
     for m in range(2, LIMIT):

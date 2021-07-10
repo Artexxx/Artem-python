@@ -13,17 +13,16 @@ import datetime
 
 
 def solution():
-	"""Возвращает число воскресений, приходящихся на первое число месяца (с 1 января 1901 года по 31 декабря 2000 года)?
+    """Возвращает число воскресений, приходящихся на первое число месяца (с 1 января 1901 года по 31 декабря 2000 года)
 
-	>>> solution()
-	171
-	"""
-	ans = sum(1
-		for y in range(1901, 2001)
-		for m in range(1, 13)
-		if datetime.date(y, m, 1).weekday() == 6)
-	return str(ans)
+    >>> solution()
+    171
+    """
+    return sum(1
+               for y in range(1901, 2001)
+               for m in range(1, 13)
+               if datetime.date(y, m, 1).weekday() == 6)
 
 
 if __name__ == "__main__":
-	print(solution())
+    print(solution())

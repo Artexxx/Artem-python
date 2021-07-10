@@ -17,18 +17,19 @@ solution   ()  # => 4179871
 
 ## Частное решение (1)
 ```python
-def solution(x):
-    LIMIT = 28124
-    sumDivs = [0] * LIMIT
+
+def solution(LIMIT=28124) -> int:
+    """ Возращает сумму всех положительных чисел, которые не могут быть записаны как сумма двух избыточных чисел"""
+    sum_divs = [0] * LIMIT
     # Находим сумму собственных делителей для каждого числа
     for i in range(1, LIMIT):
         for j in range(i * 2, LIMIT, i):
-            sumDivs[j] += i
+            sum_divs[j] += i
 
     abundants = set()
     result_sum = 0
     for n in range(1, LIMIT):
-        if sumDivs[n] > n:
+        if sum_divs[n] > n:
             abundants.add(n)
 
         if not any((n - a in abundants) for a in abundants):

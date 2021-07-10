@@ -6,6 +6,10 @@
 Поэтому, имя COLIN получает 938 × 53 = 49714 очков.
 
 Какова сумма очков имен в файле?
+
+    Время  Замедление    Аргумент      Результат
+---------  ------------  ----------  -----------
+0.0084408  0.844%                      871190344 <108414 function calls>
 """
 import os, heapq
 
@@ -41,5 +45,11 @@ def solution() -> int:
     return total
 
 
-if __name__ == "__main__":
-    print(solution())
+if __name__ == '__main__':
+    ## Run Time-Profile Table ###
+    import sys;sys.path.append('..')
+    from time_profile import TimeProfile; import cProfile
+    TimeProfile(solution)
+    with cProfile.Profile() as pr:
+        solution()
+        print('\n\n');pr.print_stats()
