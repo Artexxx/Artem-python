@@ -22,7 +22,7 @@ def solution():
 
 
 # Аналогичное решение
-solution2 = ''.join(list(permutations('0123456789'))[10**6 - 1])
+solution2 = ''.join(list(permutations('0123456789'))[999999])
 
 if __name__ == "__main__":
-    print(solution())
+    print(solution2)
