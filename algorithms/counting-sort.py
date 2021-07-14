@@ -10,17 +10,17 @@
 """
 
 
-def SimpleCountingSort(alist):
-    largest = max(alist)
+def simple_counting_sort(array):
+    largest = max(array)
     counter = [0] * (largest + 1)
-    for x in alist:
+    for x in array:
         counter[x] += 1
-    alist[:] = []
+    array[:] = []
     for number in range(largest):
-        alist += [number] * counter[number]
-    return alist
+        array += [number] * counter[number]
+    return array
 
 
 if __name__ == '__main__':
-    arr = [15, 5, 50, 10, 20, 25, 20]
-    print(SimpleCountingSort(arr))
+    array = [15, 5, 50, 10, 20, 25, 20]
+    print(simple_counting_sort(array))

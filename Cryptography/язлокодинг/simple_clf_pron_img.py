@@ -17,20 +17,20 @@ def check_porn(file):
 
 
 if __name__ == '__main__':
-    imgdir = input('Каталог c фото:')
-    dstdir = input('Каталог перемещения:')
-    if path.isdir(imgdir):
-        filelist = [path.join(imgdir, file) for file in os.listdir(imgdir)]
+    img_dir = input('Каталог c фото:')
+    out_dir = input('Каталог перемещения:')
+    if path.isdir(img_dir):
+        file_list = [path.join(img_dir, file) for file in os.listdir(img_dir)]
     else:
-        raise Exception('imgdir - должен быть каталогом с фото')
-    if not path.isdir(dstdir):
-        raise Exception('dstdir - должен быть каталогом перемещения')
+        raise Exception('img_dir - должен быть каталогом с фото')
+    if not path.isdir(out_dir):
+        raise Exception('out_dir - должен быть каталогом перемещения')
 
-    for file in filelist:
+    for file in file_list:
         if path.isfile(file):
             is_porn = check_porn(file)
             if is_porn:
                 print(file, 'is porn')
-                shutil.move(file, dstdir)
+                shutil.move(file, out_dir)
             else:
                 print(file, 'is not porn')
