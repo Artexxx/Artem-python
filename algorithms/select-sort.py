@@ -20,6 +20,7 @@ def selection_sort(alist):
         alist[i], alist[smallest] = alist[smallest], alist[i]
     return alist
 
+
 if __name__ == '__main__':
     arr = [15, 5, 50, 10, 20, 25, 20]
     print(selection_sort(arr))

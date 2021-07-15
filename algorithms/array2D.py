@@ -65,7 +65,6 @@ def zigzag_numpy(matrix: np.ndarray) -> np.ndarray:
             result = np.append(result, matrix_fliplr.diagonal(i * -1))
         else:
             result = np.append(result, matrix_flipud.diagonal(i * 1))
-
     return result
 
 
@@ -108,6 +107,7 @@ print(zigzag(test_matrix))  # == np.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
 
 
 # __________________________________________________________________________________________________________________________________
+
 
 if __name__ == '__main__':
     import doctest

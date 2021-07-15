@@ -1,4 +1,4 @@
-""" классификатор на основе адаптивного линейного нейрона """
+""" Классификатор на основе адаптивного линейного нейрона """
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
