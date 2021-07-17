@@ -85,17 +85,17 @@ def zigzag(matrix: List[List]) -> List:
     [1, 2, 3, 4, 5, 6, 7, 8, 9]
     """
     columns, rows = len(matrix), len(matrix[0])
-    mini_diagonals = [[] for _ in range(columns + rows - 1)]
+    diagonals = [[] for _ in range(columns + rows - 1)]
 
     for x in range(columns):
         for y in range(rows):
             sum_indexes = x + y
             if sum_indexes % 2 == 0:
-                mini_diagonals[sum_indexes].insert(0, matrix[x][y])
+                diagonals[sum_indexes].insert(0, matrix[x][y])
             else:
-                mini_diagonals[sum_indexes].append(matrix[x][y])
+                diagonals[sum_indexes].append(matrix[x][y])
     flatten = []
-    for zig in mini_diagonals:
+    for zig in diagonals:
         flatten += zig
     return flatten
 
