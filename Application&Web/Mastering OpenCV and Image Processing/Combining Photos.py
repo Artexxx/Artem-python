@@ -1,4 +1,4 @@
-""" combining_photos.py - полкартинку, состаящию из склеенных фоток, одинакового размера """
+""" combining_photos.py - получает картинку, состаящию из склеенных фоток, одинакового размера """
 import cv2
 import numpy as np
 from typing import List, TypeVar
