@@ -8,10 +8,10 @@ class LinearRegressionGD(object):
          скорость обучения
     n_iter (int)
          проходы по обучающимся наборам данных
-    w_ (ld-array)
+    w_ (nd-array)
          Веса после прогонки
     cost_ (list)
-        сумма квадратичных ошибок, показывающие успешность алгоритма
+        Сумма квадратичных ошибок, усреднённая по всем обучающим образцам, показывает успешность алгоритма
     """
 
     def __init__(self, eta=0.001, n_iter=50):
@@ -38,19 +38,18 @@ class LinearRegressionGD(object):
         return self
 
     def net_input(self, X):
-        """  вычисляет общий вход """
+        """  Вычисляет общий вход """
         return X @ self.w_[1:] + self.w_[0]
 
 
     def predict(self, X):
-        """ возращает метку класса после единичного шага"""
+        """ Возращает метку класса после единичного шага"""
         return self.net_input(X)
 
 
-def showErrors(errors):
-    """ график ошибки неправильной классификации """
-    plt.plot(range(1, len(errors) + 1),
-             errors, marker='o')
+def show_errors(errors):
+    """ График ошибок неправильной классификации """
+    plt.plot(range(1, len(errors) + 1), errors, marker='o')
     plt.xlabel('Эпохи')
     plt.ylabel('Сумма квадратичных ошибок')
     plt.show()
@@ -65,4 +64,4 @@ if __name__ == '__main__':
 
     lr = LinearRegressionGD()
     lr.fit(X, y)
-    showErrors(lr.cost_)
+    show_errors(lr.cost_)
