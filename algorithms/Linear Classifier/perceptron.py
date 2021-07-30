@@ -3,6 +3,7 @@
 Простейший блок нейронных сетей — перцептрон (perceptron).
 Изначально перцептрон был создан как очень отдаленная модель биологического нейрона.
 Как и у биологического нейрона, у него есть вход и выход, а также поток «сигналов», идущих от входа к выходу
+Разделяющая поверхность задается формулой (x @ w) + b = 0
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -22,9 +23,11 @@ class Perceptron(object):
     Attributes:
     -----------
     w_ (nd-array)
-         Веса после подгонки
-    errors ( list )
-        Количество ошибочных классификаций в каждой эпохе
+        Веса после подгонки, shape = [n_features]
+    bias_ (float)
+        Смещение.
+    errors_ ( list )
+        Количество ошибочных классификаций в каждой эпохе.
     """
 
     def __init__(self, eta=0.01, random_state=1, n_iter=50):
@@ -39,27 +42,27 @@ class Perceptron(object):
         :return self
         """
         rgen = np.random.RandomState(self.random_state)
-        self.w_ = rgen.normal(loc=0, scale=0.01, size=1 + X.shape[1])
+        self.w_ = rgen.normal(loc=0, scale=0.01, size=X.shape[1])
+        self.bias_ = 0
         self.errors_ = []
 
         for _ in range(self.n_iter):
-            errors = 0
+            error = 0
             for xi, target in zip(X, y):
                 update = self.eta * (target - self.predict(xi))
-                self.w_[0] += update
-                self.w_[1:] += update * xi
-                errors += int(update != 0)
-            self.errors_.append(errors)
+                self.w_ += update * xi
+                self.bias_ += update
+                error += int(update != 0)
+            self.errors_.append(error)
         return self
 
     def net_input(self, X):
         """ Вычисляет общий вход z"""
-        return X @ self.w_[1:] + self.w_[0]
+        return X @ self.w_ + self.bias_
 
     def predict(self, X):
         """
         Пороговая функция активации f(z) (нужна для смещения весов)
-        - Возращает метку класса после единичного шага
         :return -1|1
         """
         return np.where(self.net_input(X) > 0, 1, -1)

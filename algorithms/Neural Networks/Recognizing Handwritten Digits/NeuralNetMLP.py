@@ -1,6 +1,5 @@
 """
 Классификатор на основе многослойного перцсептрона (простая нейронная сеть прямого распространения с 2 скрытыми слоями по 30 нейронов в каждом.)
-https://youtu.be/t-Jpm1axBko
 """
 import numpy as np
 import sys
@@ -171,7 +170,7 @@ class NeuralNetMLP(object):
             активация выходного слоя (forward propagation)
 
         :return cost (float)
-            регуляризованные издержки
+            Регуляризованные издержки
         """
         L2_term = (self.l2 * (np.sum(self.w_h ** 2) + np.sum(self.w_out ** 2)))
 

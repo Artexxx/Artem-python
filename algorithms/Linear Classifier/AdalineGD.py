@@ -14,16 +14,23 @@ import pandas as pd
 
 class AdalineGD(object):
     """
-    eta (float)
-         Скорость обучения
-    n_iter (int)
-         Проходы по обучающимся наборам данных
-    random_state (int)
+    Params:
+    ----------
+    eta (float) = 0.01
+         Скорость обучения между 0.0 и 1.0
+    n_iter (int) = 50
+         Количесто проходов по обучающему набору данных
+    random_state (int) = 1
         Начальное значение генератора случайных чисел для инициализации весов
+
+    Attributes:
+    -----------
     w_ (nd-array)
-         Веса после прогонки
-    cost_ (list)
-         Сумма квадратичных ошибок, усреднённая по всем обучающим образцам, показывает успешность алгоритма
+        Веса после подгонки, shape = [n_features]
+    bias_ (float)
+        Смещение.
+    costs_ ( list )
+        Сумма квадратичных ошибок, усреднённая по всем обучающим образцам, показывает успешность алгоритма
     """
 
     def __init__(self, eta=0.001, n_iter=50, random_state=1):
@@ -33,35 +40,36 @@ class AdalineGD(object):
 
     def fit(self, X, y):
         """
-        X (matrix) обучающие векторы, shape = [примеры, переменные]
-        y (vector)  целевые значения (1|-1)
+        X (matrix) обучающие векторы, shape = [n_samples, n_features]
+        y (vector)  целевые значения (1|-1),  shape = [n_samples]
         :return self
         """
         rgen = np.random.RandomState(self.random_state)
-        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=1 + X.shape[1])
+        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=X.shape[1])
+        self.bias_ = 0
+        self.costs_ = []
 
-        self.cost_ = []
-        for i in range(self.n_iter):
+        for _ in range(self.n_iter):
             net_input = self.net_input(X)
             output = self.activation(net_input)
             errors = y - output  # Отклонения расчетных результатов от истинных меток классов
-            self.w_[1:] += self.eta * X.T @ errors  # Обновляем веса, вычислив градиент
-            self.w_[0] += self.eta * errors.sum()
+            self.w_ += self.eta * X.T @ errors  # Обновляем веса, вычислив градиент
+            self.bias_ += self.eta * errors.sum()
             cost = (errors ** 2).sum() / 2
-            self.cost_.append(cost)
+            self.costs_.append(cost)
         return self
 
     def net_input(self, X):
         """ Вычисляет общий вход z"""
-        return X @ self.w_[1:] + self.w_[0]
+        return X @ self.w_ + self.bias_
 
     def activation(self, X):
-        """ Вычиляет линейную активацию """
+        """ Вычиляет линейную активацию f(z)"""
         return X
 
     def predict(self, X):
         """
-        Пороговая функция активации f(z) (нужна для смещения весов)
+        Возвращает предсказанную метку класса
         :return -1|1
         """
         return np.where(self.net_input(X) >= 0.0, 1, -1)
@@ -76,7 +84,7 @@ def show_errors(errors):
 
 
 if __name__ == '__main__':
-    df = pd.read_csv('iris.csv')
+    df = pd.read_csv('src/iris.csv')
     X = df.iloc[0:100, [2, 3]].values
     y_raw = df.iloc[0:100, 4].values
     y = np.where(y_raw == 'Iris-setosa', -1, 1)
@@ -89,13 +97,13 @@ if __name__ == '__main__':
     ada = AdalineGD(eta=0.001, n_iter=23)
     ada.fit(X_std, y)
 
-    from plot_decision_regions import plot_decision_regions
+    from src.plot_decision_regions import plot_decision_regions
     plot_decision_regions(X_std, y, classifier=ada)
-    plt.title('Adaline - градиентный спуск')
-    plt.xlabel('Petal length [стандартизированный]')
-    plt.ylabel('Petal width [стандартизированный]')
+    plt.title('Adaline (Градиентный спуск)')
+    plt.xlabel('Длина чашелистика [стандартизованная]')
+    plt.ylabel('Длина лепестка [стандартизованная]')
     plt.legend(loc='upper right')
     plt.tight_layout()
     plt.show()
 
-    show_errors(ada.cost_)
+    show_errors(ada.costs_)

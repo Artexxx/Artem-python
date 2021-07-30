@@ -14,17 +14,22 @@ import pandas as pd
 
 class AdalineSGD(object):
     """
-    eta (float)
-        Скорость обучения
-    n_iter (int)
-        Проходы по обучающимся наборам данных
-    random_state (int)
+    Params:
+    ----------
+    eta (float) = 0.01
+         Скорость обучения между 0.0 и 1.0
+    n_iter (int) = 50
+         Количесто проходов по обучающему набору данных
+    random_state (int) = 1
         Начальное значение генератора случайных чисел для инициализации весов
     shuffle (bool)
-         Для перемешивания обучающих данных
+        Данные будут перемешиваться каждую эпоху
+
+    Attributes:
+    -----------
     w_ (nd-array)
-        Веса после прогонки
-    cost_ (list)
+        Веса после подгонки, shape = [n_features]
+    costs_ ( list )
         Сумма квадратичных ошибок, усреднённая по всем обучающим образцам, показывает успешность алгоритма
     """
 
@@ -42,16 +47,16 @@ class AdalineSGD(object):
         :return self
         """
         self._initialize_weigth(X.shape[1])
-        self.cost_ = []
+        self.costs_ = []
 
-        for i in range(self.n_iter):
+        for _ in range(self.n_iter):
             if self.shuffle:
                 X, y = self._shuffle(X, y)
-            cost = []
+            total_cost = .0
             for xi, target in zip(X, y):
-                cost.append(self._update_weights(xi, target))
-            avg_cost = sum(cost) / len(y)
-            self.cost_.append(avg_cost)
+                total_cost += self._update_weights(xi, target)
+            avg_cost = total_cost / len(y)
+            self.costs_.append(avg_cost)
         return self
 
     def partial_fit(self, X, y):
@@ -90,13 +95,12 @@ class AdalineSGD(object):
         return X @ self.w_[1:] + self.w_[0]
 
     def activation(self, X):
-        """ Вычиляет линейную активацию """
+        """ Вычиляет линейную активацию f(z)"""
         return X
 
     def predict(self, X):
         """
-        Пороговая функция активации f(z) (нужна для смещения весов)
-        возращает метку класса после единичного шага
+        Возвращает предсказанную метку класса
         :return -1|1
         """
         return np.where(self.activation(self.net_input(X)) >= 0.0, 1, -1)
@@ -111,7 +115,7 @@ def show_errors(errors):
 
 
 if __name__ == '__main__':
-    df = pd.read_csv('iris.csv')
+    df = pd.read_csv('src/iris.csv')
     X = df.iloc[0:100, [2, 3]].values
     y_raw = df.iloc[0:100, 4].values
     y = np.where(y_raw == 'Iris-setosa', -1, 1)
@@ -124,16 +128,17 @@ if __name__ == '__main__':
     ada = AdalineSGD(eta=0.001, n_iter=15)
     ada.fit(X_std, y)
 
-    # обновить модель на индивидуальных образцах
+    # Обновить модель на индивидуальных образцах
     ada.partial_fit(X_std[0, :], y[0])
 
-    show_errors(ada.cost_)
-    from plot_decision_regions import plot_decision_regions
+    show_errors(ada.costs_)
+    from src.plot_decision_regions import plot_decision_regions
 
     plot_decision_regions(X_std, y, classifier=ada)
-    plt.title('Adaline - стохастический градиентный спуск')
-    plt.xlabel('petal length [стандартизированный]')
-    plt.ylabel('petal width [стандартизированный]')
+    plt.title('Adaline (Стохастический градиентный спуск)')
+    plt.xlabel('Длина чашелистика [стандартизованная]')
+    plt.ylabel('Длина лепестка [стандартизованная]')
+
     plt.legend(loc='upper right')
     plt.tight_layout()
     plt.show()

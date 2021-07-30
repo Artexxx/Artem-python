@@ -5,7 +5,6 @@
     Есть датасет: m образцов, каждый образец — n-мерная точка.
     Для каждого образца мы знаем к какому классу он относится (зелёный или красный).
     Также известно, что датасет является линейно разделимым, т.е. существует n-мерная гиперплоскость такая, что зелёные точки лежат по одну сторону от неё, а красные — по другую.
-Разделяющая поверхность задается формулой (x @ w) + b = 0
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -60,11 +59,12 @@ class LogisticRegressionGD(object):
         return X @ self.w_[1:] + self.w_[0]
 
     def activation(self, z):
-        """ Вычиляет логистическкую сигмоидальную активацию """
+        """ Вычисляет логистическую сигмоидальную активацию f(z)
+        return: Вероятность того, что определённый образец принадлежит классу 1, f(z)=P(y=1|x;w)"""
         return 1 / (1 + np.exp(-np.clip(z, -250, 250)))
 
     def predict(self, X):
-        """ Возращает метку класса после единичного шага"""
+        """ Возвращает метку класса после единичного шага"""
         return np.where(self.net_input(X) >= 0.0, 1, -1)
 
 
@@ -79,14 +79,14 @@ def show_errors(errors):
 if __name__ == '__main__':
     import pandas as pd
 
-    df = pd.read_csv('fruits.csv')
+    df = pd.read_csv('src/fruits.csv')
     X = df.iloc[:, [0, 1]].values
     y = df.iloc[:, 2].values
 
     lrgd = LogisticRegressionGD(eta=0.05, n_iter=20, random_state=42)
     lrgd.fit(X, y)
 
-    from plot_decision_regions import plot_decision_regions
+    from src.plot_decision_regions import plot_decision_regions
 
     plot_decision_regions(X, y, classifier=lrgd)
     plt.title('Logistic Regression Classifier using gradient descent')
