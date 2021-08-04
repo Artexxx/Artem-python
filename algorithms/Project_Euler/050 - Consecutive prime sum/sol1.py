@@ -15,8 +15,7 @@
 """
 import math
 
-
-def bit_sieve(n) -> list:
+def bit_sieve(limit) -> List[bool]:
     """ Sieve of Eratosthenes
      Generate boolean array of length N, where prime indices are True.
 
@@ -25,12 +24,12 @@ def bit_sieve(n) -> list:
     >>> bit_sieve(10)
     [False, False, True, True, False, True, False, True, False, False]
     """
-    primes = [True] * n
-    primes[0], primes[1] = False, False  # числа 0 и 1
+    primes = [True] * limit
+    primes[0], primes[1] = False, False
 
     number_of_multiples = len(primes[4::2])
     primes[4::2] = [False] * number_of_multiples
-    for factor in range(3, int(math.sqrt(n)) + 1, 2):
+    for factor in range(3, int(math.sqrt(limit)) + 1, 2):
         if primes[factor]:
             number_of_multiples = len(primes[factor * factor::factor * 2])
             primes[factor * factor::factor * 2] = [False] * number_of_multiples

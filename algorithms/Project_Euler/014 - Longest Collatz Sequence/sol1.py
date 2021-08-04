@@ -12,12 +12,24 @@
 Какой начальный элемент меньше миллиона генерирует самую длинную последовательность?
 
   №       Время  Замедление      Число  Результат
----  ----------  ------------  -------  ------------------------------------------
-  1   0.0121054  1.211%           1000  {'counter': 179, 'largest_number': 871}
-  2   0.159858   14.78%          10000  {'counter': 262, 'largest_number': 6171}
-  3   1.9221     176.22%        100000  {'counter': 351, 'largest_number': 77031}
-  4  10.7897     886.76%        500000  {'counter': 449, 'largest_number': 410011}
+---  ----------  ------------  -------  ---------
+  1   0.0121054  1.211%           1000        871
+  2   0.159858   14.78%          10000       6171
+  3   1.9221     176.22%        100000      77031
+  4  10.7897     886.76%        500000     410011
 """
+
+
+def collatz_chain_length(number):
+    counter = 1
+    while number > 1:
+        if number % 2 == 0:
+            number /= 2
+            counter += 1
+        else:
+            number = (3 * number) + 1
+            counter += 1
+    return counter
 
 
 def solution(n):
@@ -35,30 +47,12 @@ def solution(n):
     >>> solution(15000)
     {'counter': 276, 'largest_number': 13255}
     """
-    largest_number = 0
-    pre_counter = 0
-
-    for input1 in range(n):
-        counter = 1
-        number = input1
-
-        while number > 1:
-            if number % 2 == 0:
-                number /= 2
-                counter += 1
-            else:
-                number = (3 * number) + 1
-                counter += 1
-
-        if counter > pre_counter:
-            largest_number = input1
-            pre_counter = counter
-    return {"counter": pre_counter, "largest_number": largest_number}
+    return max(range(1, n), key=collatz_chain_length)
 
 
 if __name__ == "__main__":
     result = solution(int(input().strip()))
-    print(("Largest Number:", result["largest_number"], "->", result["counter"], "digits"))
+    print("Largest Number:", result)
     ### Run Time-Profile Table ###
     # import sys; sys.path.append('..')
     # from time_profile import my_time_this

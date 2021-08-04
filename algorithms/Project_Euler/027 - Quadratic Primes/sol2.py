@@ -18,11 +18,30 @@
 
   №      Время  Замедление      Аргумент    Результат
 ---  ---------  ------------  ----------  -----------
-  1  0.0002734  0.027%                10          -21
-  2  0.0186619  1.839%               100        -1455
-  3  1.66361    164.495%            1000       -59231
+  1  0.0001656  0.017%                10          -21
+  2  0.0072277  0.706%               100        -1455
+  3  0.390135   38.291%             1000       -59231 <Ответ>
 """
 import math
+
+
+def primes_sieve(n):
+    ''' Решето Эратосфена.
+
+    >>> list(primes_sieve(50))
+    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+    '''
+    primes = [True] * n
+    primes[0], primes[1] = False, False  # Числа 0 и 1
+
+    number_of_multiples = len(primes[4::2])
+    primes[4::2] = [False] * number_of_multiples
+
+    for p in range(3, int(math.sqrt(n)) + 1, 2):
+        if primes[p]:
+            number_of_multiples = len(primes[p * p::p * 2])
+            primes[p * p::p * 2] = [False] * number_of_multiples
+    return (i for (i, isprime) in enumerate(primes) if isprime)
 
 
 def is_prime(number) -> bool:
@@ -57,12 +76,15 @@ def solution(LIMIT):
     >>> solution(1000)
     -59231 # n^2 + an + b = n^2 - 61*n + 971
     """
-    class result: n, a, b = 0, 0, 0
+
+    class result:
+        n, a, b = 0, 0, 0
 
     for a in range(-LIMIT + 1, LIMIT):
-        for b in range(-LIMIT, LIMIT + 1):
+        if a % 2 == 0: continue
+        for b in primes_sieve(LIMIT):
             n = 0
-            while is_prime(n * n + a * n + b):
+            while is_prime(n * (n + a) + b):
                 n += 1
 
             if n > result.n:

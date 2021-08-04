@@ -416,7 +416,7 @@ class os():
     os.path.isdir(r"C:\Users"), """Выхлоп /  True /"""
     os.path.isfile(r"C:\Users"),"""Выхлоп /  False /"""
     os.listdir(r"C:\Users"),"""Показывает все (даже скрытые) файлы которые есть в директории"""
-    os.path.exists("test.txt"),"""/ True or False /показывает существует или нет этот файл"""
+    os.path.exists("test.txt"),"""/ True or False /Показывает уществует ли путь до файла или папки"""
 
     for current_dir, dirs, files in os.walk("."):""" возвращает кортеж из 3 элементов                """
          print(current_dir, dirs, files) ,     """    1 - строковое представление текущей директории """
@@ -436,7 +436,6 @@ class os():
     os.chdir("direktoria"), """Может перемещать по директориям БЫЛО(  C:/Users/admin стало -> C:/Users/admin/directoria  ) """
 
     os.path.splitext(r'C:\Users\admin\file.cp') """ / Разбивает путь на пару (root, ext), где ext начинается с точки /( C:/Users/admin/file', '.py')"""
-
 
 # ----------------------------------------------------------------------------------------------------------------------
 class shutil(): "Модуль для копировния и перемещения файлов"

@@ -75,34 +75,45 @@ def sum_of_primes(n):
 >
 >*2  3     5     7           11    13          17    19          23                29*
 ```python
+def bit_sieve(limit) -> List[bool]:
+    """ Sieve of Eratosthenes
+     Generate boolean array of length N, where prime indices are True.
 
-def bit_sieve(n) -> list:
-    ''' Решето Эратосфена.
-    В списке bits сбрасываются биты, имеющие составные номера, биты с простыми номерами == 1.
-    i-му по порядку элементу будет соответствовать 1, если i -- простое и 0 иначе.
+    The time complexity of this algorithm is O(nloglog(n).
 
-    Сложность: nloglog(n).
-    '''
-    bits = [1] * (n + 1)
-    for index in range(2, int(math.sqrt(n))):
-        if bits[index]:  # если i -- простое
-            for j in range(index * index, n + 1, index):  # занулить все ему кратные
-                bits[j] = 0
-    return bits
-
-
-def bit_sieve_optimized(n) -> list:
-    """ Оптимизированное Решето Эратосфена. """
-    primes = [True] * n
-    primes[0], primes[1] = False, False  # числа 0 and 1
+    >>> bit_sieve(10)
+    [False, False, True, True, False, True, False, True, False, False]
+    """
+    primes = [True] * limit
+    primes[0], primes[1] = False, False
 
     number_of_multiples = len(primes[4::2])
     primes[4::2] = [False] * number_of_multiples
+    for factor in range(3, int(math.sqrt(limit)) + 1, 2):
+        if primes[factor]:
+            number_of_multiples = len(primes[factor * factor::factor * 2])
+            primes[factor * factor::factor * 2] = [False] * number_of_multiples
+    return primes
 
-    for p in range(3, int(math.sqrt(n)) + 1, 2):
-        if primes[p]:
-            number_of_multiples = len(primes[p * p::p * 2])
-            primes[p * p::p * 2] = [False] * number_of_multiples  # занулить все ему кратные
+
+def bit_sieve(limit) -> List[bool]:
+    """ Sieve of Eratosthenes
+     Generate boolean array of length N, where prime indices are True.
+
+    The time complexity of this algorithm is O(nloglog(n).
+
+    >>> bit_sieve(10)
+    [False, False, True, True, False, True, False, True, False, False]
+    """
+    primes = [True] * limit
+    primes[0], primes[1] = False, False
+
+    number_of_multiples = len(primes[4::2])
+    primes[4::2] = [False] * number_of_multiples
+    for factor in range(3, int(math.sqrt(limit)) + 1, 2):
+        if primes[factor]:
+            number_of_multiples = len(primes[factor * factor::factor * 2])
+            primes[factor * factor::factor * 2] = [False] * number_of_multiples
     return primes
 
 def prime_sum(n: int) -> int:

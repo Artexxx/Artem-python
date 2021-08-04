@@ -17,14 +17,13 @@
 Найдите значение d < 1000, для которого 1/d в десятичном виде содержит самую длинную повторяющуюся последовательность цифр.
 
 
-  №      Время  Замедление      Число    Результат
----  ---------  ------------  -------  -----------
-  1  1.11e-05   0.001%             10            7
-  2  0.000297   0.03%             100           97
-  3  0.0157933  1.55%            1000          983
-  4  1.17498    115.92%         10000         9967
+  №      Время  Замедление      Аргумент    Результат
+---  ---------  ------------  ----------  -----------
+  1  0.0085238  0.852%              1000          983 <Ответ>
+  2  0.511187   50.266%            10000         9967
+  3  4.13974    362.856%           30000        29989
 """
-import itertools
+import itertools, sympy
 
 
 def reciprocal_cycle_len(n):
@@ -49,12 +48,11 @@ def solution(N=1000):
     >>> solution(1000)
     983
     """
-    return max(range(1, N), key=reciprocal_cycle_len)
+    return max(sympy.primerange(1, N), key=reciprocal_cycle_len)
 
 
 if __name__ == "__main__":
-    print(solution())
-    # ### Run Time-Profile Table ###
-    # import sys; sys.path.append('..')
-    # from time_profile import my_time_this
-    # my_time_this(solution, [10, 100, 1000, 10000])
+    ## Run Time-Profile Table ###
+    import sys; sys.path.append('..')
+    from time_profile import TimeProfile
+    TimeProfile(solution, [1000, 10000, 30000], )

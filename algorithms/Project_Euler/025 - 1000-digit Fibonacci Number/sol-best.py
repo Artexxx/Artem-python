@@ -27,5 +27,5 @@ n1 = ((Decimal(10 ** 1000) / a).ln()) / r1.ln()
 n = n1.quantize(Decimal('1.'), rounding=ROUND_HALF_DOWN)
 thousandOneDigitFibonacci = a * r1 ** n + b * r2 ** n
 thousandOneDigitFibonacci = thousandOneDigitFibonacci.quantize(Decimal('1.'), rounding=ROUND_HALF_DOWN)
-print("Generated answer: " + str(thousandOneDigitFibonacci))
-print("Digits in answer: " + str(len(str(thousandOneDigitFibonacci))))
+print("Generated answer: ", thousandOneDigitFibonacci)
+print("Digits in answer: ", len(str(thousandOneDigitFibonacci)))

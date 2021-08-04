@@ -24,7 +24,9 @@ class LogisticRegressionGD(object):
     Attributes:
     -----------
     w_ (nd-array)
-         Веса после прогонки
+         Веса после прогонки, shape = [n_features]
+    bias_ (float)
+         Смещение.
     cost_ (list)
         Логистические издержки, показывающие успешность алгоритма
     """
@@ -41,22 +43,23 @@ class LogisticRegressionGD(object):
         :return self
         """
         rgen = np.random.RandomState(self.random_state)
-        self.w_ = rgen.normal(loc=0.0, scale=0.05, size=1 + X.shape[1])
+        self.w_ = rgen.normal(loc=0.0, scale=0.05, size=X.shape[1])
+        self.bias_ = 0.0
+        self.costs_ = []
 
-        self.cost_ = []
         for _ in range(self.n_iter):
             net_input = self.net_input(X)
             output = self.activation(net_input)
             errors = y - output  # отклонения расчетных результатов от истинных меток классов
-            self.w_[1:] += self.eta * X.T.dot(errors)  # Обновляем веса, вычислив градиент
-            self.w_[0] += self.eta * errors.sum()
-            cost = -y.dot(np.log(output)) - ((1 - y).dot(np.log(1 - output)))
-            self.cost_.append(cost)
+            self.w_ += self.eta * X.T.dot(errors)  # Обновляем веса, вычислив градиент
+            self.bias_ += self.eta * errors.sum()
+            cost = -y.dot(np.log(output + 1e-15)) - ((1 - y).dot(np.log(1 - output + 1e-15)))
+            self.costs_.append(cost)
         return self
 
     def net_input(self, X):
         """ Вычисляет общий вход z """
-        return X @ self.w_[1:] + self.w_[0]
+        return X @ self.w_ + self.bias_
 
     def activation(self, z):
         """ Вычисляет логистическую сигмоидальную активацию f(z)
@@ -96,4 +99,4 @@ if __name__ == '__main__':
     plt.tight_layout()
     plt.show()
 
-    show_errors(lrgd.cost_)
+    show_errors(lrgd.costs_)

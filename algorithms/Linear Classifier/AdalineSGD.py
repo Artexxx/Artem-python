@@ -29,6 +29,8 @@ class AdalineSGD(object):
     -----------
     w_ (nd-array)
         Веса после подгонки, shape = [n_features]
+    bias_ (float)
+         Смещение.
     costs_ ( list )
         Сумма квадратичных ошибок, усреднённая по всем обучающим образцам, показывает успешность алгоритма
     """
@@ -70,10 +72,11 @@ class AdalineSGD(object):
             self._update_weights(X, y)
         return self
 
-    def _initialize_weigth(self, len_features):
+    def _initialize_weigth(self, n_features):
         """ Нужно для инициализации весов небольшими рандомными числами """
         self.rgen = np.random.RandomState(self.random_state)
-        self.w_ = self.rgen.normal(loc=0.0, scale=0.01, size=1 + len_features)
+        self.w_ = self.rgen.normal(loc=0.0, scale=0.01, size=n_features)
+        self.bias_ = 0.0
         self.w_initialized = True
 
     def _shuffle(self, X, y):
@@ -82,17 +85,17 @@ class AdalineSGD(object):
         return X[r], y[r]
 
     def _update_weights(self, xi, target):
-        """ Обновляет веса и возращает меру успешности алгоритма"""
+        """ Обновляет веса и возвращает ошибку"""
         output = self.activation(self.net_input(xi))
         error = target - output
-        self.w_[0] += self.eta * error
-        self.w_[1:] += self.eta * xi.dot(error)
+        self.w_ += self.eta * xi.dot(error)
+        self.bias_ += self.eta * error
         cost = (error ** 2) / 2
         return cost
 
     def net_input(self, X):
         """ Вычисляет общий вход z"""
-        return X @ self.w_[1:] + self.w_[0]
+        return X @ self.w_ + self.bias_
 
     def activation(self, X):
         """ Вычиляет линейную активацию f(z)"""

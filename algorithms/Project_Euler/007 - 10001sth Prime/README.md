@@ -60,17 +60,25 @@ def solution(n):
 
 
 ```python
-def bit_sieve(n) -> list:
+def bit_sieve(limit) -> List[bool]:
+    """ Sieve of Eratosthenes
+     Generate boolean array of length N, where prime indices are True.
+
+    The time complexity of this algorithm is O(nloglog(n).
+
+    >>> bit_sieve(10)
+    [False, False, True, True, False, True, False, True, False, False]
     """
-    Решето Эратосфена.
-    Сложность: nloglog(n).
-    """
-    bits = [True] * (n + 1)
-    for index in range(2, int(math.sqrt(n))):
-        if bits[index]:  # если i - простое
-            for j in range(index * index, n + 1, index):  # занулить все ему кратные
-                bits[j] = False
-    return bits
+    primes = [True] * limit
+    primes[0], primes[1] = False, False
+
+    number_of_multiples = len(primes[4::2])
+    primes[4::2] = [False] * number_of_multiples
+    for factor in range(3, int(math.sqrt(limit)) + 1, 2):
+        if primes[factor]:
+            number_of_multiples = len(primes[factor * factor::factor * 2])
+            primes[factor * factor::factor * 2] = [False] * number_of_multiples
+    return primes
 
 
 def solution(n):

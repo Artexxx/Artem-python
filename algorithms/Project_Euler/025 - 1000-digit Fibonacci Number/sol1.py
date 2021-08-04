@@ -23,36 +23,16 @@
 
 Каков индекс первого члена в последовательности Фибоначчи, который содержит n цифр?
 
-  №      Время  Замедление      Число    Результат
----  ---------  ------------  -------  -----------
-  1  0.0002482  0.025%             10           45
-  2  0.0181968  1.79%             100          476
-  3  2.22865    221.05%          1000         4782
+  №      Время  Замедление      Аргумент    Результат
+---  ---------  ------------  ----------  -----------
+  1  1.35e-05   0.001%                10           45
+  2  0.0001689  0.016%               100          476
+  3  0.0281723  2.800%              1000         4782 <Ответ>
 """
+import itertools
 
 
-def fibonacci(n):
-    if n == 1 or type(n) is not int:
-        return 0
-    elif n == 2:
-        return 1
-    else:
-        sequence = [0, 1]
-        for i in range(2, n + 1):
-            sequence.append(sequence[i - 1] + sequence[i - 2])
-        return sequence[n]
-
-
-def fibonacci_digits_index(n):
-    digits = 0
-    index = 2
-    while digits < n:
-        index += 1
-        digits = len(str(fibonacci(index)))
-    return index
-
-
-def solution(n):
+def solution(N):
     """Возвращает индекс первого члена в последовательности Фибоначчи, который должен содержать n цифр.
 
     >>> solution(1000)
@@ -64,12 +44,18 @@ def solution(n):
     >>> solution(3)
     12
     """
-    return fibonacci_digits_index(n)
+    prev, cur = 0, 1
+    for index in itertools.count(start=1):
+        if len(str(cur)) == N: return index
+        ### prev = fibonacci(i - 1), cur = fibonacci(i) ###
+        prev, cur = cur, prev + cur
+
+
 
 
 if __name__ == "__main__":
     print(solution(int(str(input()).strip())))
     # ### Run Time-Profile Table ###
     # import sys; sys.path.append('..')
-    # from time_profile import my_time_this
-    # my_time_this(solution, [10, 100, 1000])
+    # from time_profile import TimeProfile
+    # TimeProfile(solution, [10, 100, 1000])
