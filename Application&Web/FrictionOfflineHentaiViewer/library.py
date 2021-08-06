@@ -237,7 +237,7 @@ class Doujin:
 
     def json(self):
         """
-        Возращает следующую структуру: (dict)
+        Возвращает следующую структуру: (dict)
         {
           'id': (str) - Library.identifier - Уникальное id директории с фото
           'title': (str) - Library.path.basename - Название директории с фото

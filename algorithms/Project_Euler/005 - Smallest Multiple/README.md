@@ -78,22 +78,22 @@ def solution(end):
 ``` python
 import math
 
-def primeFactors(x) -> list:
-    """ Возращает простые числа, образующие х
+def prime_factors(x) -> list:
+    """ Возвращает простые чисела, образующие х
 
-    >>> primeFactors(24)
+    >>> prime_factors(24)
     [2, 2, 2, 3]
     """
     if x <= 1: return []
     for i in range(2, x + 1):
         if x % i == 0:
-            return [i, *primeFactors(x // i)]
+            return [i, *prime_factors(x // i)]
 
 
-def primesFrequency(primes: list) -> list:
-    """Возращает частоты последовательных простых чисел
+def primes_frequency(primes: list) -> list:
+    """"Возвращает частоты последовательных простых чисел
 
-    >>> primesFrequency([2, 2, 3, 3, 2, 3])
+    >>> primes_frequency([2, 2, 3, 3, 2, 3])
     [[2, 2], [3, 2], [2, 1], [3, 1]]
     """
     frequency = [[primes[0], 1]]
@@ -106,14 +106,14 @@ def primesFrequency(primes: list) -> list:
     return frequency
 
 
-def primesGreatestFrequency(primesFrequencyList: list) -> dict:
-    """Возращает самые большие частоты последовательных простых чисел
+def primes_greatest_frequency(primes_frequency_list: list) -> dict:
+    """Возвращает самые большие частоты последовательных простых чисел
 
-    >>> primesGreatestFrequency(  [2, 2],  [3, 2],  [2, 1],  [3, 1])
+    >>> primes_greatest_frequency([2, 2])
     { 2: 2, 3: 2 }
     """
     max_frequency = {}
-    for frequency in primesFrequencyList:
+    for frequency in primes_frequency_list:
         value = max_frequency.get(frequency[0])
         if value:
             max_frequency[frequency[0]] = max(value, frequency[1])
@@ -123,11 +123,22 @@ def primesGreatestFrequency(primesFrequencyList: list) -> dict:
 
 
 def solution(n):
+    """Возвращает наименьшее положительное число, которое равномерно делится (без остатка) на все числа от 1 до n.
+
+    >>> solution(10)
+    2520
+    >>> solution(15)
+    360360
+    >>> solution(20)
+    232792560
+    >>> solution(22)
+    232792560
+    """
     primes = []
     for i in range(n, 1, -1):
-        primes.extend(primeFactors(i))
-    primesFrequencyList = primesFrequency(primes)
-    max_frequency = primesGreatestFrequency(primesFrequencyList)
+        primes.extend(prime_factors(i))
+    primes_frequency_list = primes_frequency(primes)
+    max_frequency = primes_greatest_frequency(primes_frequency_list)
 
     result_number = 1
     for item in max_frequency.items():

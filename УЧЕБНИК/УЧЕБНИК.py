@@ -579,7 +579,7 @@ class cook():
     heapq.heapify(arr) # сортировка
     print(arr[0], arr[-1])   # min и max значения
     heapq.heappush(arr, 2)   # добавление
-    print(heapq.heappop(arr))# возращает min элемент, удаляет его
+    print(heapq.heappop(arr))# Возвращает min элемент, удаляет его
 
     heapq.heappush(queue, (priotiry, index, item))# добавление в очередь с приоритетом
     index += 1

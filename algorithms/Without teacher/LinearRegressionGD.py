@@ -43,7 +43,7 @@ class LinearRegressionGD(object):
 
 
     def predict(self, X):
-        """ Возращает метку класса после единичного шага"""
+        """ Возвращает метку класса после единичного шага"""
         return self.net_input(X)
 
 

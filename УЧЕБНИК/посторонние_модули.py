@@ -175,7 +175,7 @@ class pandas():
 
     """Отфильтровать 'Name' по значению столбца 'Age' """
     df.loc[df.Age <= 18.0, ['Name']]
-    df.Age == 18.00 # возращает булевый массив
+    df.Age == 18.00 # Возвращает булевый массив
     df.query("lunch == 'standard' | gender == @temp") # temp -- переменная
     df.filter(like='bbi', axis=0) # нечёткий поиск по строкам( индексам )
 

@@ -23,12 +23,12 @@
 """
 
 
-def distinctProducts(n, m):
+def distinct_products(n, m):
     """
-    Возрощает количество различных произведений a и b для  1<=a<=n и 2<=b<=m
-    >>> distinctProducts(1, 5)
+    Возвращает количество различных произведений a и b для  1<=a<=n и 2<=b<=m
+    >>> distinct_products(1, 5)
     4
-    >>> distinctProducts(2, 5)
+    >>> distinct_products(2, 5)
     7   # 1:(2, 3, 4, 5) 2:({2}, {4}, 6, 8, 10)
 
     """
@@ -40,26 +40,21 @@ def distinctProducts(n, m):
     return len(set_products)
 
 
-def distinctPowers(n):
-    """Возращает количество различных членов в последовательности, сгенерированной 2 <= a <= N и 2 <= b <= N
+def distinct_powers(n):
+    """Возвращает количество различных членов в последовательности, сгенерированной a^b, где 2 <= a <= N и 2 <= b <= N
 
-      >>> solution(100)
+      >>> distinct_powers(100)
       9183
-      >>> solution(50)
+      >>> distinct_powers(50)
       2184
-      >>> solution(20)
-      324
-      >>> solution(5)
+      >>> distinct_powers(5)
       15
-      >>> solution(2)
-      1
-      >>> solution(1)
-      0
     """
     imperfect_powers = [True] * (n + 1)
-    root = int(n ** 0.5)
+    sqrt_n = int(n ** 0.5)
     n_distinct = checked = 0
-    for a in range(2, root + 1):
+
+    for a in range(2, sqrt_n + 1):
         if imperfect_powers[a]:
             max_power = 1
             a_pow = a ** 2
@@ -67,14 +62,14 @@ def distinctPowers(n):
                 imperfect_powers[a_pow] = False
                 max_power += 1
                 a_pow *= a
-            n_distinct += distinctProducts(max_power, n)
+            n_distinct += distinct_products(max_power, n)
             checked += max_power
     n_distinct += (n - 1) * (n - checked - 1)
     return n_distinct
 
 
 if __name__ == '__main__':
-    print(distinctPowers(int(input().strip())))
+    print(distinct_powers(int(input().strip())))
     # ### Run Time-Profile Table ###
     # import sys; sys.path.append('..')
     # from time_profile import my_time_this

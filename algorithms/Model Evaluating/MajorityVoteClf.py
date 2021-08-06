@@ -65,7 +65,7 @@ class MajorityVoteClf(BaseEstimator, ClassifierMixin):
 
     def get_params(self, deep=True):
         """
-        Возращает имена параметров классификатора
+        Возвращает имена параметров классификатора
         Решает ошибку:
             it does not seem to be a scikit-learn estimator as it does not implement a 'get_params' methods."""
         if not deep:

@@ -27,7 +27,7 @@ def reduceFractionToLowestCommonTerms(a, b):
 
 def solution():
     """
-    Возращает знаменатель произведения 4x особых дробей.
+    Возвращает знаменатель произведения 4x особых дробей.
 
     >>> solution()
     100

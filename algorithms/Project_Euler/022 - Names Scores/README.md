@@ -61,7 +61,7 @@ def solution() -> int:
 
     total = 0
     for i in range(1, len(names) + 1):
-        # heappop - возращает min элемент, удаляет его из кучи
+        # heappop - Возвращает min элемент, удаляет его из кучи
         total += name_score(heapq.heappop(names), i)
 
     return total

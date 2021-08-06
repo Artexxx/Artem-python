@@ -163,8 +163,8 @@ Constraints:
 
 class ExactLengthExactSum:
     """
-    Возращает True если N переменных суммируются до sum_value
-    [*] Возращает True если количество переменных меньше N
+    Возвращает True если N переменных суммируются до sum_value
+    [*] Возвращает True если количество переменных меньше N
     """
 
     def __init__(self, number_of_values: int, sum_value) -> None:

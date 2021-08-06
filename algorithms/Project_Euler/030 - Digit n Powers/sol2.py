@@ -12,25 +12,24 @@ As 1 = 1^4 is not a sum it is not included.
 
 """
 from itertools import combinations_with_replacement
+from types import MappingProxyType
 
-
-def solution():
+def solution(N):
     result_sum = 0
-    powers = {str(d): d ** 5 for d in range(10)}
+    powers = MappingProxyType({str(d): d ** N for d in range(10)})
 
-    for digits in combinations_with_replacement('0123456789', 6):
+    # if N >= 5: N += 1
+    for digits in combinations_with_replacement('0123456789', 6 * (9) ** N):
         candidate = sum(powers[d] for d in digits)
         check_sum = sum(powers[d] for d in str(candidate))
         if candidate == check_sum:
             result_sum += candidate
-
-    return result_sum - 1  # As 1 = 1^n is not a sum it is not included.
+    return result_sum - 1  # 1 = 1^4 не считается, так как это - не сумма.
 
 
 if __name__ == "__main__":
     import cProfile
     with cProfile.Profile() as p:
-        print(solution())
+        print(solution(6))
     p.print_stats()
-
 

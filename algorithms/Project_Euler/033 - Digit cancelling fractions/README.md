@@ -48,7 +48,7 @@ def cancel_digit(numerator, denominator) -> Fraction:
 
 def cancel_digit_product() -> Fraction:
     """
-    Возращает знаменатель произведения 4x дробей.
+    Возвращает знаменатель произведения 4x дробей.
 
     >>> solution()
     100
@@ -101,7 +101,7 @@ def cancel_digit_product() -> Fraction:
 ```python
 def solution():
     """
-    Возращает знаменатель произведения 4x особых дробей.
+    Возвращает знаменатель произведения 4x особых дробей.
 
     >>> solution()
     100

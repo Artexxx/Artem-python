@@ -22,25 +22,22 @@
 """
 
 
-def solution(n):
-    """Возращает количество различных членов в последовательности, сгенерированной 2 <= a <= N и 2 <= b <= N
+def solution(N):
+    """Возвращает количество различных членов в последовательности, сгенерированной a^b, где  2 <= a <= N и 2 <= b <= N
 
     >>> solution(100)
     9183
     """
-    collectPowers = set()
-
-    N = n + 1
-    for a in range(2, N):
-        for b in range(2, N):
-            currentPow = a ** b  # вычисляет текущую степень
-            collectPowers.add(currentPow)
-    return len(collectPowers)
+    collect_powers = set()
+    for a in range(2, N+1):
+        for b in range(2, N+1):
+            collect_powers.add(pow(a, b))
+    return len(collect_powers)
 
 
 if __name__ == "__main__":
-    print(solution(int(input().strip())))
-    # ### Run Time-Profile Table ###
-    # import sys;sys.path.append('..')
-    # from time_profile import my_time_this
-    # my_time_this(solution, [10, 100, 1000])
+    # print(solution(int(input().strip())))
+    ### Run Time-Profile Table ###
+    import sys;sys.path.append('..')
+    from time_profile import TimeProfile
+    TimeProfile(solution, [10, 100, 1000])

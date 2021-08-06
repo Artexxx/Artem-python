@@ -1,5 +1,5 @@
 def binary_search(list_, item):
-    """ Возращает индекс числа item в списке list_.
+    """ Возвращает индекс числа item в списке list_.
     Сложность: lg n
 
     [-] список должен быть отсортирован, cложномть сортировки: n lg n
@@ -24,7 +24,7 @@ def binary_search(list_, item):
 
 
 def binary_search_recursive(list_, start, stop, item):
-    """ Возращает индекс числа item в списке list_.
+    """ Возвращает индекс числа item в списке list_.
     Сложность: lg n
 
     [-] список должен быть отсортирован, cложномть сортировки: n lg n

@@ -8,7 +8,7 @@ games = {}
 
 def new_game():
     """
-    Содаёт новою игру и возращает её id
+    Содаёт новою игру и Возвращает её id
     """
     while True:
         game_id = hashlib.md5(

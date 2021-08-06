@@ -73,13 +73,13 @@ class GameSession:
 
     def _get_active_player(self):
         """
-        Возращает игрока, который может сейчас стрелять
+        Возвращает игрока, который может сейчас стрелять
         """
         return self._players[self._current_turn % len(self._players)]
 
     def _get_passive_player(self):
         """
-        Возращает игрока, который может сейчас стрелять
+        Возвращает игрока, который может сейчас стрелять
         """
         return self._players[(self._current_turn + 1) % len(self._players)]
 

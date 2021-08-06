@@ -119,7 +119,7 @@ class Node():
 
 def node_to_path(node: Node) -> List[MazeLocation]:
     """
-    Возращает координаты пути от начальной до конечной ячейки.
+    Возвращает координаты пути от начальной до конечной ячейки.
     """
     path = [node.state]
     # Двигается назад (от конца к началу)
@@ -248,7 +248,7 @@ class PriorityQueue:
 
 
 def manhattan_distance(end: MazeLocation):
-    """Возращает Манхэттенское расстояние между 2 точками
+    """Возвращает Манхэттенское расстояние между 2 точками
 
     >>> end, b = MazeLocation(4, 4), MazeLocation(0, 4)
     ... manhattan_distance(end)(b)
