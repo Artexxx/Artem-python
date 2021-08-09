@@ -385,156 +385,6 @@ class TryExcept():
         raise
 
 # ----------------------------------------------------------------------------------------------------------------------
-class file(): # Работа с файлами
-
-    a=open("text.txt","w") , """создаёт файл text.txt"""
-    a.close()
-
-    open("text.txt", "rb"), """читает файл text.txt на уровне байт
-                                / read1=file.read()/"""
-
-    open("text.txt", "ab"),"""добавляет файл"""
-    file.write("hello word"),"""добавляет в файл текст"""
-
-    # w (write) - открыть для записи, содержимое файла стирается
-    # a (append) - открыть для аписи, запись ведется в коней
-    # b (binary) - открыть в бинарном режиме
-    # r+ -  открыть для чтения и записи
-    # W+  - открыть для чтения и записи, содержимое файла стирается
-    file.readline(),       """читает файл построчно, но выводит текст с переносом строки / \n / """
-
-    from linecache import getline
-    getline('file.txt', 4),"""Прочитать строку с определенным номером 
-                            (например, читаем четвертую строку файла, служебные символы убираются):"""
-
-    with open('test.txt', 'r') as file,open('t.txt', 'r') as f: """читает файл text.txt и закрывает его"""
-        print(file.read())
-
-# ----------------------------------------------------------------------------------------------------------------------
-class os():
-    import os
-    os.path.isdir(r"C:\Users"), """Выхлоп /  True /"""
-    os.path.isfile(r"C:\Users"),"""Выхлоп /  False /"""
-    os.listdir(r"C:\Users"),"""Показывает все (даже скрытые) файлы которые есть в директории"""
-    os.path.exists("test.txt"),"""/ True or False /Показывает уществует ли путь до файла или папки"""
-
-    for current_dir, dirs, files in os.walk("."):""" возвращает кортеж из 3 элементов                """
-         print(current_dir, dirs, files) ,     """    1 - строковое представление текущей директории """
-                                               """    2 - список из всех подпапок                    """
-                                               """    3 - список всех файлов                         """
-
-    os.path.expanduser("~") """Возвращает корневую директорию C:/Users/admin"""
-    os.getcwd(), """Выводит путь до текущей папки / C:/Users/admin/Desktop /"""
-    os.path.abspath("your_text"),"""Тоже самое, что os.getcwd() + '/your_text' -> C:/Users/admin/Desktop/your_text"""
-
-    os.system("C:\питон37"),"""Имитация терминала  /os.system("ping google.com")
-                                                  /os.system("type test.txt") - просмотр файла"""
-
-    os.path.getsize("test.txt"),"""Размер файла в байтах"""
-
-    os.path.join(r'C:\Users', 'admin'),"""(  C:/Users стало -> C:/Users/admin  )"""
-    os.chdir("direktoria"), """Может перемещать по директориям БЫЛО(  C:/Users/admin стало -> C:/Users/admin/directoria  ) """
-
-    os.path.splitext(r'C:\Users\admin\file.cp') """ / Разбивает путь на пару (root, ext), где ext начинается с точки /( C:/Users/admin/file', '.py')"""
-
-# ----------------------------------------------------------------------------------------------------------------------
-class shutil(): "Модуль для копировния и перемещения файлов"
-    import shutil
-
-    # Копируем src в dst. (cp src dst)
-    shutil.copy("porn.json/text.txt","porn.json/result.txt") ,
-    # Перемещаем  src в  dst. (mv src dst)
-    shutil.move("src", "dst"),
-    # Копируем дерево каталогов. (cp -R src dst)
-    shutil.copytree("src", "dst", ignore = shutil.ignore_patterns('*.py'))
-    """ignore_dangling_symlinks=True -- игнорирует бирый ссылки"""
-
-# ----------------------------------------------------------------------------------------------------------------------
-class tkinter():  "Графический модуль"
-    import tkinter
-    root=Tk()  ,#  создаёт окно
-    root.mainloop(),#показывает окно
-
-    root.title("Loker") ,# заголовочное название
-
-    root.attributes("-fulscreen",True) ,# окно во весь экран
-
-    entry = Entry(root,font=1)  ,# Поле ввода entry-text
-
-    entry.place(width=150,height=50,x=600,y=400) ,#  кординаты и размеры поля ввода
-
-    root.protocol("WM_DELETE_WINDOW",on_closing) ,# Не работает сочетание клавишь (альт-ф4) для закрытие программы
-
-    root.bind('<Control-KeyPress-c>', callback)  # если нажато сочетание клавишь (ctrl-с) -> callback()
-
-    Button(root, text="Я кнопка", width=10, heigh=4, bg="black", fg="blue")  #  / bg - цвет кнопки fg- цвет текста /
-
-# ----------------------------------------------------------------------------------------------------------------------
-class sys():
-    import sys
-
-    """ Считать все строки по одной из стандартного потока ввода"""
-    for line in sys.stdin:
-        line = line.strip()
-
-    """ Секундомер в терминале [динамически обновляется]"""
-    for i in range(1, 4):
-        a = f"\r{'.' * i}{i}"
-        sys.stdout.write(a)
-        sys.stdout.flush()
-        time.sleep(1)
-    sys.stdout.write("\rtime out")
-
-# ----------------------------------------------------------------------------------------------------------------------
-class csv():# Comma-Separated Values — (значения, разделённые запятыми)
-    import csv
-    csv.reader(file)# делает из текста файла [таблицы], разделитель-[,]
-    csv.reader(file,delimiter="-")#  разделитель--[-]
-
-    writer = csv.writer(file)
-    writer.writerows([["a"],["b"]])# делает из [таблиц] текст  , разделитель-[,]
-    writer.writerows([["a"], ["b"]],quoting=csv.QUOTE_NONNUMERIC) #
-    # csv.QUOTE_ALL - все значения внутрь кавычек ''
-    # csv.QUOTE_NONNUMERIC - все нечисловые значения внутрь кавычек ''
-
-# ----------------------------------------------------------------------------------------------------------------------
-class xml():
-    """XML(расширяемый язык разметки) / сами обозначем теги / используется для того чтобы хранить данные 
-    <tag>содержимое</tag>
-    также можно указывать атрибуты в открывающемся тэге
-    примечание: похоже на дерево, имеет корень """
-    from xml.etree import ElementTree
-
-    tree=ElementTree.parse("name_file.xml") # возвращает дерево
-    root=tree.getroot() # возвращает корень дерева
-
-    for child in root: # возвращает детей корня дерева
-        print(child.tag, child.attrib)
-
-    print(root[1][0].text) # можно выводить значения так
-
-    for element in root.iter("scores"): # поиск значения по всему дереву
-        for child in element:
-            print(child.tag, child.text)
-
-    artem=root[0]
-    modul_1=next(artem.iter("module1"))
-    modul_1.text="90"  # изменил значение,!!! надо перезаписать файл
-    certificate=artem[2]
-    certificate.set("type","cool rezultat")# добавил атрибуты
-
-    descript=ElementTree.Element("description")# создаём тэг
-    descript.text="Showed Good Skills"
-    artem.append(descript) # добавляем тэг
-
-    descript=artem.find("description")
-    artem.remove(descript) # удаляет тэг
-
-    root = ElementTree.Element('student')# создаёт корень
-    name=ElementTree.SubElement(root,"name")# указываем родителя и имя тэга, создаёт тэг
-    name.text="Artem"
-
-# ----------------------------------------------------------------------------------------------------------------------
 class cook():
     from collections import deque
     # создаёт arr максимальной длиной 3
@@ -581,9 +431,8 @@ class cook():
     heapq.heappush(arr, 2)   # добавление
     print(heapq.heappop(arr))# Возвращает min элемент, удаляет его
 
-    heapq.heappush(queue, (priotiry, index, item))# добавление в очередь с приоритетом
-    index += 1
-    heapq.heappop(queue)[-1]# менее приоритетное
+    heapq.heappush(queue, (priotiry, index, item))# Добавление в очередь с приоритетом
+    heapq.heappop(queue)[-1]# Удаление из очереди
 
     """Группировка по значению конкретного поля"""
     import collections
@@ -600,15 +449,3 @@ class cook():
     arr = [1, 2, 3]
     pr = [i for i in itertools.permutations(arr, 2)]
 
-    """ Пройтись по диретрориям и найти файл """
-    def findFile(start, name):
-        for r, d, files in os.walk(start):
-            if name in files:f_p = os.path.join(start, r, name);print(os.path.abspath(f_p))
-    findFile("/", 'index.html'),
-
-    """ Запустить debug"""
-    import pdb
-    i = 6
-    pdb.set_trace() # Можно ввести `i` --> 6
-
-# ----------------------------------------------------------------------------------------------------------------------
