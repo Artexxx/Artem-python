@@ -30,7 +30,7 @@ def PCA_kernel_RBF(X, *, gamma, k_features):
     eigen_vals, eigen_vecs = eigen_vals[::-1], eigen_vecs[:, ::-1]
 
     X_pr = np.column_stack([eigen_vecs[:, i] for i in range(k_features)])
-    vals =  [eigen_vals[i] for i in range(k_features)]
+    vals = [eigen_vals[i] for i in range(k_features)]
     return X_pr, vals
 
 

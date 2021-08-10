@@ -50,8 +50,8 @@ class AdalineGD(object):
         self.costs_ = []
 
         for _ in range(self.n_iter):
-            net_input = self.net_input(X)
-            output = self.activation(net_input)
+            net_input = self._net_input(X)
+            output = self._activation(net_input)
             errors = y - output  # Отклонения расчетных результатов от истинных меток классов
             self.w_ += self.eta * X.T @ errors  # Обновляем веса, вычислив градиент
             self.bias_ += self.eta * errors.sum()
@@ -59,11 +59,11 @@ class AdalineGD(object):
             self.costs_.append(cost)
         return self
 
-    def net_input(self, X):
+    def _net_input(self, X):
         """ Вычисляет общий вход z"""
         return X @ self.w_ + self.bias_
 
-    def activation(self, X):
+    def _activation(self, X):
         """ Вычиляет линейную активацию f(z)"""
         return X
 
@@ -72,7 +72,7 @@ class AdalineGD(object):
         Возвращает предсказанную метку класса
         :return -1|1
         """
-        return np.where(self.net_input(X) >= 0.0, 1, -1)
+        return np.where(self._net_input(X) >= 0.0, 1, -1)
 
 
 def show_errors(errors):

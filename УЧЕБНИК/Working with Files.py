@@ -151,12 +151,15 @@ class os.path():
 
     os.path.join(r'C:\Users', 'admin'), """(  C:/Users стало -> C:/Users/admin  )"""
 
-
-
-    for current_dir, dirs, files in os.walk("."): """ возвращает кортеж из 3 элементов                """
-        print(current_dir, dirs, files), """    1 - строковое представление текущей директории """
-                                         """    2 - список из всех под-папок                    """
-                                         """    3 - список всех файлов                         """
+    """Пройтись рекурсивно по директориям и найти файл
+     os.walk — возвращает кортеж из 3 элементов:   1 — строковое представление текущей директории
+                                                   2 — список из всех под-папок
+                                                   3 — список всех файлов в текущей директории"""
+    start, fname = '/', "index.html"
+    for dirname, subdirs, files in os.walk(start):
+        if fname in files:
+            file_path = os.path.join(start, dirname, fname)
+            print(os.path.abspath(file_path))
 
 # ----------------------------------------------------------------------------------------------------------------------
 class pathlib():
@@ -176,7 +179,7 @@ class pathlib():
     # parent: PurePosixPath('C:\Users\admin\Desktop')
     # parents: <PurePosixPath.parents>
 
-    """Содержимое каталога"""
+    """Вывести содержимое каталога (без рекурсии)"""
     dir_path = pathlib.Path('temp_dir')
     list(dir_path.iterdir())
     # Выхлоп / Path('temp_dir/image.jpg'), Path('temp_dir/text.txt') /
@@ -195,7 +198,10 @@ class fnmatch():
     """
     from fnmatch import fnmatch
     fnmatch('data001.csv', '*.csv') # Выхлоп / True /
-    fnmatch.filter(files, pattern)
+
+    files = ('data001.csv', '1.png', '2.png')
+    fnmatch.filter(files, '*.png')
+    # Выхлоп / [1.png, 2.png] /
 
 # ----------------------------------------------------------------------------------------------------------------------
 class glob():
@@ -206,16 +212,10 @@ class glob():
     import glob
 
     """Символу “звездочка” (*) соответствует любое количество символов в сегменте"""
-    glob.glob('E:/Фото 1/*')
+    glob.glob('E:/Фото 1/*.jpg') # Фильтрация только внутри папки ”Фото 1”
     # Выхлоп / ['E:/Фото 1/A.jpg', 'E:/Фото 1/C.jpg',  'E:/Фото 1/D.png',]
-    glob.glob('E:/*/*')
+    glob.glob('E:/*/*') # Фильтрация только внутри под-папок ”E:/”
     # Выхлоп / ['E:/Фото 2/B.jpg', 'E:/Фото 1/A.jpg',  'E:/Фото 3/G.png',]
 
 # ----------------------------------------------------------------------------------------------------------------------
-class cook():
-    """ Пройтись по директориям и найти файл """
-    def findFile(start, name):
-        for r, d, files in os.walk(start):
-            if name in files:f_p = os.path.join(start, r, name);print(os.path.abspath(f_p))
-    findFile("/", 'index.html'),
 

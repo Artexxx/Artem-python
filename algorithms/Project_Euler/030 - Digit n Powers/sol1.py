@@ -15,7 +15,6 @@
 
 """
 from functools import lru_cache
-from typing import Any, Callable, Union
 
 
 @lru_cache(maxsize=10)
@@ -39,7 +38,7 @@ def solution():
     443839
     """
     is_pownumber = lambda x: sum_digit_power(x, 5) == x
-    return sum(filter(is_pownumber, range(1000, (9 ** 5) * 5 + 1)))
+    return sum(filter(is_pownumber, range(2, 5*(9)**5)))
 
 
 if __name__ == "__main__":

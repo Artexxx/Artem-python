@@ -9,17 +9,17 @@ As 1 = 1^4 is not a sum it is not included.
 Сумма этих чисел равна 1634 + 8208 + 9474 = 19316.
 
 Найдите сумму всех чисел, которые могут быть записаны в виде суммы пятых степеней их цифр.
-
 """
 from itertools import combinations_with_replacement
 from types import MappingProxyType
 
+
 def solution(N):
     result_sum = 0
     powers = MappingProxyType({str(d): d ** N for d in range(10)})
+    if N >= 5: N += 1
 
-    # if N >= 5: N += 1
-    for digits in combinations_with_replacement('0123456789', 6 * (9) ** N):
+    for digits in combinations_with_replacement('0123456789', N):
         candidate = sum(powers[d] for d in digits)
         check_sum = sum(powers[d] for d in str(candidate))
         if candidate == check_sum:
@@ -30,6 +30,6 @@ def solution(N):
 if __name__ == "__main__":
     import cProfile
     with cProfile.Profile() as p:
-        print(solution(6))
+        print(solution(5))
     p.print_stats()
 

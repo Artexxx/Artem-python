@@ -54,11 +54,8 @@ def visualize_logistic_loss():
 
 
 def visualize_dots(X, Y, Z, xlist, ylist, zlist, title='Result'):
-    fig = plt.figure(figsize=(10, 10))
-    ax = plt.axes(projection='3d')
+    fig, ax = plt.figure(figsize=(10, 10)), plt.axes(projection='3d')
     ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='jet', edgecolor='none', alpha=0.6)
-    ax.set_xlabel('X Label')
-    ax.set_ylabel('Y Label')
-    ax.set_zlabel('Z Label')
+    ax.set_xlabel('X Label'); ax.set_ylabel('Y Label'); ax.set_zlabel('Z Label')
     ax.plot(xlist, ylist, zlist, 'ro', markersize=10)
     ax.set_title(title, fontsize=20)

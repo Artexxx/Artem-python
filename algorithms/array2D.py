@@ -89,11 +89,11 @@ def zigzag(matrix: List[List]) -> List:
 
     for x in range(columns):
         for y in range(rows):
-            sum_indexes = x + y
-            if sum_indexes % 2 == 0:
-                diagonals[sum_indexes].insert(0, matrix[x][y])
+            sum_indices = x + y
+            if sum_indices % 2 == 0:
+                diagonals[sum_indices].insert(0, matrix[x][y])
             else:
-                diagonals[sum_indexes].append(matrix[x][y])
+                diagonals[sum_indices].append(matrix[x][y])
     flatten = []
     for zig in diagonals:
         flatten += zig

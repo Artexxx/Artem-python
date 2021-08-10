@@ -48,27 +48,33 @@ class LogisticRegressionGD(object):
         self.costs_ = []
 
         for _ in range(self.n_iter):
-            net_input = self.net_input(X)
-            output = self.activation(net_input)
+            net_input = self._net_input(X)
+            output = self._activation(net_input)
             errors = y - output  # отклонения расчетных результатов от истинных меток классов
             self.w_ += self.eta * X.T.dot(errors)  # Обновляем веса, вычислив градиент
             self.bias_ += self.eta * errors.sum()
-            cost = -y.dot(np.log(output + 1e-15)) - ((1 - y).dot(np.log(1 - output + 1e-15)))
+            cost = -y.dot(np.log(output)) - ((1 - y).dot(np.log(1 - output)))
             self.costs_.append(cost)
         return self
 
-    def net_input(self, X):
+    def _net_input(self, X):
         """ Вычисляет общий вход z """
         return X @ self.w_ + self.bias_
 
-    def activation(self, z):
+    def _activation(self, z):
         """ Вычисляет логистическую сигмоидальную активацию f(z)
-        return: Вероятность того, что определённый образец принадлежит классу 1, f(z)=P(y=1|x;w)"""
-        return 1 / (1 + np.exp(-np.clip(z, -250, 250)))
+        return:
+            f(z) — вероятность того, что определённый образец принадлежит классу 1, f(z)=P(y=1|x;w)
+
+        note:
+            Ограничиваю сверху размером 36, так как при большем значении функция дает результат 1
+            и из-за этого невозможно рассчитать ошибку, так как выражение np.log(1-1) выдает исключение
+        """
+        return 1 / (1 + np.exp(-np.clip(z, -250, 36)))
 
     def predict(self, X):
         """ Возвращает метку класса после единичного шага"""
-        return np.where(self.net_input(X) >= 0.0, 1, -1)
+        return np.where(self._net_input(X) >= 0.0, 1, -1)
 
 
 def show_errors(errors):
