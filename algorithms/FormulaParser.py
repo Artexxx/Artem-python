@@ -66,3 +66,4 @@ def evaluate(formula: str):
 
 if __name__ == '__main__':
     print(evaluate("2+5"))
+    print(evaluate("3+4*5"))
