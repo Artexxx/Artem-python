@@ -1,15 +1,42 @@
 import collections
+import json
 import os
 import pathlib
 import linecache
 import shutil
 import csv
 import mmap
+from xml.etree import ElementTree
+
+example_xml="""
+<breakfast menu>
+    <food>
+        <name>Belgian Waf f les</name>
+        <calories>650</calories>
+    </food>
+    <food>
+        <name>Strawberry Belgian Waffles</name>
+        <calories>900</calories>
+    </food>
+    <food>
+        <name>Berry-Berry Belgian Waf fles</name>
+        <calories>900</calories>
+    </food>
+    <food>
+        <name>French Toast</name>
+        <calories>бOO</calories>
+    </food>
+    <food>
+        <name>Homestyle Breakfast</name>
+        <calories>950</calories>
+    </food>
+</breakfast menu> 
+"""
+example_json = {'name': 'ACME', 'shape': 100, 'price': 542.23, 'address': None, 'availability': True, }
 
 
 # ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 class file():
-
     file=open("somefile.txt", mode="ab", encoding='utf-8', errors='ignore')
     file.write("hello word")
     print("hello word", file=file)
@@ -28,8 +55,8 @@ class file():
     #      Default text — français
     #            ignore — franais  # Отбрасывает данные
     #           replace — fran?ais # Заменяет вопросительным знаком (?)
-    # xmlcharrefreplace — fran&#231;ais # Заменяет ссылкой на символ XML (без потери данных)
-    #  backslashreplace — franWxe7ais # Заменяет на значение repr(unicode) (без потери данных)
+    # xmlcharrefreplace — fran&#231;ais # Замена ссылкой на подходящий символ XML (без потери данных)
+    #  backslashreplace — franWxe7ais   # Замена Escape-последовательностями repr(unicode) (без потери данных)
 
     file.readline(), """Читает файл построчно, выводит текст с переносом строки — \n """
 
@@ -56,7 +83,7 @@ class pathlib():
     p.mkdir() # Если создаваемый путь существует, то возбуждается исключение FileExistsError
     p.rmdir() # Если папка не пуста, то возбуждается исключение  OSError
 
-    """Метод unlink используется для удаления файлов, символических сс ылок и большинства других типов путей"""
+    """Метод unlink используется для удаления файлов, символических ссылок и большинства других типов путей"""
     pathlib.Path('example.txt').unlink()
 
 # ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -71,12 +98,12 @@ class mmap():
 
     with memory_map('example.txt') as m:
         print(m.read()); m.seek(0) # перейти в начало
-        m[-5:-2] = b'ABC'
+        m[-3:] = b'ABC'
         print(m.read()); m.seek(0) # перейти в начало
     """
     |                 Before                   |                 After                    |
     |——————————————————————————————————————————|——————————————————————————————————————————|
-    |b'Example file. This is the content (123)'|b'Example file. This is the content (ABC)'|
+    | b'Example file. This is the content: 123'| b'Example file. This is the content: ABC'|
     """
 
 # ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -129,7 +156,7 @@ class sys():
 
 # ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 class csv():
-    """csv модуль для чтения и записи данных в CSV-файл"""
+    """csv модуль для чтения и записи данных в CSV-файл (Comma-Separated Values)"""
 
     """Чтение данных в именованный кортеж
     [#] Заголовки колонок должны быть валидными идентификаторами """
@@ -167,25 +194,104 @@ class csv():
     # csv.QUOTE_NONNUMERIC — все нечисловые значения внутрь кавычек ''
 
 # ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+class json():
+    """json модуль для чтения и записи данных в JSON-файл (JavaScript Object Notation)"""
+
+    """Примеры записи и чтения данных"""
+    with open("example.json", 'wx') as f:
+        json.dump(example_json, f)
+    """
+    |    After: Python dict    |      Before: string     |
+    |——————————————————————————|—————————————————————————|
+    |    {'address': None,     |  "{'address': null,     |  
+    |    'availability': True, |   'availability': true, |
+    |    'name': 'ACME',       |   'name': 'ACME',       |
+    |    'price': 542.23}      |   'price': 542.23}"     |
+    """
+    with open("example.json", 'r') as f:
+        data = json.load(f)
+
+    """Сериализация экземпляров классов
+    Функция для аргумента default вызывается для объектов, которые иначе не могут быть сериализованы. Обычно возникает TypeError.
+    Функция для аргумента object_hook вызывается для каждого словаря, декодированного из входящего потока данных, предоставляя возможность преобразования словарей в объекты другого тип.
+    """
+    class Point:
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+
+    def serialize_instance(obj)->dict:
+        d = {'__classname__': type(obj).__name__}
+        d.update(vars(obj)); return d
+
+    def unserialize_object(d:dict):
+        classes = {'Point': Point}
+        class_name = d.pop('__classname__', None)
+        if class_name:
+            cls = classes[class_name]
+            obj = cls.__new__(cls) # Создание экземпляра без конструктора __init__
+            for attr, value in d.items(): setattr(obj, attr, value)
+            return obj
+        return d
+    
+    p = Point(x=12, y=3)
+    s=json.dumps(p, default=serialize_instance) #  Выхлоп /  '{"__classname__": "Point", "x": 12, "y": 3}' /
+    p=json.loads(s, object_hook=unserialize_object) #  Выхлоп /  Point(12, 3) /
+
+# ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 class xml():
-    """XML(расширяемый язык разметки) / сами обозначем теги / используется для того чтобы хранить данные 
-    <tag>содержимое</tag>
-    также можно указывать атрибуты в открывающемся тэге
-    примечание: похоже на дерево, имеет корень """
-    from xml.etree import ElementTree
+    """xml модуль для чтения и записи данных в XML-файл (extensible Markup Language )"""
 
-    tree=ElementTree.parse("name_file.xml") # возвращает дерево
-    root=tree.getroot() # возвращает корень дерева
+    """Парсинг простых XML-данных"""
+    tree = ElementTree.parse("name_file.xml")
+    root = tree.getroot() # Возвращает корень дерева
+    for element in root.iterfind("scores"): # Поиск значения по всему дереву
+        for child in element: print(child.tag, child.text)
 
-    for child in root: # возвращает детей корня дерева
-        print(child.tag, child.attrib)
+    """Парсинг больших XML-данных
+    Пример файла на 500K cтрок: https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Pot-Holes-Reported-Historical/7as2-ds3y
+    В основе итеративный парсинг и удаление узлов.
+    Итератор ElementTree.iterparse: производит кортежи вида (event, element), где event одно из событий (start|end).
+    Событие start создается, когда элемент создан, но еще не наполнен потомками.
+    """"""Пример:
+    >>>for event, element in ElementTree.iterparse('menu.xml', ('start', 'end')): print(event, element)
+    start <Element 'breakfast_menu'>
+    start <Element 'food'>
+        start <Element 'name'>
+        end <Element 'name'>                  
+        start <Element 'calories'>
+        end <Element 'calories'>
+    end <Element 'food'>
+    [...]
+    end <Element 'breakfast_menu'>"""
+    def parse_and_remove(file_name, path):
+        doc = ElementTree.iterparse(file_name, ('start', 'end'))
+        path_parts = path.split('/')
+        next(doc) # Пропуск корня
+        tag_stack = []
+        elem_stack = []
+        for event, element in doc:
+            if event == 'start':
+                tag_stack.append(element.tag); elem_stack.append(element)
+            elif event == 'end':
+                if tag_stack == path_parts:
+                    yield element
+                    # Далее удаляется узел из родителя
+                    elem_stack[-2].remove(element)
+                try:
+                    tag_stack.pop(); elem_stack.pop()
+                except IndexError: pass
 
-    print(root[1][0].text) # можно выводить значения так
+    potholes_by_zip = collections.Counter()
+    tree = ElementTree.parse("rows.xml")
+    for pothole in tree.iterfind('row/row'):
+        potholes_by_zip[pothole.findtext('zip')] += 1
+    # _____ vs _____ #  Mem usage:  1200 MiB vs 75 MiB
+    for pothole in fast_generator("rows.xml", 'row/row'):
+        potholes_by_zip[pothole.findtext('zip')] += 1
 
-    for element in root.iter("scores"): # Поиск значения по всему дереву
-        for child in element:
-            print(child.tag, child.text)
-
+    """Преобразование python словарей в XML """
+    #TODO
     artem=root[0]
     modul_1=next(artem.iter("module1"))
     modul_1.text="90"  # изменил значение,!!! надо перезаписать файл

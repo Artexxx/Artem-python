@@ -65,13 +65,14 @@ class textwrap():
     |                                     |> printing is desired.          |
     """
 
+    """Метод shorten сжимает пробелы и обрезает по ширине"""
     shortened = textwrap.shorten(dedented_text, 100)
     shortened_wrapped = textwrap.fill(shortened, width=50)
     """            Before                 |     After fill + shorten     |
     |—————————————————————————————————————|——————————————————————————————|
-    |The textwrap module can be used to   |The textwrap module can be    |
-    |format text for output in situations |used to format text for output|
-    |where pretty-printing is desired.    |in situations [...]           |
+    |  The  textwrap   module can   be    |The textwrap module can be    |
+    | used to   format text for  output   |used to format text for output|
+    | in situations where pretty-printing |in situations [...]           |
     """
 
 # ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
