@@ -11,7 +11,7 @@ textwrap_example = '''
     or filling features found in many text editors.
     '''
 
-# ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+# ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 class format():
     """format используется тогда, когда требуется подставить значения в общий шаблон"""
 
@@ -30,52 +30,53 @@ class format():
     "int: {0:d};  hex: {0:#x};  oct: {0:#o};  bin: {0:#b}".format(42)
     #  Выхлоп / int: 42;  hex: 0x2a;  oct: 0o52;  bin: 0b101010/
 
-# ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+# ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 class textwrap():
-    """Модуль textwrap — это простой способ очистить текст и сделать вывод под размеры терминала"""
+    """Модуль textwrap ─ это простой способ очистить текст и сделать вывод под размеры терминала"""
 
     """Метод dedent удаляет все общие начальные пробелы из каждой строки в "тексте"."""
     dedented_text = textwrap.dedent(textwrap_example)
-    """                 Before                 |               After dedent            |
-    |——————————————————————————————————————————|———————————————————————————————————————|
-    |    The textwrap module can be used to    | The textwrap module can be used to    |
-    |    format text for output in situations  | format text for output in situations  |
-    |    where pretty-printing is desired.     | where pretty-printing is desired.     |
+    """                 Before                 │               After dedent            │
+    ├──────────────────────────────────────────┼───────────────────────────────────────┤
+    │    The textwrap module can be used to    │ The textwrap module can be used to    │
+    │    format text for output in situations  │ format text for output in situations  │
+    │    where pretty-printing is desired.     │ where pretty-printing is desired.     │
     """
 
     """Метод fill изменяет ширину области вывода, создает висячие отступы, добавляет префикс"""
     print(textwrap.fill(dedented_text, initial_indent='', subsequent_indent=' ' * 4, width=50))
-    """            Before                 |          After fill          |
-    |—————————————————————————————————————|——————————————————————————————|
-    |The textwrap module can be used to   |The textwrap module can be    |
-    |format text for output in situations |    used to format text for   |
-    |where pretty-printing is desired.    |    output in situations where|
-    |                                     |    pretty-printing is        |
-    |                                     |    desired.                  |
+    """            Before                 │          After fill          │
+    ├─────────────────────────────────────┼──────────────────────────────┤
+    │The textwrap module can be used to   │The textwrap module can be    │
+    │format text for output in situations │    used to format text for   │
+    │where pretty-printing is desired.    │    output in situations where│
+    │                                     │    pretty-printing is        │
+    │                                     │    desired.                  │
     """
 
     """Метод indent управляет префиксом."""
     wrapped = textwrap.fill(dedented_text, width=30)
     final = textwrap.indent(wrapped, '> ', predicate=lambda line: True)
-    """            Before                 |      After fill + indent       |
-    |—————————————————————————————————————|————————————————————————————————|
-    |The textwrap module can be used to   |> The textwrap module can be    |
-    |format text for output in situations |> used to format text for output|
-    |where pretty-printing is desired.    |> in situations where pretty-   |
-    |                                     |> printing is desired.          |
+    """            Before                 │      After fill + indent       │
+    ├─────────────────────────────────────┼────────────────────────────────┤
+    │The textwrap module can be used to   │> The textwrap module can be    │
+    │format text for output in situations │> used to format text for output│
+    │where pretty-printing is desired.    │> in situations where pretty-   │
+    │                                     │> printing is desired.          │
     """
 
     """Метод shorten сжимает пробелы и обрезает по ширине"""
     shortened = textwrap.shorten(dedented_text, 100)
     shortened_wrapped = textwrap.fill(shortened, width=50)
-    """            Before                 |     After fill + shorten     |
-    |—————————————————————————————————————|——————————————————————————————|
-    |  The  textwrap   module can   be    |The textwrap module can be    |
-    | used to   format text for  output   |used to format text for output|
-    | in situations where pretty-printing |in situations [...]           |
+
+    """            Before                 │     After fill + shorten     │
+    ├─────────────────────────────────────┼──────────────────────────────┤
+    │  The  textwrap   module can   be    │The textwrap module can be    │
+    │ used to   format text for  output   │used to format text for output│
+    │ in situations where pretty-printing │in situations [...]           │
     """
 
-# ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+# ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 class sys():
     """ Секундомер в терминале [динамически обновляется]"""
     for i in range(1, 4):
@@ -84,3 +85,19 @@ class sys():
         sys.stdout.flush()
         time.sleep(1)
     sys.stdout.write("\rtime out")
+
+# ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+class xml():
+    """
+    Класс ElementTree не делает никаких попыток форматировать вывод функции tostring() для улучшения его удобочитаемости,
+    поскольку добавление дополнительных пробелов изменяет содержимое документа.
+    Чтобы сделать вывод более удобным для чтения, XML-документ нужно предварительно преобразовать c помощью модуля xml.dom.minidom и применить метод toprettyxml().
+    """
+    def prettify(elem):
+        from xml.etree import ElementTree
+        from xml.dom import minidom
+        """Возвращает красиво оформленную XML-строку для объекта Element."""
+        rough_string = ElementTree.tostring(elem, 'utf-8')
+        reparsed = minidom.parseString(rough_string)
+        return reparsed.toprettyxml(indent=" ")
+# ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
