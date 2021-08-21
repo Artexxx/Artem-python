@@ -287,7 +287,7 @@ class xml():
             elif event == 'end':
                 if tag_stack == path_parts:
                     yield element
-                    # Далее удаляется узел из родителя
+                    # удаляется узел родителя
                     elem_stack[-2].remove(element)
                 try:
                     tag_stack.pop(); elem_stack.pop()
