@@ -1,7 +1,13 @@
-import os
+import glob
 import os.path as path
 import shutil
 from PIL import Image
+from colorama import Fore, init; init(autoreset=True)
+
+
+def image_path_generator(image_dir):
+    for e in ('png', 'jpg', 'gif'):
+        yield from glob.glob(image_dir + '\*.' + e)
 
 
 def check_porn(file):
@@ -20,17 +26,16 @@ if __name__ == '__main__':
     img_dir = input('Каталог c фото:')
     out_dir = input('Каталог перемещения:')
     if path.isdir(img_dir):
-        file_list = [path.join(img_dir, file) for file in os.listdir(img_dir)]
+        images = image_path_generator(img_dir)
     else:
         raise Exception('img_dir - должен быть каталогом с фото')
     if not path.isdir(out_dir):
-        raise Exception('out_dir - должен быть каталогом перемещения')
+        raise Exception('out_dir - должен быть созданным каталогом')
 
-    for file in file_list:
-        if path.isfile(file):
-            is_porn = check_porn(file)
-            if is_porn:
-                print(file, 'is porn')
-                shutil.move(file, out_dir)
-            else:
-                print(file, 'is not porn')
+    for file in images:
+        is_porn = check_porn(file)
+        if is_porn:
+            print(f'{Fore.GREEN}{file} is porn')
+            shutil.move(file, out_dir)
+        else:
+            print(f'{Fore.RED}{file} is not porn')

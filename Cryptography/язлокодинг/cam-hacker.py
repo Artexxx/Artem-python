@@ -1,5 +1,5 @@
 import requests, re
-from colorama import Fore, init;init(autoreset=True)
+from colorama import Fore, init; init(autoreset=True)
 
 citi = ['US', 'US', 'JP', 'IT', 'KR', 'FR', 'DE', 'TW', 'RU', 'GB', 'NL', 'CZ', 'TR', 'AT', 'CH', 'ES', 'CA', 'SE',
         'IL', 'PL', 'IR', 'NO', 'RO', 'IN', 'VN', 'BE', 'BR', 'BG', 'ID', 'DK', 'AR', 'MX', 'FI', 'CN', 'CL', 'ZA',
