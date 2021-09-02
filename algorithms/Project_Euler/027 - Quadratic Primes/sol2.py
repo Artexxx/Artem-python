@@ -100,5 +100,4 @@ if __name__ == '__main__':
     ### Run Time-Profile Table ###
     import sys; sys.path.append('..')
     from time_profile import TimeProfile
-
     TimeProfile(solution, [10, 100, 1000])

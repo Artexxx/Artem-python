@@ -44,8 +44,6 @@ def solution(n):
     3 #120
     >>> solution(3)
     6 #6
-    >>> solution(1)
-    1 #1
     """
     f = factorial(n)
     result = sum_of_digits(f)

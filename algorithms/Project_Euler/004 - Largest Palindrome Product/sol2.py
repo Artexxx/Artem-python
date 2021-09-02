@@ -14,7 +14,7 @@
 """
 
 
-def optimized_is_palindromic(number: int) -> bool:
+def is_palindromic(number: int) -> bool:
     reverse = 0
     i = number
     while i > 0:
@@ -23,17 +23,16 @@ def optimized_is_palindromic(number: int) -> bool:
     return reverse == number
 
 
-def largestPalindromeNumber(n):
-    largestNumber = int("9" * n)
-    smallestNumber = int("1" + "0" * (n - 1))
+def largest_palindrome_number(n):
+    LargestNumber = int("9" * n)
+    SmallestNumber = int("1" + "0" * (n - 1))
 
-    for i in range(largestNumber * largestNumber, smallestNumber * smallestNumber, -1):
-        candidate = str(i)
-        if candidate == candidate[::-1]:
-            for j in range(largestNumber, smallestNumber, -1):
+    for i in range(LargestNumber * LargestNumber, SmallestNumber * SmallestNumber, -1):
+       if is_palindromic(i):
+            for j in range(LargestNumber, SmallestNumber, -1):
                 if (j * j < i):
                     break  # если J^2 меньше палиндрома, то проверять меньшие значения j бесполезно
-                for k in range(j, smallestNumber, -1):
+                for k in range(j, SmallestNumber, -1):
                     if (j * k == i):
                         return i
                     elif (j * k < i):
@@ -42,7 +41,7 @@ def largestPalindromeNumber(n):
 
 
 if __name__ == '__main__':
-    print(largestPalindromeNumber(int(input().strip())))
+    print(largest_palindrome_number(int(input().strip())))
     # ### Run Time-Profile Table ###
     # import sys; sys.path.append('..')
     # from time_profile import my_time_this

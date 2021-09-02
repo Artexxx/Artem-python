@@ -10,10 +10,6 @@ def solution(power):
 
     >>> solution(1000)
     1366
-    >>> solution(50)
-    76
-    >>> solution(20)
-    31
     >>> solution(15)
     26
     """

@@ -42,13 +42,12 @@ def distinct_products(n, m):
 
 def distinct_powers(n):
     """Возвращает количество различных членов в последовательности, сгенерированной a^b, где 2 <= a <= N и 2 <= b <= N
-
-      >>> distinct_powers(100)
-      9183
-      >>> distinct_powers(50)
-      2184
-      >>> distinct_powers(5)
-      15
+    >>> distinct_powers(100)
+    9183
+    >>> distinct_powers(50)
+    2184
+    >>> distinct_powers(5)
+    15
     """
     imperfect_powers = [True] * (n + 1)
     sqrt_n = int(n ** 0.5)

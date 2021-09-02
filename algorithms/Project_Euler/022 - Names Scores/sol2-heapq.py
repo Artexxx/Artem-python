@@ -35,9 +35,8 @@ def solution() -> int:
     871198282
     """
     with open(os.path.dirname(__file__) + "/p022_names.txt") as file:
-        names = str(file.readlines()[0]).split(",")
-    heapq.heapify(names)  # сортировка
-
+        names = file.readline().split(",")
+        heapq.heapify(names)  # Сортировка
     total = 0
     for i in range(1, len(names) + 1):
         # heappop - Возвращает min элемент, удаляет его из кучи

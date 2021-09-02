@@ -18,7 +18,7 @@
 """
 
 
-def solution2(LIMIT=28124) -> int:
+def solution(LIMIT=28124) -> int:
     """ Возвращает сумму всех положительных чисел, которые не могут быть записаны как сумма двух избыточных чисел
     """
     LIMIT = LIMIT + 1  # Fixme
@@ -39,38 +39,6 @@ def solution2(LIMIT=28124) -> int:
             result_sum += n
     return result_sum
 
-
-def return_deviders(number):
-    deviders_list = []
-    for i in range(1, int(number ** 0.5) + 1):
-        if not number % i:
-            deviders_list.append(i)
-            if number // i not in deviders_list and number // i != number:
-                deviders_list.append(number // i)
-    return deviders_list
-
-
-    def get_abundant_numbers():
-        abundant_numbers_list = []
-        for i in range(1, limit):
-            if sum(return_deviders(i)) > i:
-                abundant_numbers_list.append(i)
-        return abundant_numbers_list
-
-def solution(limit):
-
-
-    abundants_sum = [False] * (limit + 1)
-    abundant_numbers = get_abundant_numbers()
-
-    for number_1 in abundant_numbers:
-        for number_2 in abundant_numbers:
-            if number_1 + number_2 <= limit:
-                abundants_sum[number_1 + number_2] = True
-            else:
-                break
-
-    return  sum(i for (i, position) in enumerate(abundants_sum) if not position)
 
 if __name__ == '__main__':
     ## Run Time-Profile Table ###

@@ -6,6 +6,15 @@
 """
 
 
+def is_palindromic(number: int) -> bool:
+    reverse = 0
+    i = number
+    while i > 0:
+        reverse = reverse * 10 + i % 10
+        i //= 10
+    return reverse == number
+
+
 def solution(n):
     """Возвращает самый большой палиндром, который меньше N и сделан из произведения двух 3-значных чисел.
 
@@ -17,8 +26,7 @@ def solution(n):
     39893
     """
     for number in range(n - 1, 10000, -1):
-        strNumber = str(number)
-        if strNumber == strNumber[::-1]:
+        if is_palindromic(number):
             divisor = 999
             while divisor != 99:
                 if (number % divisor == 0) and (len(str(int(number / divisor))) == 3):
@@ -29,4 +37,7 @@ def solution(n):
 
 
 if __name__ == "__main__":
-    print(solution(int(input().strip())))
+    ### Run Time-Profile Table ###
+    import sys; sys.path.append('..')
+    from time_profile import TimeProfile
+    TimeProfile(solution, [20000, 100000, 1000000])

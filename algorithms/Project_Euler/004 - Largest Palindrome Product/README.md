@@ -21,7 +21,7 @@ solution(40000) # => 39893 = 393 x 101
 def solution(n):
     for number in range(n - 1, 10000, -1):
         strNumber = str(number)
-        if strNumber == strNumber[::-1]:
+        if str_number == str_number[::-1]:
             divisor = 999
             while divisor != 99:
                 if (number % divisor == 0) and (len(str(int(number / divisor))) == 3):
@@ -45,17 +45,16 @@ def is_palindromic(number: int) -> bool:
 > Найдите самый большой палиндром, сделаный из произведения двух n-значных чисел.
 
 ```python
-def largestPalindromeProduct(n):
-    largestNumber = int("9" * n)
-    smallestNumber = int("1" + "0" * (n - 1))
+def largest_palindrome_number(n):
+    LargestNumber = int("9" * n)
+    SmallestNumber = int("1" + "0" * (n - 1))
 
-    for i in range(largestNumber * largestNumber, smallestNumber * smallestNumber, -1):
-        candidate = str(i)
-        if candidate == candidate[::-1]:
-            for j in range(largestNumber, smallestNumber, -1):
+    for i in range(LargestNumber * LargestNumber, SmallestNumber * SmallestNumber, -1):
+       if is_palindromic(i):
+            for j in range(LargestNumber, SmallestNumber, -1):
                 if (j * j < i):
                     break  # если J^2 меньше палиндрома, то проверять меньшие значения j бесполезно
-                for k in range(j, smallestNumber, -1):
+                for k in range(j, SmallestNumber, -1):
                     if (j * k == i):
                         return i
                     elif (j * k < i):

@@ -6,16 +6,16 @@
 from math import sqrt, log
 from decimal import *
 
-r1 = (1 + sqrt(5)) / 2  # ~=> 1.6180
-r2 = (1 - sqrt(5)) / 2  # ~=> -0.6180
-a = 1 / sqrt(5)  # ~=> 0.4472
-b = -a  # ~=> -0.4472
-n1 = (log(10 ** 1000 / a)) / log(r1)  # ~=> 4787.6
-n = round(n1)  # ROUND UP #~=> 4787
-thousandDigitFibonacci = a * r1 ** n + b * r2 ** n
-thousandDigitFibonacci = int(thousandDigitFibonacci)  # ROUND DOWN
-print("Generated answer: " + str(thousandDigitFibonacci))
-print("Digits in answer: " + str(len(str(thousandDigitFibonacci))))
+# r1 = (1 + sqrt(5)) / 2  # ~=> 1.6180
+# r2 = (1 - sqrt(5)) / 2  # ~=> -0.6180
+# a = 1 / sqrt(5)  # ~=> 0.4472
+# b = -a  # ~=> -0.4472
+# n1 = (log(10 ** 1000 / a)) / log(r1)  # ~=> 4787.6
+# n = round(n1)  # ROUND UP #~=> 4787
+# thousandDigitFibonacci = a * r1 ** n + b * r2 ** n
+# thousandDigitFibonacci = int(thousandDigitFibonacci)  # ROUND DOWN
+# print("Generated answer: " + str(thousandDigitFibonacci))
+# print("Digits in answer: " + str(len(str(thousandDigitFibonacci))))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|Use Decimal|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 getcontext().prec = 1500

@@ -85,7 +85,7 @@ def is_prime(number) -> bool:
 
     >>> is_prime(10)
     False
-    >>> is_prime(11)
+    >>> is_prime(10**2000 + 4561)
     True
     """
     # simple test for small n: 2 and 3 are prime, but 1 is not
@@ -97,16 +97,43 @@ def is_prime(number) -> bool:
         return False
 
     # search for subsequent prime factors around multiples of 6
-    sqrt_n = math.sqrt(number)
-    for i in range(5, math.floor(sqrt_n + 1), 6):
-        if number % i == 0 or number % (i + 2) == 0:
+    for divisor in range(5, int(math.sqrt(number)), 6):
+        if number % divisor == 0 or number % (divisor + 2) == 0:
+            return False
+    return True
+
+
+def is_prime_trial_division(n) -> bool:
+    """
+    Determine if the natural number n is prime using trial division.
+
+    >>> is_prime_trial_division(10)
+    False
+    >>> is_prime_trial_division(11)
+    True
+    """
+    # simple test for prime n: 2 and 3 are prime, but 1 is not
+    if n <= 3: return n > 1
+    if n in {5, 7, 11, 13, 17, 19, 23, 29}: return True
+
+    # check if multiple of 2, 3, 5, 7, 11, 13, 17, 19, 23 or 29
+    if not (n % 2 and n % 3 and n % 5 and n % 7 and n % 11 and n % 13 and
+            n % 17 and n % 19 and n % 23 and n % 29):
+        return False
+
+    # all primes are of the form ck + i for i < c and i co-prime to c; c = 2*3*5 = 30
+    for divisor in range(30, math.floor(math.sqrt(n) + 1), 30):
+        if not (n % (divisor + 1) and n % (divisor + 7) and
+                n % (divisor + 11) and n % (divisor + 13) and
+                n % (divisor + 17) and n % (divisor + 19) and
+                n % (divisor + 23) and n % (divisor + 29)):
             return False
     return True
 
 
 def bit_sieve(limit) -> List[bool]:
     """ Sieve of Eratosthenes
-     Generate boolean array of length N, where prime indices are True.
+    Generate boolean array of length N, where prime indices are True.
 
     The time complexity of this algorithm is O(nloglog(n).
 

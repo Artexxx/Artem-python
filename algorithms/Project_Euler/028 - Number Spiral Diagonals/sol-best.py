@@ -27,4 +27,4 @@ def spiralDiagonals(n):
 
 
 if __name__ == '__main__':
-    print(spiralDiagonals(3))
+    print(spiralDiagonals(1001))

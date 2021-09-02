@@ -24,7 +24,9 @@ def solution2(int_numbers: list) -> int:
         all_sum //= 10
     return all_sum
 
+
 if __name__ == "__main__":
-    n = int(input("Количество чисел в массиве").strip())
-    int_numbers = [int(input().strip()) for _ in range(n)]
-    print(solution2(int_numbers))
+    import os
+    with open(os.path.dirname(__file__) + "/num.txt", "r") as f:
+        int_numbers = [int(line) for line in f]
+        print(solution(int_numbers))

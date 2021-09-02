@@ -43,7 +43,6 @@ def solution():
 
 if __name__ == "__main__":
     import cProfile
-
     with cProfile.Profile() as p:
         print(solution())
     p.print_stats()

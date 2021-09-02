@@ -8,6 +8,7 @@
 
 Примечание: Некоторые произведения можно получить несколькими способами, поэтому убедитесь, что включили их в сумму лишь единожды.
 """
+from time import perf_counter
 
 
 def distinct(str_abc):
@@ -22,7 +23,7 @@ def pandigital_products_sum() -> int:
     >>> solution()
     45228
     """
-    result_set = set()
+    products = set()
     for a in range(2, 1000):
         if not distinct(str(a)): continue
         for b in range(a + 1, 25000):
@@ -31,9 +32,11 @@ def pandigital_products_sum() -> int:
             if len(str_abc) > 9:
                 break
             if len(str_abc) == 9 and distinct(str_abc):
-                result_set.add(c)
-    return sum(result_set)
+                products.add(c)
+    return sum(products)
 
 
 if __name__ == '__main__':
+    start_time = perf_counter()
     print(pandigital_products_sum())
+    print("Time profile:", round(perf_counter() - start_time, 5))
