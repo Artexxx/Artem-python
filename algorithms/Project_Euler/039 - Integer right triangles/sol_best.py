@@ -29,4 +29,7 @@ def solution(LIMIT=1000):
 
 
 if __name__ == '__main__':
+    from timeit import default_timer
+    start_time = default_timer()
     print(solution())
+    print("Time: {:.5}ms".format(default_timer() - start_time))

@@ -27,7 +27,7 @@ def get_digit(indicies):
 def solution():
     """
     >>> solution()
-    210 # =>   PROD{1, 5, 3, 7, 2, 1, 210}
+    210 # =>  PROD{1, 5, 3, 7, 2, 1, 210}
     """
     result_product = 1
     for power in range(2, 7):
@@ -37,4 +37,7 @@ def solution():
 
 
 if __name__ == '__main__':
+    from timeit import default_timer
+    start_time = default_timer()
     print(solution())
+    print("Time: {:.5}ms".format(default_timer() - start_time))

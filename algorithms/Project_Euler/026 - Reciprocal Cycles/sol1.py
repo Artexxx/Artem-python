@@ -26,15 +26,32 @@
 import itertools, sympy
 
 
-def reciprocal_cycle_len(n):
+def reciprocal_cycle_len1(d):
+    # "Long division" until remainder is 1
+    # finds next remainder (without actually doing long division)
+    L = 1  # Repteated part startes with length of 1
+    while 10**L % d != 1:
+        L += 1
+    return L
+
+def reciprocal_cycle_len2(d):
+    r = 1  # initial remainder
+    reminders = []
+    while r not in reminders:
+        reminders.append(r)
+        r = r * 10 % d
+    return len(reminders) - reminders.index(r)
+
+
+def reciprocal_cycle_len3(n):
     seen = {}
-    x = 1
+    r = 1
     for i in itertools.count():
-        if x in seen:
-            return i - seen[x]
+        if r in seen:
+            return i - seen[r]
         else:
-            seen[x] = i
-            x = x * 10 % n
+            seen[r] = i
+            r = r * 10 % n
 
 
 def solution(N=1000):
@@ -48,11 +65,12 @@ def solution(N=1000):
     >>> solution(1000)
     983
     """
-    return max(sympy.primerange(1, N), key=reciprocal_cycle_len)
+    return max(sympy.primerange(1, N), key=reciprocal_cycle_len3)
 
 
 if __name__ == "__main__":
     ## Run Time-Profile Table ###
-    import sys; sys.path.append('..')
+    import sys;sys.path.append('..')
     from time_profile import TimeProfile
-    TimeProfile(solution, [1000, 10000, 30000], )
+
+    TimeProfile(solution, [1000, 10000, 30000])

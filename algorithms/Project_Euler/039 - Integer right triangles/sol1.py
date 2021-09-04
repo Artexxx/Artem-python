@@ -6,18 +6,20 @@
 
 Какое значение p ≤ 1000 дает максимальное число решений?
 """
-from itertools import product
+from collections import defaultdict
 from math import sqrt
 
 is_valid_sqrt = lambda n: n == int(n)
-is_valid_triangle = lambda a, b, c: all((a, b, c))
 
 
 def perimeters_generator():
-    for a, b in product(range(500), range(500)):
-        c: float = sqrt(a * a + b * b)
-        if is_valid_sqrt(c) and a + b + c <= 1000 and is_valid_triangle(a, b, c):
-            yield a + b + int(c)
+    for a in range(1, 1000 // 3):  # Нужно место для b и c
+        for b in range(a + 1, 1000 - (2 * a)):  # Нужно место для c
+            c: float = sqrt(a * a + b * b)
+            if a + b + c > 1000:
+                break
+            if is_valid_sqrt(c):
+                yield a + b + int(c)
 
 
 def solution():
@@ -36,14 +38,14 @@ def solution():
      [240, 252, 348]
      [240, 252, 348]
     """
-    count_dict = dict()
+    count_dict = defaultdict(int)
     for p in perimeters_generator():
-        if count_dict.get(p):
-            count_dict[p] += 1
-        else:
-            count_dict[p] = 1
+        count_dict[p] += 1
     return max(count_dict, key=lambda x: count_dict[x])
 
 
 if __name__ == '__main__':
+    from timeit import default_timer
+    start_time = default_timer()
     print(solution())
+    print("Time: {:.5}ms".format(default_timer() - start_time))

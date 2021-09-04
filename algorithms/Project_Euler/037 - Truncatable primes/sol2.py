@@ -87,7 +87,6 @@ def solution():
 if __name__ == '__main__':
     ### Run Time-Profile Table ###
     from cProfile import Profile
-
     with Profile() as pr:
         print(solution())
         pr.print_stats()

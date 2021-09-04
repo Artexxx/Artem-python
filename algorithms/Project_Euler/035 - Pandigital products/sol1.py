@@ -6,36 +6,11 @@
 
 Сколько существует круговых простых чисел меньше миллиона?
 
-  №    Время  Замедление      Число    Результат
----  -------  ------------  -------  -----------
-  1    1.508  150.800%      1000000           55
+   Время  Замедление    Аргумент      Результат
+--------  ------------  ----------  -----------
+0.0525863  5.259%       1000000              55
 """
 import math
-
-
-def is_prime(n: int) -> bool:
-    """
-    Determines if the natural number n is prime.
-
-    >>> is_prime(10)
-    False
-    >>> is_prime(11)
-    True
-    """
-    # simple test for small n: 2 and 3 are prime, but 1 is not
-    if n <= 3:
-        return n > 1
-
-    # check if multiple of 2 or 3
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-
-    # search for subsequent prime factors around multiples of 6
-    max_factor = int(math.sqrt(n))
-    for i in range(5, max_factor + 1, 6):
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-    return True
 
 
 def bit_sieve(n) -> list:
@@ -59,61 +34,36 @@ def bit_sieve(n) -> list:
     return primes
 
 
-def is_circular_prime(n: int, n_is_prime: bool) -> bool:
+PRIMES = bit_sieve(10 ** 6)
+
+
+def is_circular_prime(n: int) -> bool:
     def rotations(chars: str) -> int:
         for i in range(len(chars)):
             yield int(chars[i:] + chars[:i])
 
-    if not n_is_prime:
+    str_n = str(n)
+    # Любая перестановка цифр числа должна быть простым числом —→ число не может содержать четные цифры 0, 2, 4, 6, 8, и цифру 5
+    if '5' in str_n or '0' in str_n or '2' in str_n or '4' in str_n or '6' in str_n or '8' in str_n:
         return False
 
-    for r in rotations(str(n)):
-        if not is_prime(r): return False
+    for r in rotations(str_n):
+        if not PRIMES[r]: return False
     return True
 
 
-def solution(N=1000000):
+def solution():
     """
     Возвращает количество круговых простых чисел меньше миллиона.
 
     >>> solution()
     55
     """
-    sieve_bit_array = bit_sieve(N)
-    return sum(1 for n in range(3, N, 2)
-               if is_circular_prime(n, sieve_bit_array[n])) + 1
+    return sum(1 for n in range(101, 10 ** 6, 2)
+               if PRIMES[n] and is_circular_prime(n)) + 13
 
-def f():
-    N = 1000000
-    prime = [False, False] + [True] * (N - 2)
-    primes = []
-    for p in range(2, N):
-        if prime[p]:
-            primes.append(p)
-            for q in range(p * p, N, p):
-                prime[q] = False
-    count = 0
-    pow10 = 1
-    k_max = 1
-    for p in primes:
-        k = len(str(p))
-        if k > k_max:
-            pow10 *= 10
-            k_max = k
-        for i in range(k - 1):
-            p = p // 10 + (p % 10) * pow10
-            if not prime[p]:
-                break
-        else:
-            count += 1
-    print(count)
 
-def x():
-    bit_sieve(10 ** 6)
-    return filter()
 if __name__ == '__main__':
     import sys; sys.path.append('..')
     from time_profile import TimeProfile
-
-    # TimeProfile(solution, [10 ** 6])
-    TimeProfile(f)
+    TimeProfile(solution)

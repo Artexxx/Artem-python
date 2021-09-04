@@ -14,7 +14,9 @@
 """
 import math
 
+from functools import lru_cache
 
+@lru_cache
 def is_prime(n: int) -> bool:
     """
     Determines if the natural number n is prime.
@@ -72,5 +74,5 @@ if __name__ == '__main__':
     ### Run Time-Profile Table ###
     from cProfile import Profile
     with Profile() as pr:
-        solution()
+        print(solution())
         pr.print_stats()

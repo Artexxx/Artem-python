@@ -28,15 +28,20 @@ solution  ()  # => 840 # 16 решений
 [-] Считает одно и тоже решение сначало для `a`, а потом для `b`
 
 ```python
+from collections import defaultdict
+from math import sqrt
+
 is_valid_sqrt = lambda n: n == int(n)
-is_valid_triangle = lambda a, b, c: all((a, b, c))
+
 
 def perimeters_generator():
-    for a, b in product(range(500), range(500)):
-        c: float = sqrt(a * a + b * b)
-        if is_valid_sqrt(c) and a + b + c <= 1000 and is_valid_triangle(a, b, c):
-            yield a + b + int(c)
-
+    for a in range(1, 1000 // 3):  # Нужно место для b и c
+        for b in range(a + 1, 1000 - (2 * a)):  # Нужно место для c
+            c: float = sqrt(a * a + b * b)
+            if a + b + c > 1000:
+                break
+            if is_valid_sqrt(c):
+                yield a + b + int(c)
 
 def solution():
     """
@@ -45,23 +50,21 @@ def solution():
     840 # 16 решений
     Полученные решения:
      [40, 399, 401]
-     [40, 399, 401]
-     [56, 390, 394]
      [56, 390, 394]
           ...
-     [210, 280, 350]
      [210, 280, 350]
      [240, 252, 348]
      [240, 252, 348]
     """
-    count_dict = dict()
+    count_dict = defaultdict(int)
     for p in perimeters_generator():
-        if count_dict.get(p):
-            count_dict[p] += 1
-        else:
-            count_dict[p] = 1
-    return max(count_dict,  key=lambda x: count_dict[x])
+        count_dict[p] += 1
+    return max(count_dict, key=lambda x: count_dict[x])
 ```
+
+| Ответ | Время |
+| --- |     --- |
+|840  | 0.035ms |
 
 ## Нормальное решение (1)
 
@@ -111,3 +114,7 @@ def solution(LIMIT=1000):
 **Примечание:**
 
 `a<p/3`, т.к `a<c` и `b<c`, следовательно `a≤b` 
+
+| Ответ | Время |
+| --- |     --- |
+|840  | 0.015ms |

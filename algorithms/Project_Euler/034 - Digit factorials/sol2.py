@@ -6,8 +6,7 @@
 
 Примечание: поскольку 1! = 1 и 2! = 2 не являются суммами, учитывать их не следует.
 """
-
-factorials = {'0': 1, '1': 1, '2': 2, '3': 6, '4': 24, '5': 120, '6': 720, '7': 5040, '8': 40320, '9': 362880}
+from itertools import combinations_with_replacement
 
 
 def solution():
@@ -17,9 +16,20 @@ def solution():
     >>> solution()
     40730
     """
-    sfd = lambda n: sum(factorials[c] for c in str(n))
-    return sum(i for i in range(10, 1499999) if sfd(i) == i)
+    factorials = {0: 1, 1: 1, 2: 2, 3: 6, 4: 24, 5: 120, 6: 720, 7: 5040, 8: 40320, 9: 362880}
+    digits = range(10)
+    lengths = [2, 3, 4, 5, 6, 7]
+    result_sum = 0
+    for lenght in lengths:
+        for number in combinations_with_replacement(digits, lenght):
+            candidate = sum(factorials[d] for d in number)
+            if sorted(map(int, str(candidate))) == sorted(number):
+                result_sum += candidate
+    return result_sum
 
 
 if __name__ == '__main__':
+    from timeit import default_timer
+    start_time = default_timer()
     print(solution())
+    print("Time: {:.3}ms".format(default_timer() - start_time))
