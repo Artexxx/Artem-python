@@ -4,9 +4,9 @@
 К примеру, 2143 является 4-значным пан-цифровым числом, а также простым числом.
 
 Какое существует наибольшее n-значное пан-цифровое простое число?
-    Время  Замедление    Аргумент      Результат
----------  ------------  ----------  -----------
-0.0001417  0.014%                        7652413
+    Время  Замедление    Результат
+---------  -----------   -----------
+0.0001417  0.014         7652413
 """
 import math
 
@@ -36,24 +36,25 @@ def is_prime(n: int) -> bool:
     return True
 
 
-def permutations(lst):
-    if len(lst) == 0: yield []
-    elif len(lst) == 1: yield lst
-    for i in range(len(lst)):
-        x = lst[i]
-        xs = lst[:i] + lst[i + 1:]
-        for p in permutations(xs):
-            yield [x] + p
+def permutations(list_):
+    if len(list_) == 0: yield []
+    elif len(list_) == 1: yield list_
+    else:
+        for i in range(len(list_)):
+            x = list_[i]
+            xs = list_[:i] + list_[i + 1:]
+            for p in permutations(xs):
+                yield [x] + p
 
 
 def solution():
     """
-    Возвращает нибольшее n-значное пан-цифровое простое число
+    Возвращает наибольшее n-значное пан-цифровое простое число
     >>> solution()
     7652413
     """
-    for perm_lst in permutations(list('7654321')):
-        pandigital = int(''.join(perm_lst))
+    for permutation in permutations(list('7654321')):
+        pandigital = int(''.join(permutation))
         if is_prime(pandigital):
             return pandigital
 

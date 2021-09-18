@@ -9,23 +9,28 @@
 
 Найдите следующее треугольное число, являющееся также пятиугольным и шестиугольным.
 
-  №      Время  Замедление      Аргумент       Результат
----  ---------  ------------  ----------  --------------
-  1  6.85e-05   0.007%                 1           40755
-  2  0.0133499  1.328%             40755      1533776805 (Ответ)
-  3  2.89455    288.120%      1533776805  57722156241751
+    Время  Замедление         Число       Результат
+---------  ------------  ----------  --------------
+5.28e-05   0.005%                 1           40755
+0.0097281  0.968%             40755      1533776805  (Ответ)
+1.92689    191.716%      1533776805  57722156241751
 """
-from itertools import count
 
 
-def generate_pentagonal():
-    for n in count():
-        yield (n * ((3 * n) - 1)) // 2
+def generate_polygonal(type_number):
+    """Генерирует фиругные числа
 
-
-def generate_hexagonal():
-    for n in count():
-        yield n * ((2 * n) - 1)
+    >>> generate_polygonal(type_number=3)
+    1 3 6 10 15 21 28 36  [...]
+    >>> generate_polygonal(type_number=4)
+    1 4 9 16 25 36 49 64  [...]
+    """
+    c = type_number - 2
+    a = b = 1
+    while True:
+        yield a
+        b += c
+        a += b
 
 
 def is_triangle(num):
@@ -40,15 +45,15 @@ def solution(low_limit=40755):
     >>> solution()
     1533776805
     """
-    hexagonal = generate_hexagonal()
-    pentagonal = generate_pentagonal()
+    hexagonal = generate_polygonal(type_number=6)
+    pentagonal = generate_polygonal(type_number=5)
     h = next(hexagonal)
     p = next(pentagonal)
 
     while True:
         while p < h:
             p = next(pentagonal)
-        if p == h and p > low_limit and is_triangle(p):
+        if p == h and p > low_limit and is_triangle(p) :
             return p
         h = next(hexagonal)
 
@@ -57,4 +62,4 @@ if __name__ == '__main__':
     ### Run Time-Profile Table ###
     import sys; sys.path.append('..')
     from time_profile import TimeProfile
-    TimeProfile(solution, [1, 40755, 1533776805])
+    TimeProfile(solution, [1, 40755, 1533776805], DynamicTimer=True)

@@ -21,18 +21,18 @@
 def solution(LIMIT=10 ** 6):
     """Находит первое из первых четырех последовательных чисел, каждое из которых имеет четыре отличных друг от друга простых множителя.
     """
-    sieve = [0] * (LIMIT + 1)
-    len_sequence = 0
+    factors  = [0] * (LIMIT + 1)  # Количество простых множителей для каждого числа
+    len_sequence = 0  # Количество последовательных чисел с 4 простыми множителями
 
     for n in range(2, LIMIT + 1):
-        if sieve[n] == 0:  # `n` is prime
-            sieve[n::n] = [x + 1 for x in sieve[n::n]]
+        if factors[n] == 0:  # `n` простое число.
+            factors[n::n] = [x + 1 for x in factors[n::n]]
             continue
 
-        if sieve[n] == 4:
+        elif factors[n] == 4:
             len_sequence += 1
             if len_sequence == 4:
-                return n - 3  # need the first number
+                return n - 3
         else:
             len_sequence = 0
 

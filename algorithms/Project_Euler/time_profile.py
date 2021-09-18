@@ -64,7 +64,16 @@ class TimeProfile:
     │ 1.19  log2(N)   +      1.116 │ N*log2(N)         │
     │ 1.37  log2(N)   +      2.232 │ N*log2(N)*log2(N) │
 
-
+    ┌────────────┬─────────────────────────────────────────────┐
+    │  Notation  │                 Type                        │
+    │------------│---------------------------------------------│
+    │ O(1)       │ Constant. Does not depend on the input data.│
+    │ O(n)       │ Linear. Will grow as "n" grows.             │
+    │ O(n log n) │ Quasi linear.                               │
+    │ O(n2)      │ Quadratic complexity.                       │
+    │ O(n3)      │ Cubic complexity.                           │
+    │ O(n!)      │ Factorial complexity.                       │
+    
     >>> TimeProfile(solution, [10_000, 100_000, 1_000_000, 10_000_000, 100_000_000])
 
     №      Время  Замедление        Число         Результат

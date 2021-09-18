@@ -16,8 +16,6 @@ Cколько значений (не обязательно различных) 
 """
 
 
-
-
 def solution():
     """
     Биномиальные коэффициенты для различных n удобно представлять в виде таблицы, которая называется арифметический треугольник Паскаля.
@@ -49,6 +47,6 @@ def solution():
 
 if __name__ == '__main__':
     ### Run Time-Profile Table ###
-    import sys;sys.path.append('..')
+    import sys; sys.path.append('..')
     from time_profile import TimeProfile
     TimeProfile(solution)

@@ -32,6 +32,12 @@ def solution(words: list):
                if isTrNumber(word_value(word)))
 
 
+
 if __name__ == '__main__':
+    ### Run Time-Profile Table ###
+    from timeit import default_timer
+    start_time = default_timer()
     words = open('words.txt').read().strip('"').split('","')
     print(solution(words))
+    print("Time: {:.3}ms".format(default_timer() - start_time))
+

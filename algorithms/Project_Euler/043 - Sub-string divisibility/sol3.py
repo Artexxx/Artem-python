@@ -14,33 +14,22 @@ d7d8d9=728 делится на 13 без остатка
 d8d9d10=289 делится на 17 без остатка
 Найдите сумму всех пан-цифровых чисел из цифр от 0 до 9, обладающих данным свойством.
 
-  №    Время  Замедление      Число    Результат
----  -------  ------------  -------  -----------
- 1   4.01282   401.282%        None  16695334890
+    Время  Замедление    Аргумент      Результат
+---------  ------------  ----------  -----------
+0.0008629  0.086%                    16695334890
 """
-import itertools
 
 
-def has_substring_divisibility(n: str):
-    substring_divisors = {
-        (2, 4): 2,
-        (3, 5): 3,
-        (4, 6): 5,
-        (5, 7): 7,
-        (6, 8): 11,
-        (7, 9): 13,
-        (8, 10): 17
-    }
-    for t, d in substring_divisors.items():
-        if int(n[t[0] - 1:t[1]]) % d:
-            return False
-    return True
-
-
-def find_substring_divisible_pandigitals():
-    pandigital_numbers = (''.join(p) for p in list(itertools.permutations('0123456789')) if p[0] != '0')
-    pandigital_numbers_with_substring_divisibility = filter(has_substring_divisibility, pandigital_numbers)
-    return pandigital_numbers_with_substring_divisibility
+def convert_to_number(*digits):
+    """ Соединяет цифры в число
+    >>> convert_to_number(1,2,3)
+    123
+    """
+    number = 0
+    for d in digits:
+        number *= 10
+        number += d
+    return number
 
 
 def solution():
@@ -49,11 +38,33 @@ def solution():
     >>> solution()
     16695334890 # sum{1406357289, 1430952867, 1460357289, 4106357289, 4130952867, 4160357289}
     """
-    return sum(map(int, find_substring_divisible_pandigitals()))
+    return sum(
+        convert_to_number(d1, d2, d3, d4, d5, d6, d7, d8, d9, d10)
+        for d10 in set(range(10))
+        for d9 in set(range(10)) - {d10}
+        for d8 in set(range(10)) - {d10, d9}
+        if convert_to_number(d8, d9, d10) % 17 == 0
+        for d7 in set(range(10)) - {d10, d9, d8}
+        if convert_to_number(d7, d8, d9) % 13 == 0
+        for d6 in set(range(10)) - {d10, d9, d8, d7}
+        if convert_to_number(d6, d7, d8) % 11 == 0
+        for d5 in set(range(10)) - {d10, d9, d8, d7, d6}
+        if convert_to_number(d5, d6, d7) % 7 == 0
+        for d4 in set(range(10)) - {d10, d9, d8, d7, d6, d5}
+        if convert_to_number(d4, d5, d6) % 5 == 0
+        for d3 in set(range(10)) - {d10, d9, d8, d7, d6, d5, d4}
+        if convert_to_number(d3, d4, d5) % 3 == 0
+        for d2 in set(range(10)) - {d10, d9, d8, d7, d6, d5, d4, d3}
+        if convert_to_number(d2, d3, d4) % 2 == 0
+        for d1 in set(range(10)) - {d10, d9, d8, d7, d6, d5, d4, d3, d2}
+    )
 
 
 if __name__ == '__main__':
     ### Run Time-Profile Table ###
-    import sys; sys.path.append('..')
+    import sys;
+
+    sys.path.append('..')
     from time_profile import TimeProfile
+
     TimeProfile(solution)

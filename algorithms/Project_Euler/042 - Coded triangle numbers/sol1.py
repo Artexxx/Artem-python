@@ -33,5 +33,8 @@ def solution(words: list):
 
 
 if __name__ == '__main__':
+    from timeit import default_timer
+    start_time = default_timer()
     words = open('words.txt').read().strip('"').split('","')
     print(solution(words))
+    print("Time: {:.3}ms".format(default_timer() - start_time))

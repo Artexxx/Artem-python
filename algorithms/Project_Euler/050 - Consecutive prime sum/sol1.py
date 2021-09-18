@@ -14,6 +14,8 @@
 0.581774  58.177%                        997651 (Ответ)
 """
 import math
+from typing import List
+
 
 def bit_sieve(limit) -> List[bool]:
     """ Sieve of Eratosthenes
@@ -38,37 +40,37 @@ def bit_sieve(limit) -> List[bool]:
 
 def get_primes(n):
     is_prime = bit_sieve(n)
-    primes = [num for num in range(3, n + 1, 2) if is_prime[num]]
+    primes = [num for num in range(3, n, 2) if is_prime[num]]
     return primes
 
 
-def solution():
+def solution(LIMIT=10 ** 6):
     """
     Находит простое число, меньше одного миллиона, которое можно записать в виде суммы наибольшего количества последовательных простых чисел.
     """
-    primes = get_primes(10**6)
-    longest = 21
-    result = 0
+    primes = get_primes(LIMIT)
+    longest_len = 21
+    result_sum = 0
 
     for i in range(len(primes)):
-        for j in range(i + longest, len(primes) - i + 1):
+        for j in range(i + longest_len, len(primes) - i + 1):
             temp_sum = sum(primes[i:j])
-            if temp_sum > 10**6:
+            if temp_sum > LIMIT:
                 break
-            if temp_sum in primes:
-                if len(primes[i:j]) > longest:
-                    result = temp_sum
-                    longest = len(primes[i:j])
-
-    return result
+            if temp_sum in primes and (j - i) > longest_len:
+                result_sum = temp_sum
+                longest_len = (j - i)
+    return result_sum
 
 
 if __name__ == '__main__':
-    # ### Run Time-Profile Table ###
+    ### Run Time-Profile Table ###
     import sys; sys.path.append('..')
     from time_profile import TimeProfile
+
     TimeProfile(solution)
     import cProfile
+
     with cProfile.Profile() as pr:
-       print(solution())
+        solution()
     print(pr.print_stats())

@@ -21,35 +21,30 @@
 """
 from math import log10
 
+def memoization(f):
+    memo = {}
+    def helper(arg):
+        if arg not in memo:
+            memo[arg] = f(arg)
+        return memo[arg]
+    return helper
 
-def solution(LIM=1000):
-    """
-    Возвращает количество дробей в которых длина числителя больше длины знаменателя в первой тысяче приближений
-
-    Идея: https://en.wikipedia.org/wiki/Continued_fraction
-    Согласно ссылке, если p/q является первым приближением, то следующее приближение может быть записано как (p+2q)/(p+q).
-    Итак, начнем с 3/2 (первое приближение для √2), где p = 3 и q = 2
-
-    >>> solution(1000)
-    153
-    """
-    result = 0
-    numerator = 3
-    denominator = 2
-
-    for _ in range(LIM):
-        numerator, denominator = numerator + denominator * 2, numerator + denominator
-        if int(log10(numerator)) > int(log10(denominator)):
-            result += 1
-    return result
-
+@memoization
+def sqrtFrk(number):
+    if number == 1:
+        return 3, 2
+    elif number == 2:
+        return 7, 5
+    else:
+        return sqrtFrk(number - 1)[0] * 2 + sqrtFrk(number - 2)[0], sqrtFrk(number - 1)[1] * 2 + \
+               sqrtFrk(number - 2)[1]
 
 if __name__ == '__main__':
     ### Run Time-Profile Table ###
     import sys;sys.path.append('..')
     from time_profile import TimeProfile;import cProfile
-    TimeProfile(solution, [1000, 10000])
+    TimeProfile(sqrtFrk, [1000])
     with cProfile.Profile() as pr:
-        solution(10000)
+        sqrtFrk(10000)
     pr.print_stats()
 

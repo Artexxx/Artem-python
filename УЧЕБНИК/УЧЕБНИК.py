@@ -497,7 +497,7 @@ class itertools():
     # Выхлоп / [0 1, 4, 9, 16, 25, 36, 49, 64, 81] / В данном случае итератор, возвращаемый функцией repeat(), не нуждается в явном ограничении числа повторений, поскольку обработка c помощью функции map() прекращается сразу же, как только исчерпывается любой из ее входных итераторов.
 
     """Функция compress(data, condition) возвращает каждый элемент data, которому в conditions соответствует элемент с истинным значением"""
-    itertools.compress('ABCDEF'[1, 0, 1, 0, 1, 1])  # Выхлоп / A C E F /
+    itertools.compress('ABCDEF', [1, 0, 1, 0, 1, 1])  # Выхлоп / A C E F /
 
     """Функция filterfalse(func, iterable) Возвращает те элементы итерируемого объекта, для которых func возвращает значение False"""
 
@@ -1012,9 +1012,3 @@ class cook():
     for row in data: group_by_age[row["a"]].append(row)
     # {39: [{'name': 'Artem', 'age': 39}, {'name': 'Jack ', 'age': 39}],
     #  40: [{'name': 'William', 'age': 40}, {'name': 'Amelia', 'age': 40}]}
-
-    """ Вернуть все возможные перестановки массива """
-    import itertools
-    arr = [1, 2, 3]
-    pr = [i for i in itertools.permutations(arr, 2)]
-

@@ -15,27 +15,29 @@ solution  () => 7652413
 
 ## Частное решение (1)
 
-_Анализ:_ 9 и 8-значные пан-цифровые числа делятся на 3 и поэтому не могут быть простыми.
+_Анализ:_ 1, 2, 3, 5, 6, 8 и 9-значные пан-цифровые числа кратны 3 и поэтому не могут быть простыми.
+Таким образом, нужно искать среди 4 и 7-значных пан-цифровых чисел.
 
 ```python
-def permutations(lst):
-    if len(lst) == 0: yield []
-    elif len(lst) == 1: yield lst
-    for i in range(len(lst)):
-        x = lst[i]
-        xs = lst[:i] + lst[i + 1:]
-        for p in permutations(xs):
-            yield [x] + p
+def permutations(list_):
+    if len(list_) == 0: yield []
+    elif len(list_) == 1: yield list_
+    else:
+        for i in range(len(list_)):
+            x = list_[i]
+            xs = list_[:i] + list_[i + 1:]
+            for p in permutations(xs):
+                yield [x] + p
 
 
 def solution():
     """
-    Возвращает нибольшее n-значное пан-цифровое простое число
+    Возвращает наибольшее n-значное пан-цифровое простое число
     >>> solution()
     7652413
     """
-    for perm_lst in permutations(list('7654321')):
-        pandigital = int(''.join(perm_lst))
+    for permutation in permutations(list('7654321')):
+        pandigital = int(''.join(permutation))
         if is_prime(pandigital):
             return pandigital
 ```

@@ -37,6 +37,7 @@ def memoize(f):
 
     return wrapper
 
+
 @memoize
 def reverse(n):
     return int(str(n)[::-1])
@@ -66,3 +67,4 @@ if __name__ == '__main__':
     TimeProfile(solution, [10**4, 10**5, 10**6])
     with cProfile.Profile() as pr:
         solution(10**6)
+        pr.print_stats()

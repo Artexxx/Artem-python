@@ -56,19 +56,19 @@ def solution(proportion=0.1):
     Идея из решения 28 проблемы:
         Рассмотрим спираль, приведенную в примере.
 
-        | digit | Index |
-        | ----- | ----- |
-        | 1     | 0     |
-        | 3     | 2     |
-        | 5     | 4     |
-        | 7     | 6     |
-        | 9     | 8     |
-        | 13    | 12    |
-        | 17    | 16    |
-        | 21    | 20    |
-        | 25    | 24    |
+        │ digit │ Index │
+        │ ----- │ ----- │
+        │ 1     │ 0     │
+        │ 3     │ 2     │
+        │ 5     │ 4     │
+        │ 7     │ 6     │
+        │ 9     │ 8     │
+        │ 13    │ 12    │
+        │ 17    │ 16    │
+        │ 21    │ 20    │
+        │ 25    │ 24    │
 
-        При прохлждении каждого квадрата индекс нужного числа увеличивается на 2, потом на 4, потом на 6..., до тех пор,
+        При прохождении каждого квадрата индекс нужного числа увеличивается на 2, потом на 4, потом на 6..., до тех пор,
           пока мы не достигнем цифры, завершающей сетку.
 
     Примечание:
@@ -79,26 +79,29 @@ def solution(proportion=0.1):
     count_primes = 0
     count_diagonals_numbers = 1
     while True:
-        for i in range(4):
-            number += step
 
-            # Только первые 3 диагонали содержат простые числа
-            if i != 3 and is_prime(number):
+        # Только первые 3 диагонали содержат простые числа
+        for i in range(0, 3):
+            number += step
+            if is_prime(number):
                 count_primes += 1
 
         step += 2
         count_diagonals_numbers += 4
 
         if count_primes / count_diagonals_numbers < proportion:
-            side_length = int(number**0.5)
+            side_length = int(number ** 0.5)
             return side_length
 
 
 if __name__ == '__main__':
     ## Run Time-Profile Table ###
-    import sys;sys.path.append('..')
-    from time_profile import TimeProfile; import cProfile
+    import sys; sys.path.append('..')
+    from time_profile import TimeProfile;
+    import cProfile
+
     TimeProfile(solution, [0.2, 0.1])
     with cProfile.Profile() as pr:
         solution(0.1)
-        print('\n\n');pr.print_stats()
+        print('\n\n');
+        pr.print_stats()

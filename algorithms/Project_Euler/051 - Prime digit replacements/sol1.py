@@ -11,15 +11,15 @@
 Найдите наименьшее простое число, которое является одним из восьми простых чисел, полученных заменой части цифр (не обязательно соседних) одинаковыми цифрами.
 
    Время  Замедление    Аргумент      Результат
---------  ------------  ----------  ----------- <333732 function calls>
-0.317896  31.790%                        121313 (Ответ)
+--------  ------------  ----------  -----------
+0.230331  23.033%                        121313 <Ответ>
 """
 import math
 from collections import Counter
 from string import digits
 
 
-def prime_sieve(n) -> list:
+def prime_sieve(n):
     """ Sieve of Eratosthenes
      Generate boolean array of length N, where prime indices are True.
 
@@ -47,18 +47,18 @@ def count_duplicated_digits(number: int) -> int:
 
 def get_duplicated_digits(number: str) -> str:
     """ Возвращает повторяющиеся цифры
-    >>> list(get_duplicated_digits("1122334"))
-    ['1', '2', '3']
+    >>> list(get_duplicated_digits("1112333"))
+    ['1', '3']
     """
     for digit, count in Counter(number).items():
-        if count > 1:
+        if count >= 3:
             yield digit
 
 
-def get_patterns(number: int) -> str:
+def get_patterns(number: int):
     """ Возвращает паттерны повторяющихся цифр
-    >>> list(get_patterns(1122334))
-    ['**22334', '11**334', '1122**4']
+    >>> list(get_patterns(1112333))
+    ['***2333', '1112***']
     """
     number = str(number)
     for digit in get_duplicated_digits(number):
@@ -74,23 +74,21 @@ def solution():
     """
     Находит наименьшее простое число, которое является одним из восьми простых чисел, полученных заменой части цифр (не обязательно соседних) одинаковыми цифрами.
     """
-    primes = [prime for prime in prime_sieve(10 ** 6) if count_duplicated_digits(prime) >= 3]
-
+    fprimes = [prime for prime in prime_sieve(10 ** 6)
+               if count_duplicated_digits(prime) >= 3]
     patterns_view = []
-    for prime in primes:
+    for prime in fprimes:
 
         for pattern in get_patterns(prime):
             if pattern in patterns_view:
                 continue
-            else:
-                primes_count = 0
-
-                for candidate in get_candidates(pattern):
-                    if candidate in primes and (len(str(candidate)) == len(str(prime))):
-                        primes_count += 1
-                if primes_count == 8:
-                    return prime
-                patterns_view.append(pattern)
+            primes_count = 0
+            for candidate in get_candidates(pattern):
+                if candidate in fprimes and (len(str(candidate)) == len(str(prime))):
+                    primes_count += 1
+            if primes_count == 8:
+                return prime
+            patterns_view.append(pattern)
 
 
 if __name__ == '__main__':
