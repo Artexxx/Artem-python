@@ -39,6 +39,7 @@ def sqrtFrk(number):
         return sqrtFrk(number - 1)[0] * 2 + sqrtFrk(number - 2)[0], sqrtFrk(number - 1)[1] * 2 + \
                sqrtFrk(number - 2)[1]
 
+
 if __name__ == '__main__':
     ### Run Time-Profile Table ###
     import sys;sys.path.append('..')

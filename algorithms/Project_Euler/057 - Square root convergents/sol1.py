@@ -19,7 +19,7 @@
   1  0.0006408  0.064%              1000          153  Ответ
   2  0.0144547  1.381%             10000         1508 <20000 function calls>
 """
-from math import log10
+from math import log10, gcd
 
 
 def solution(LIM=1000):
@@ -39,6 +39,7 @@ def solution(LIM=1000):
 
     for _ in range(LIM):
         numerator, denominator = numerator + denominator * 2, numerator + denominator
+
         if int(log10(numerator)) > int(log10(denominator)):
             result += 1
     return result
