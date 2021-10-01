@@ -571,7 +571,7 @@ class operator():
 
 
 # ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-class oop():
+class OOP):
     class Date:
         _formats = {
             'ymd': '{d.year}—{d.month}—{d.day}',
@@ -784,7 +784,7 @@ class oop():
             """ Params:
             • self — экземпляр класса TypedProperty
             • instance — экземпляр класса Person
-            • cls — класс Person
+              • cls — класс Person
             """
             if instance is None: return self
             else: return instance.__dict__[self.name]
