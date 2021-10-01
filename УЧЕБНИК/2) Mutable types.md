@@ -113,15 +113,6 @@ ListStruct(ob_size=5, allocated=8)
 Существует множество видов хеш-функций и они должны обладать рядом свойств, например, «если два объекта равны, то их хеши должны быть одинаковыми» или «если объекты имеют одинаковый хеш, то вероятно это один и тот же объект».
 Для наглядности рассмотрим простой пример. Зададим хеш-функцию для строк, которая вычисляет хеш как сумму произведений позиции символа на его кодовый знак, и будем использовать эту функцию для определения индекса в списке куда следует поместить строку:
 
-<figure class="video_container">
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS_iuMXnp61wlo4amm5nvHr4Ir8VUzisJSBsr7YEL7fKWAiT-9bmehyngtb9TYaFEsFnRokCyIXwsvY/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-</figure>
-
 <figure>
 <iframe src="//www.slideshare.net/slideshow/embed_code/key/EixD8OUMBX65Jy" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 </figure>
-
-<script src="https://gitlab.com/gitlab-org/gitlab-ce/snippets/1717978.js"></script>
-
-
-<iframe width="1000" height="600" frameborder="0" src="https://pythontutor.com/iframe-embed.html#code=def%20my_hash%28astring%29%3A%0A%20%20%20%20h%20%3D%200%0A%20%20%20%20for%20pos,%20ch%20in%20enumerate%28astring%29%3A%0A%20%20%20%20%20%20%20%20h%20%2B%3D%20pos%20*%20ord%28ch%29%0A%20%20%20%20return%20h%0A%0AL%20%3D%20%5BNone,%20None,%20None,%20None,%20None%5D%0A%0Aindex%20%3D%20my_hash%28'%D0%AF'%29%20%25%20len%28L%29%0AL%5Bindex%5D%20%3D%20'%D0%AF'%0A%0Aindex%20%3D%20my_hash%28'%D0%BD%D0%B8%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0'%29%20%25%20len%28L%29%0AL%5Bindex%5D%20%3D%20'%D0%BD%D0%B8%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0'%0A%0Aindex%20%3D%20my_hash%28'%D0%BD%D0%B5'%29%20%25%20len%28L%29%0AL%5Bindex%5D%20%3D%20'%D0%BD%D0%B5'%0A%0Aindex%20%3D%20my_hash%28'%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%81%D1%8C'%29%20%25%20len%28L%29%0AL%5Bindex%5D%20%3D%20'%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%81%D1%8C'&codeDivHeight=400&codeDivWidth=400&cumulative=false&curInstr=0&heapPrimitives=false&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false"> </iframe>
