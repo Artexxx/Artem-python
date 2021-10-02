@@ -38,7 +38,8 @@ def solution(LIM=1000):
     denominator = 2
 
     for _ in range(LIM):
-        numerator, denominator = numerator + denominator * 2, numerator + denominator
+        numerator = numerator + denominator * 2
+        denominator = numerator - denominator
 
         if int(log10(numerator)) > int(log10(denominator)):
             result += 1

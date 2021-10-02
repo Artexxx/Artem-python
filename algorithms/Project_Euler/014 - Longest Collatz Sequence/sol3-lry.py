@@ -50,7 +50,7 @@ def solution(n):
 
 if __name__ == '__main__':
     print(solution(10 ** 6))
-    ## Run Time-Profile Table ###
+    ### Run Time-Profile Table ###
     # import sys; sys.path.append('..')
     # from time_profile import my_time_this
     # my_time_this(solution, [1000, 10_000, 100_000, 10 ** 6])

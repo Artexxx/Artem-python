@@ -78,12 +78,12 @@ class solution():
         self.max_chain_length = max_chain_length
         self.primes: Tuple[int] = prime_sieve(self.MAX_ITER)
 
-    @property
-    def result(self):
+
+    def get_result(cls):
         """
         Возвращает наименьшую сумму элементов множества из N простых чисел, для которых объединение любых двух даст новое простое число.
         """
-        return self.solve_backtrack(chain=[])
+        return cls.solve_backtrack(chain=[])
 
     @staticmethod
     def test_chain(chain: Iterable[int], candidate: int) -> bool:
@@ -108,11 +108,11 @@ class solution():
         return chain
 
 
-if __name__ == '__main__':
-    ## Run Time-Profile Table ###
-    import cProfile
 
+if __name__ == '__main__':
+    ### Run Time-Profile Table ###
+    import cProfile
     with cProfile.Profile() as pr:
-        print(solution(5).result)
+        print(solution(5).get_result())
         print('\n\n');
         pr.print_stats()

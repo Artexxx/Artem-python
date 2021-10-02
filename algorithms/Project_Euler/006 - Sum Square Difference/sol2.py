@@ -37,7 +37,7 @@ def solution(n):
 
 if __name__ == "__main__":
     #print(solution(int(input().strip())))
-    ## Run Time-Profile Table ###
+    ### Run Time-Profile Table ###
     sys.path.append('../')
     from time_profile import TimeProfile
     TimeProfile(solution, [100, 1000])

@@ -109,32 +109,6 @@ class mmap():
     """
 
 # ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-# class os():
-#     import os
-#     os.path.isdir(r"C:\Users"), """Выхлоп /  True /"""
-#     os.path.isfile(r"C:\Users"),"""Выхлоп /  False /"""
-#     os.listdir(r"C:\Users"),"""Показывает все (даже скрытые) файлы которые есть в директории"""
-#     os.path.exists("test.txt"),"""/ True or False /Показывает существует ли путь до файла или папки"""
-#
-#     for current_dir, dirs, files in os.walk("."):""" возвращает кортеж из 3 элементов                """
-#          print(current_dir, dirs, files) ,     """    1 - строковое представление текущей директории """
-#                                                """    2 - список из всех подпапок                    """
-#                                                """    3 - список всех файлов                         """
-#
-#     os.getcwd(), """Выводит путь до текущей папки / C:/Users/admin/Desktop /"""
-#     os.path.abspath("your_text"),"""То же самое, что os.getcwd() + '/your_text' -> C:/Users/admin/Desktop/your_text"""
-#
-#     os.system("C:\питон37"),"""Имитация терминала  /os.system("ping google.com")
-#                                                   /os.system("type test.txt") - просмотр файла"""
-#
-#     os.path.getsize("test.txt"),"""Размер файла в байтах"""
-#
-#     os.path.join(r'C:\Users', 'admin'),"""(  C:/Users стало -> C:/Users/admin  )"""
-#     os.chdir("direktoria"), """Может перемещать по директориям БЫЛО(  C:/Users/admin стало -> C:/Users/admin/directoria  ) """
-#
-#     os.path.splitext(r'C:\Users\admin\file.cp') """ / Разбивает путь на пару (root, ext), где ext начинается с точки /( C:/Users/admin/file', '.py')"""
-
-# ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 class shutil():
     """Модуль shutil (сокр от "shell utilities") предоставляет функции, позволяющие копировать и перемещать файлы, а также удалять целые деревья каталогов"""
 

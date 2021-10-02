@@ -88,7 +88,7 @@ def solution():
 
 
 if __name__ == '__main__':
-    ## Run Time-Profile Table ###
+    ### Run Time-Profile Table ###
     import sys; sys.path.append('..')
     from time_profile import TimeProfile;
     TimeProfile(solution, DynamicTimer=True)

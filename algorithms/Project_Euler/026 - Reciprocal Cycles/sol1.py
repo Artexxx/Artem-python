@@ -69,7 +69,7 @@ def solution(N=1000):
 
 
 if __name__ == "__main__":
-    ## Run Time-Profile Table ###
+    ### Run Time-Profile Table ###
     import sys;sys.path.append('..')
     from time_profile import TimeProfile
 

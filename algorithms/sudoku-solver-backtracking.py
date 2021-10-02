@@ -167,7 +167,7 @@ if __name__ == '__main__':
         sudoku = Sudoku(board)
         print(sudoku)
         sudoku.solve()
-        print('\n________________ Решённая судоку')
+        print('\n________________ Решённая судоку:')
         print(sudoku)
         print(f'Решено за {sudoku.count_tries} подстановок')
 

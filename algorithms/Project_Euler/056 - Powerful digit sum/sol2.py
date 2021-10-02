@@ -15,7 +15,6 @@ def fast_power(base, power, /):
     """
     Идея состоит в том, чтобы делить степень пополам на каждом шагу. т.к 3 ^ 10 = 9 ^ 5
     """
-
     result = 1
     while power != 0:
         if power % 2 == 0:
@@ -57,7 +56,7 @@ if __name__ == '__main__':
     ### Run Time-Profile Table ###
     import sys;sys.path.append('..')
     from time_profile import TimeProfile;import cProfile
-    TimeProfile(solution, [100, 200])
+    TimeProfile(solution, [100, 200, 300])
     with cProfile.Profile() as pr:
         solution(200)
     pr.print_stats()
