@@ -1,13 +1,13 @@
 ## <center>Парсинг и анализ исходного кода</center>
 
-### Лексический и синтаксический разбор при помощи синтаксических деревьев
 Для анализа кода в CPython используются две структуры, **Concrete
 Syntax Tree** (**CST**, дерево синтаксического парсинга) и **Abstract Syntax Tree**(**AST**, синтаксическое дерево).
 
 
 ![Step1](Sciences/images/cpython/compiler/steps1.svg)
 
-## Получение дерева разбора (CST)
+## Лексический анализ и дерево парсинга (CST)
+
 
 Процесс вызова разбиения на лексемы и синтаксического анализа можно проиллюстрировать следующим образом:
 ![CST](Sciences/images/cpython/compiler/CST2.jpg)
@@ -69,13 +69,13 @@ term[expr_ty]:
     | a=term '//' b=factor { _PyAST_BinOp(a, FloorDiv, b, EXTRA) 
 ```
 
-Потом строится дерево парсинга. То есть **CST**—это просто отображение грамматики в древовидную форму.
+Потом строится само дерево парсинга. То есть **CST**—это просто отображение грамматики в древовидную форму.
 
 Перейдём к реальному примеру.  Рассмотрим как, простое арифместическое выражение `a + 1` превращается в дерево парсинга (**CST**):
 
-Выражение разбилось на следующие лексемы:
+На первом шаге выражение разбивается на следующие лексемы:
 
-<details><summary>Разбиения на токены:</summary>
+<details><summary>Разбиение на токены:</summary>
 
 ```python
 from tokenize import tokenize
@@ -97,7 +97,7 @@ pprint([(token.string, tok_name[token.type]) for token in tokens])
 ('', 'ENDMARKER')]
 ```
 
-<details><summary>Печать дерева синтаксического анализа</summary>
+<details><summary>Печать CST</summary>
 
 ```python
 from symbol import sym_name
@@ -152,7 +152,102 @@ pprint(lex('a + 1'))
 ```
 В данном выводе можно наблюдать символы в нижнем регистре, полученные из LL-грамматики, например, `arith_expr`, и значения лексем в верхнем регистре, такие как `NUMBER`.
 
-В итоге получилось следующее дерево парсинга:
+В итоге получилось следующее дерево парсинга (**CST**):
 
 ![CST](Sciences/images/cpython/compiler/CST.jpg)
 
+## Абстрактное синтаксическое дерево (AST)
+
+Следующий этап в интерпретаторе CPython состоит в преобразовании выработанное синтаксическим анализатором дерева парсинга (**CST**) в нечто более логичное, что можно исполнить.
+
+Абстрактное синтаксическое дерево отличается от дерева парсинга (**СST**) тем, что в нём отсутствуют узлы и рёбра для тех синтаксических правил, которые не влияют на семантику программы.
+Классическим примером такого отсутствия являются группирующие скобки, так как в **AST** группировка операндов явно задаётся структурой дерева.
+Итак, **AST** помогает представить программу в независимом от синтаксиса виде.
+
+Пример **AST** для простого арифметического выражения `3 + 4*a`:
+```python
+>> import ast
+>>> ast.dump(ast.parse("3 + 4*a"))
+
+BinOp(
+  left  = Num(3),
+  op    = Add(),
+  right = BinOp(
+            left  = Num(4),
+            op    = Mult(),
+            right = Name('a')
+          )
+)
+```
+![AST](Sciences/images/cpython/compiler/AST.jpg)
+
+`BinOp` означает `Binary Operation` и просто указывает на то, что в таких операциях как сложение и умножение – по два операнда.
+
+## Оптимизации внутри AST
+
+<details><summary>Сворачивание BinOp:</summary>
+
+```c
+static int
+fold_binop(expr_ty node, PyArena *arena, int optimize)
+{
+    expr_ty lhs, rhs;
+    lhs = node->v.BinOp.left;
+    rhs = node->v.BinOp.right;
+    if (lhs->kind != Constant_kind || rhs->kind != Constant_kind) {
+        return 1;
+    }
+
+    PyObject *lv = lhs->v.Constant.value;
+    PyObject *rv = rhs->v.Constant.value;
+    PyObject *newval;
+
+    switch (node->v.BinOp.op) {
+    case Add:
+        newval = PyNumber_Add(lv, rv);
+        break;
+    case Sub:
+        newval = PyNumber_Subtract(lv, rv);
+        break;
+    case Mult:
+        newval = safe_multiply(lv, rv);
+        break;
+    case Div:
+        newval = PyNumber_TrueDivide(lv, rv);
+        break;
+    case FloorDiv:
+        newval = PyNumber_FloorDivide(lv, rv);
+        break;
+    case Mod:
+        newval = safe_mod(lv, rv);
+        break;
+    case Pow:
+        newval = safe_power(lv, rv);
+        break;
+    case LShift:
+        newval = safe_lshift(lv, rv);
+        break;
+    case RShift:
+        newval = PyNumber_Rshift(lv, rv);
+        break;
+    case BitOr:
+        newval = PyNumber_Or(lv, rv);
+        break;
+    case BitXor:
+        newval = PyNumber_Xor(lv, rv);
+        break;
+    case BitAnd:
+        newval = PyNumber_And(lv, rv);
+        break;
+    default: // Unknown operator
+        return 1;
+    }
+    return make_const(node, newval, arena);
+}
+```
+</details>
+
+
+![AST1](Sciences/images/cpython/compiler/ast_before.png)
+Если мы взглянем на приведённое выше **AST**, то обнаружим, к примеру, что оба поля `left` и `right` узла `BinOp` являются числами (узлами `Num`), то сможем произвести соответствующие вычисления заранее, а затем заменить `BinOp` обычным узлом `Num`.
+![AST2](Sciences/images/cpython/compiler/ast_after.png)
