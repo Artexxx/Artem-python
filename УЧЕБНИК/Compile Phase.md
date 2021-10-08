@@ -364,7 +364,7 @@ def make_counter():
     return counter
 global_name = 1
 ```
-<details><summary>Печать таблицы символов с Python/symtable:</summary>
+<details><summary>Печать таблицы символов с помощью Python/symtable:</summary>
 
 ```python
 import tabulate
@@ -467,3 +467,64 @@ count
 Следующая запись таблицы символов будет о том, что функция `make_counter` содержит имена `count` и `counter`, помеченные как локальные.
 Последняя запись таблицы символов будет о вложенной функции `counter`. Она будет иметь переменную `count`, помеченную как **free**. 
 Следует отметить, что хоть `make_counter` и определена как локальная в записи таблицы символов, но она рассматривается как глобальная в самом блоке кода модуля
+
+### Control Flow Graf (CFG)
+
+Граф потока управления – это направленные граф, который моделируют поток программы, используя базовые блоки, которые содержат промежуточное представление.
+
+Простой пример **CFG**:
+```python
+a= 10
+while(a <= 0):
+    if a == 5:
+        print(a)
+    a += 1
+print("exited")
+```
+![CFG](Sciences/images/cpython/compiler/CFG.png)
+
+### Результатом компиляции является code object
+В результате обхода Control Flow Graf генерируется байткод, который хранится в [code object](https://github.com/python/cpython/blob/e9cd47d0e58cd468d6482d7ba59730b134d0d521/Include/cpython/code.h#L28).
+
+```c
+struct PyCodeObject {
+    PyObject_HEAD
+    // ...
+    PyObject *co_code;          /* instruction opcodes */
+    PyObject *co_consts;        /* list (constants used) */
+    PyObject *co_names;         /* list of strings (names used) */
+    PyObject *co_varnames;      /* tuple of strings (local variable names) */
+    PyObject *co_cellvars;      /* tuple of strings (cell variable names) */
+    PyObject *co_freevars;      /* tuple of strings (free variable names) */
+    // ...
+};
+```
+```python
+def make_counter():
+    count = 0
+    def counter():
+        nonlocal count
+        count += 1
+        return count
+    return counter
+
+for attribute in dir(make_counter.__code__):
+   if attribute.startswith('co_'):
+       print('{:15}'.format(attribute),
+             getattr(make_counter.__code__, attribute))
+```
+```python
+co_argcount     0
+co_cellvars     ('count',)
+co_code         b'd\x01\x89\x00\x87\x00f\x01d\x02d\x03\x84\x08}\x00|\x00S\x00'
+co_filename     C:/Users/path/to/test.py
+co_name         make_counter
+co_stacksize    3
+co_varnames     ('counter',)
+...
+```
+
+
+Таким образом мы получили числовое представление питоновского байткода. Интерпретатор пройдётся по каждому байту в последовательности и выполнит связанные с ним инструкции. Обратите внимание, что байткод сам по себе не содержит питоновских объектов, ссылок на объекты и т.п.
+
+Байткод можно попытаться понять открыв файл интерпретатора CPython (ceval.c), но мы этого делать не будем
