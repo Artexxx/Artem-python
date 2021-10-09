@@ -1,10 +1,10 @@
 1. Разбиение исходного python кода в на токены
 2. Преобразование токенов в дерево парсинга (**CST**).
 3. Преобразование дерева парсинга в абстрактные синтаксическое дерево (**AST**).
-4. Генерация таблицы символов.
+4. Построение symtable.
 5. Создание **PyObject** из **AST**. Этот шаг включает в себя:
-    - Преобразование **AST** в граф потока управления *CFG*.
-    - Получение объекта кода из графа потока управления.
+    - Преобразование **AST** в **Control Flow Graf**.
+    - Получение **code object** из графа потока управления.
 
 
 ## <center>Парсинг и анализ исходного кода</center>
@@ -524,7 +524,137 @@ co_varnames     ('counter',)
 ...
 ```
 
+Дизассемблирование  функции `make_counter` c помощью модуля dis:
+```python
+>>> [ord(b) for b in make_counter.__code__.co_code]
+[100, 1, 0, 125, 1, 0, 124, 1, 0, 124, 0, 0, 23, 83]
 
-Таким образом мы получили числовое представление питоновского байткода. Интерпретатор пройдётся по каждому байту в последовательности и выполнит связанные с ним инструкции. Обратите внимание, что байткод сам по себе не содержит питоновских объектов, ссылок на объекты и т.п.
+>>>import dis
+...dis.dis(make_counter.__code__)
+  2           0 LOAD_CONST               1 (0)
+              2 STORE_DEREF              0 (count)
+  3           4 LOAD_CLOSURE             0 (count)
+              6 BUILD_TUPLE              1
+              8 LOAD_CONST               2 (<code object counter at 0x0000022C4915FB30, file "<ipython-input-2-1dab88bd53d1>", line 3>)
+             10 LOAD_CONST               3 ('make_counter.<locals>.counter')
+             12 MAKE_FUNCTION            8 (closure)
+             14 STORE_FAST               0 (counter)
+  7          16 LOAD_FAST                0 (counter)
+             18 RETURN_VALUE
+Disassembly of <code object counter at 0x0000022C4915FB30, file "<ipython-input-2-1dab88bd53d1>", line 3>:
+  5           0 LOAD_DEREF               0 (count)
+              2 LOAD_CONST               1 (1)
+              4 INPLACE_ADD
+              6 STORE_DEREF              0 (count)
+  6           8 LOAD_DEREF               0 (count)
+             10 RETURN_VALUE
 
-Байткод можно попытаться понять открыв файл интерпретатора CPython (ceval.c), но мы этого делать не будем
+```
+Первая колонка это номер строки исходного кода, вторая колонка это смещение внутри байткода: `LOAD_CONST` находится на позиции 0, а `STORE_FAST` на позиции 3 и так далее.
+Средняя колонка это название самой инструкции, последние две колонки дают понятие об аргументах инструкции (ели они есть), четвертая колонка показывает сам аргумент, который представляет собой индекс в других атрибутов объекта кода.
+<br>В этом примере аргумент для `LOAD_CONST` это индекс в списке `co_consts`, а аргумент для `STORE_FAST` это индекс в `co_varnames`, в пятой колонке выводятся имена переменных или значение констант.
+
+### Интерпретация байткода
+
+Code object попадает в [`_PyEval_EvalCodeWithName`](https://github.com/python/cpython/blob/9cf6752276e6fcfd0c23fdb064ad27f448aaaf75/Python/ceval.c#L4322):
+   * Инициализируется фрейм для выполнения кода
+   * Попадает в цикл с огромным свитчем.
+
+Немного про фреймы:
+<br> Фрейм живет в стеке фреймов, у него есть указатель на предыдущий фрейм и он связан с **Code Object**.
+
+![Step1](Sciences/images/cpython/compiler/frame.jpg)
+
+```c 
+typedef struct _frame {
+    PyObject_VAR_HEAD
+    struct _frame *f_back;      /* previous frame, or NULL */
+    PyCodeObject *f_code;       /* PyCodeObject  */
+
+    PyObject *f_builtins;       /* builtin symbol table (PyDictObject) */
+    PyObject *f_globals;        /* global symbol table (PyDictObject) */
+    PyObject *f_locals;         /* local symbol table (any mapping) */
+
+    PyObject **f_valuestack;    
+    PyObject **f_stacktop;     
+
+
+    int f_lasti;                /* last instruction if called */
+    int f_iblock;               /* index in f_blockstack */
+    char f_executing;           /* whether the frame is still executing */
+} PyFrameObject;
+```
+
+Пример **FrameObject**:
+```python
+import inspect
+def f():
+    frame = inspect.currentframe()
+    print(f"Current function: {frame.f_code.co_name}")
+    caller = frame.f_back
+    print(f"Caller function: {caller.f_code.co_name}")
+    print(f"Caller's local: {caller.f_locals}")
+    print(f"Caller's global: {caller.f_globals.keys()}")
+
+def show_frame():
+    l = 1
+    m = 2
+    f()
+show_frame()
+```
+```text
+Current function: f
+Caller function: show_frame
+Caller's local: {'l': 1, 'm': 2}
+Caller's global:dict_keys([..., 'inspect', 'f', 'c', 'show_frame'])
+```
+Результаты показывают, что информацию о вызывающем объекте можно получить через цепочку фреймов：
+
+
+```c
+// ceval.c.757
+PyObject *
+_PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
+{
+    int opcode; /* Current opcode */
+    int oparg; /* Current opcode argument, if any */
+    enum why_code why; /* Reason for block stack unwind */
+    
+    PyThreadState *tstate = PyThreadState_GET();
+    ...
+    tstate->frame = f;
+    co = f->f_code;
+    names = co->co_names;
+    consts = co->co_consts;
+    fastlocals = f->f_localsplus;
+    freevars = f->f_localsplus + co->co_nlocals;
+    first_instr = (_Py_CODEUNIT *) PyBytes_AS_STRING(co->co_code);
+    f->f_stacktop = NULL; /* remains NULL unless yield suspends frame */
+    ...
+       // ceval.c.1144
+       for (;;) {
+           // ceval.c.
+           switch (opcode) {
+                TARGET(LOAD_FAST) { ... }
+                TARGET(LOAD_CONST) { ... }
+                TARGET(BINARY_SUBTRACT) {...}
+            ...
+            }
+ }
+```
+
+Рассмотрим код, который исполняется при обработке операции [`BINARY_SUBTRACT`](https://github.com/python/cpython/blob/a7252f88d3fa33036bdd6036b8c97bc785ed6f17/Python/ceval.c#L2104):
+
+```c 
+TARGET(BINARY_SUBTRACT) {
+    PyObject *right = POP();
+    PyObject *left = TOP();
+    PyObject *diff = PyNumber_Subtract(left, right);
+    Py_DECREF(right);
+    Py_DECREF(left);
+    SET_TOP(diff);
+    if (diff == NULL)
+        goto error;
+    DISPATCH();
+}
+```
