@@ -138,4 +138,54 @@ type_call(PyTypeObject *type, PyObject *args, PyObject *kwds)
 }
 ```
 
+```python hl_lines="5 6 7 8 9 10 16 23 24 25"
+import os, sys, re
 
+REGEX_HL_LINE = re.compile(r".*?hl_lines=\"(?P<hl_lines>.*?)\"")
+HL_LINE_SPACES = 2
+
+
+def format_directory(dir_path):
+    for file_path in [os.path.join(dp, f) for dp, dn, filenames in os.walk(dir_path) for f in filenames if os.path.splitext(f)[1] == '.md']: format_file(file_path)
+
+
+def format_file(file_path):
+    has_changed = False
+    with open(file_path, "r") as stream:
+        md_lines = stream.readlines()        
+    for index, line in enumerate(md_lines):
+        hl_lines = get_hl_lines(line)
+        if not hl_lines:
+            continue
+        hl_lines_numbers = parse_hl_lines(hl_lines)
+        formated_hl_lines_numbers = format_hl_lines(hl_lines_numbers)
+        new_line = replace_hl_lines(line, formated_hl_lines_numbers)
+        md_lines[index] = new_line
+        has_changed = True
+    if has_changed:
+        with open(file_path, "w+") as stream:
+            md_lines = stream.writelines(md_lines)
+
+
+def get_hl_lines(line):
+    match = REGEX_HL_LINE.match(line)
+    return match.group("hl_lines") if match else ""
+
+
+def parse_hl_lines(hl_lines):
+    result = []
+    for item in hl_lines.split(" "):
+        if not item:  # handle empty string from split
+            continue
+        if "-" in item:  # handle range
+            range_item_min, range_item_max = item.split("-")
+            if int(range_item_min) >= int(range_item_max):
+                raise ValueError
+            items = [i for i in range(int(range_item_min), int(range_item_max)+1)]
+            result += items
+            continue
+        result.append(int(item))  # handle simple number
+    result.sort()
+    return result
+
+```
