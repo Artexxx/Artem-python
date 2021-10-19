@@ -782,10 +782,11 @@ class OOP):
             self.expected_type = expected_type
 
         def __get__(self, instance, cls):
-            """ Params:
-            • self — экземпляр класса TypedProperty
-            • instance — экземпляр класса Person
-              • cls — класс Person
+            """
+            Params:
+            ● self — экземпляр класса TypedProperty
+            ● instance — экземпляр класса Person
+            ● cls — класс Person
             """
             if instance is None: return self
             else: return instance.__dict__[self.name]

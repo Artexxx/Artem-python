@@ -9,7 +9,33 @@ solution (5) => 127035954683
 ```
 
 ## Частное решение (1)
+```python
+def solution(N):
+    sorted_cubes = {}
 
+    for x in itertools.count(1):
+        cube = pow(x, 3)
+        cube_digits = ''.join(sorted(str(cube)))
+        cached_cube = sorted_cubes.get(cube_digits)
+
+        if cached_cube is not None:
+            cached_cube['count'] += 1
+            cached_cube['cubes'].append(cube)
+
+            if cached_cube['count'] == N:
+                return min(cached_cube['cubes'])
+        else:
+            sorted_cubes[cube_digits] = {'count': 1, 'cubes': [cube]}
+```
+```text
+  №      Время  Замедление      Аргумент          Результат
+---  ---------  ------------  ----------  -----------------
+  1  0.0291759  2.918%                 5       127035954683
+  2  0.149325   12.015%               10    126120833457949
+  3  1.07143    92.210%               30  11237467249565803
+```
+## Частное решение (2)
+Оптимизированная версия первого решения с помощью `defaultdict`.
 ```python
 def solution(N):
     mapping = defaultdict(int)

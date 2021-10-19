@@ -180,10 +180,10 @@ type_call(PyTypeObject *type, PyObject *args, PyObject *kwds)
 
 |Поле	        |Размер в байтах|
 | ----	        | ---- |
-|PyGC_Head	    |16 (24 до Python 3.8)|
-|PyObject_HEAD  |	16|
-|__dict__       |	8|
-|__weakref__    |	8|
+|`PyGC_Head`	|16 (24 до Python 3.8)|
+|`PyObject_HEAD`|	16|
+|`__dict__`     |	8|
+|`__weakref__`  |	8|
 |Всего	        |48 (56 до Python 3.8)|
 
 Где [PyGC_Head](https://github.com/python/cpython/blob/3.8/Include/cpython/objimpl.h#L46) это элемент двойного связанного списка, который используется сборщиком мусора для обнаружения циклических ссылок. `__weakref__` это ссылка на список, так называемых, слабых ссылок (weak reference) на данный объект. В одной из следующих лекций мы будем говорить про управление памятью в CPython, сейчас мы не будем на этом подбробно останавливаться.

@@ -6,31 +6,32 @@
 
   №      Время  Замедление      Аргумент          Результат
 ---  ---------  ------------  ----------  -----------------
-  1  0.0137154  1.372%                 5       127035954683 (Ответ)
-  2  0.13445    12.073%               10    126120833457949
-  3  0.990706   85.626%               30  11237467249565803
+  1  0.0291759  2.918%                 5       127035954683 (Ответ)
+  2  0.149325   12.015%               10    126120833457949
+  3  1.07143    92.210%               30  11237467249565803
 """
 import itertools
-from collections import defaultdict
 
 
 def solution(N):
     """
     Находит наименьший куб, для которого ровно N перестановок также являются кубами.
     """
-    mapping = defaultdict(int)
-    cubes = defaultdict(list)
+    sorted_cubes = {}
 
     for x in itertools.count(1):
         cube = pow(x, 3)
         cube_digits = ''.join(sorted(str(cube)))
+        cached_cube = sorted_cubes.get(cube_digits)
 
-        mapping[cube_digits] += 1
-        cubes[cube_digits].append(cube)
+        if cached_cube is not None:
+            cached_cube['count'] += 1
+            cached_cube['cubes'].append(cube)
 
-        if mapping[cube_digits] == N:
-            result = min(cubes[cube_digits])
-            return result
+            if cached_cube['count'] == N:
+                return min(cached_cube['cubes'])
+        else:
+            sorted_cubes[cube_digits] = {'count': 1, 'cubes': [cube]}
 
 
 if __name__ == '__main__':
