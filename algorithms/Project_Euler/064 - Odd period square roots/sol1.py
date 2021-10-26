@@ -65,11 +65,27 @@
 from collections import namedtuple
 from math import sqrt
 
-ContinuedFraction = namedtuple('ContinuedFraction', 'integer coefficients base')
+
+class ContinuedFraction(namedtuple('ContinuedFraction', 'integer coefficients base')):
+    __slots__ = ()
+
+    def __str__(self):
+        period = "({})".format(", ".join(map(str, self.coefficients)))
+        return f"√{self.base} = ⟨{self.integer}; {period}⟩"
 
 
-def find_continuted_fraction(number):
-    """https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Continued_fraction_expansion"""
+def find_continuted_fraction(number) -> ContinuedFraction:
+    """
+    Решение основано на:
+            https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Continued_fraction_expansion
+
+    >>> print(find_continuted_fraction(7))
+    √7 = ⟨2; (1, 1, 1, 4)
+    >>> print(find_continuted_fraction(12))
+    √12 = ⟨3; (2, 6)⟩
+    >>> print(find_continuted_fraction(13))
+    √13 = ⟨3; (1, 1, 1, 1, 6)⟩
+    """
 
     if int(sqrt(number)) == sqrt(number):
         return ContinuedFraction(int(sqrt(number)), (), number)
