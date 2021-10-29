@@ -106,7 +106,7 @@ def find_continuted_fraction(number) -> ContinuedFraction:
 
 def solution(LIMIT):
     """
-    Находит количество непрерывных дробей период является нечетным при N ≤ 10000.
+    Находит количество непрерывных дробей, период которых является нечетным.
     """
     result_count = 0
 

@@ -201,3 +201,49 @@ def solution(N):
   2  0.0006653  0.060%              1000         4034
   3  0.0195435  1.888%             10000        55322
 ```
+
+## Частное решение (2)
+
+```python
+def e_generator():
+    yield 2
+    for k in itertools.count(start=1):
+        yield 1
+        yield k * 2
+        yield 1
+
+
+def continued(e_generator, n_iterations) -> Fraction:
+    """
+    Возвращает N-е приближение непрерывной дроби для e.
+
+    >>> continued(e_generator(), 3)
+    Fraction(8, 3)
+    >>> continued(e_generator(), 4)
+    Fraction(11, 4)
+    >>> continued(e_generator(), 10)
+    Fraction(1457, 536)
+    """
+    fraction_number = next(e_generator)
+    if n_iterations == 1:
+        return Fraction(fraction_number)
+    else:
+        return Fraction(fraction_number) + Fraction(1, continued(e_generator, n_iterations - 1))
+
+
+def solution(N):
+    """
+    Возвращает сумму цифр числителя N-го приближения непрерывной дроби для e.
+
+    >>> solution(10)
+    17
+    """
+    numerator = continued(e_generator(), N).numerator
+    return sum(map(int, str(numerator)))
+```
+```text
+  №      Время  Замедление      Аргумент    Результат
+---  ---------  ------------  ----------  -----------
+  1  0.0008369  0.084%               100          272
+  2  0.0310575  3.022%              1000         4034
+```
