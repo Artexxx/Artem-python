@@ -31,7 +31,7 @@
 > Используя числа от 1 до 10, в зависимости от расположения, можно образовать 16-тизначные и 17-тизначные строки. Каково максимальное значение 16-тизначной строки для "магического" пятиугольного кольца?
 
 ``` python
-solution()  # =>  
+solution()  # => 6531031914842725
 ```
 
 ## Нормальное решение (1)
@@ -63,29 +63,20 @@ solution()  # =>
 Итак, результат: 6,5,3; 10,3,1; 9,1,4; 8,4,2; 7,2,5;
 
 ## Нормальное решение (1)
+Основная идея:
+Магическое n-угольное кольцо имеет 2n узлов и n линий. Помещая все узлы в один список, узлы на позициях [0 : n-1] будут внутренними, а узлы на позициях [n : 2n-1] будут внешними.
+Так как половина всех узлов внешние, то если все внешние узлы относятся к большей половине, то самый наименьший внешний узел будет на 1 больше размера данного кольца.
+Поскольку решения начинаются с наименьшего внешнего узла, первое число в решении не может быть больше, чем на 1 размера n-угольника.
+
 ```python
-import itertools
-
-
-def permutations(list_):
-    if len(list_) == 0:
-        yield []
-    elif len(list_) == 1:
-        yield list_
-    else:
-        for i in range(len(list_)):
-            x = list_[i]
-            xs = list_[:i] + list_[i + 1:]
-            for p in permutations(xs):
-                yield [x] + p
-
+from itertools import permutations
 
 class Ring(object):
-    def __init__(self, digits):
-        self._digits = digits
-        self._size = int(len(digits) / 2)
-        self._inner_nodes = digits[:self._size]
-        self._outer_nodes = digits[self._size:]
+    def __init__(self, numbers):
+        self._numbers = numbers
+        self._size = int(len(numbers) / 2)
+        self._inner_nodes = numbers[:self._size]
+        self._outer_nodes = numbers[self._size:]
 
     def is_magic(self):
         first_sum = sum(self.get_line(0))
@@ -148,17 +139,26 @@ class Ring(object):
         return ring_graph
 
     def __repr__(self):
-        return f'Ring({self._digits})'
+        return f'Ring({self._numbers})'
 
     def __str__(self):
         return self.construct_string()
 
 
-def solution(digits, digits_in_result):
-    ring_size = len(digits) // 2
+def solution(numbers, digits_in_result):
+    """
+    >>>solution(list(range(1, 6 + 1)), 9)
+    Таймер закончил работу, время = 0.0626s
+    432621513
+
+    >>>solution(list(range(1, 10 + 1)), 16)
+    Таймер закончил работу, время = 2.41s
+    6531031914842725
+    """
+    ring_size = len(numbers) // 2
     results = set()
 
-    for permutation in itertools.permutations(digits):
+    for permutation in itertools.permutations(numbers):
         if permutation[0] != min(permutation[:ring_size]):
             continue
         ring = Ring(permutation)
@@ -167,13 +167,27 @@ def solution(digits, digits_in_result):
     return max(
         filter(lambda s: len(s) == digits_in_result, results)
     )
-```
-```
->>> solution(list(range(1, 6 + 1)), 9)
-Таймер закончил работу, время = 0.0626s
-432621513
 
->>> solution(list(range(1, 10 + 1)), 16)
-Таймер закончил работу, время = 2.41s
-6531031914842725
+
+def solution(ring_size=5):
+    node_values = list(range(ring_size * 2, 0, -1))
+
+    for head in range(ring_size + 1, 0, -1):
+        tail = [n for n in node_values if n != head]
+
+        for inner in permutations(tail, ring_size):
+            outer_numbers = [n for n in tail if n not in inner and not n < head]
+
+            for outer in permutations(outer_numbers, ring_size - 1):
+                ring = Ring(list(inner) + [head] + list(outer))
+                if ring.is_magic():
+                    ring.visualize()
+                    return ring.construct_string()
+```
+```text
+  №      Время  Замедление      Аргумент         Результат
+---  ---------  ------------  ----------  ----------------
+  1  4.49e-05   0.004%                 3         432621513
+  2  0.0018381  0.179%                 4      462723831516
+  3  0.0094784  0.764%                 5  6531031914842725
 ```
