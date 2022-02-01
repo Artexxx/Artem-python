@@ -27,7 +27,7 @@ class ParallelTimer:
         self.parallel_timer_task.join()
 
         while self.timer_is_running:
-            time.sleep(0.05)
+            time.sleep(0.01)
         print(f"\rТаймер закончил работу, время = {self.timer_time:.3}s", end='\n\n')
 
     def _parallel_timer(self):

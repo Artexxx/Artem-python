@@ -37,8 +37,8 @@ class Sudoku(object):
     def valid_cell(self, value, position):
         """
         Проверяет пригодность числа для пустой ячейки
-        :param number {1-9} число для проверки
-        :param position (строка, столбец) позиция числа
+        :param number {1-9} — число для проверки
+        :param position (строка, столбец) — позиция числа
         :return bool
         """
         # Проверка строки
@@ -103,28 +103,33 @@ class Sudoku(object):
         return str_sudoku.replace('0', '*')
 
     def __repr__(self):
-        return str(self)
+        return f'Sudoku({self._board})'
 
     def __getitem__(self, item):
         return self._board[item]
 
 
-with open('p096_sudoku.txt') as f:
-    lines = f.read().split()
-
-boards = np.empty(shape=(50, 9, 9), dtype='uint8')
-for i in range(50):
-    for row in range(9):
-        for col in range(9):
-            boards[i, row, col] = lines[i * 11 + row + 2][col]
-
-
-def solution(n):
+def _read_first_n_boards(n):
     """
-    Решает все пятьдесят головоломок, и Возвращает сумму трехзначных чисел, находящихся в верхнем левом углу каждого решения.
+    Читает из файла 'p096_sudoku.txt' первые N головоломок.
+    """
+    with open('p096_sudoku.txt') as f:
+        lines = f.read().split()
+
+    boards = np.empty(shape=(50, 9, 9), dtype='uint8')
+    for i in range(n):
+        for row in range(9):
+            for col in range(9):
+                boards[i, row, col] = lines[i * 11 + row + 2][col]
+    return boards
+
+
+def solution(N):
+    """
+    Решает первые N головоломок и возвращает сумму трехзначных чисел, находящихся в верхнем левом углу каждого решения.
     """
     result_sum = 0
-    for grid in boards[:n]:
+    for grid in _read_first_n_boards(N):
         sudoku = Sudoku(grid.tolist())
         sudoku.solve()
         print(sudoku.count_tries, grid)

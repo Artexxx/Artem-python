@@ -67,7 +67,7 @@ def main():
     else:
         parser.print_help()
         path = input('>>> Your img dir: ')
-        name = input('>>> Your PDF name: ')
+        name = input('>>> Dir for PDF: ')
 
     if "\\" in path:
         path = path.replace("\\", "/")

@@ -1,13 +1,10 @@
 """
 Начиная в вершине треугольника (см. пример ниже) и перемещаясь вниз на смежные числа, максимальная сумма до основания составляет 23.
-
 3
 7 4
 2 4 6
 8 5 9 3
-
 То есть, 3 + 7 + 4 + 9 = 23
-
 Найдите максимальную сумму пути от вершины до основания следующего треугольника:
 """
 
@@ -34,7 +31,7 @@ if __name__ == "__main__":
     # assert solution(testTriangle) == 23
     import os
     script_dir = os.path.dirname(os.path.realpath(__file__))
-    triangle = os.path.join(script_dir, "p067_triangle.txt")
+    triangle = os.path.join(script_dir, "data.txt")
     with open(triangle, "r") as f: triangle = f.readlines()
     triangle = [[int(y) for y in x.rstrip("\r\n").split(" ")] for x in triangle]
     print(solution(triangle))
