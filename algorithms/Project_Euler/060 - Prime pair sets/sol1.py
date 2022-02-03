@@ -78,7 +78,6 @@ class solution():
         self.max_chain_length = max_chain_length
         self.primes: Tuple[int] = prime_sieve(self.MAX_ITER)
 
-
     def get_result(cls):
         """
         Возвращает наименьшую сумму элементов множества из N простых чисел, для которых объединение любых двух даст новое простое число.

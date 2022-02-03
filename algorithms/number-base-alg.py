@@ -132,8 +132,9 @@ def is_prime_trial_division(n) -> bool:
 
 
 def bit_sieve(limit) -> List[bool]:
-    """ Sieve of Eratosthenes
-    Generate boolean array of length N, where prime indices are True.
+    """
+    Sieve of Eratosthenes
+    Return boolean array of length N, where prime indices are True.
 
     The time complexity of this algorithm is O(nloglog(n).
 

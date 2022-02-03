@@ -105,30 +105,6 @@ class Ring(object):
         return self.construct_string()
 
 
-def solution(numbers, digits_in_result):
-    """
-    >>>solution(list(range(1, 6 + 1)), 9)
-    Таймер закончил работу, время = 0.0626s
-    432621513
-
-    >>>solution(list(range(1, 10 + 1)), 16)
-    Таймер закончил работу, время = 2.41s
-    6531031914842725
-    """
-    ring_size = len(numbers) // 2
-    results = set()
-
-    for permutation in itertools.permutations(numbers):
-        if permutation[0] != min(permutation[:ring_size]):
-            continue
-        ring = Ring(permutation)
-        if ring.is_magic():
-            results.add(ring.construct_string())
-    return max(
-        filter(lambda s: len(s) == digits_in_result, results)
-    )
-
-
 def solution(ring_size=5):
     """
     Основная идея:

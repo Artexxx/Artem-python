@@ -40,11 +40,10 @@
 
   №      Время  Замедление      Аргумент    Результат
 ---  ---------  ------------  ----------  -----------
-  1  8.31e-05   0.008%               100          272
-  2  0.0006123  0.053%              1000         4034
-  3  0.0179202  1.731%             10000        55322
+  1  2.54e-05   0.003%               100          272
+  2  0.0003452  0.032%              1000         4034
+  3  0.0170572  1.671%             10000        55322
 """
-from collections import deque
 
 
 def solution(N):
@@ -54,17 +53,19 @@ def solution(N):
     >>> solution(10)
     17
     """
-    last_three_numerators = deque([2, 3], maxlen=2)
+    old_numerator = 2
+    numerator = 3
 
     for index in range(3, N+1):
         fraction_number = 1
         if index % 3 == 0:
             fraction_number = (index // 3) * 2
 
-        new_numerator = last_three_numerators[0] + last_three_numerators[1] * fraction_number
-        last_three_numerators.append(new_numerator)
+        temp = numerator
+        numerator = old_numerator + numerator * fraction_number
+        old_numerator = temp
 
-    return sum(map(int, str(last_three_numerators[-1])))
+    return sum(map(int, str(numerator)))
 
 
 if __name__ == '__main__':

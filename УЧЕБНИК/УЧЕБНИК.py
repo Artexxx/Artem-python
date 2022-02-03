@@ -501,6 +501,7 @@ class itertools():
     itertools.compress('ABCDEF', [1, 0, 1, 0, 1, 1])  # Выхлоп / A C E F /
 
     """Функция filterfalse(func, iterable) Возвращает те элементы итерируемого объекта, для которых func возвращает значение False"""
+    itertools.filterfalse(lambda x: x < 3, [2, 3, 4, 5]) # Выхлоп / [3, 4, 5] /
 
     """Функция dropwhile(func, iterable) начинает возвращать все оставшиеся элементы как только условие принимает ложное значение"""
     itertools.dropwhile(lambda x: x < 5, [1, 4, 6, 4, 1])  # Выхлоп / 6 4 1 /
