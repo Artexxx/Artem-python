@@ -106,11 +106,11 @@ def is_concat_prime(x, y):
 
 
 class PrimePairChain():
-    PrimeSieveLimit = 10_000
+    _prime_sieve_limit = 10_000
 
     def __init__(self, max_chain_length=4):
         self.max_chain_length = max_chain_length
-        self._primes: List[int] = prime_sieve(self.PrimeSieveLimit)
+        self._primes: List[int] = prime_sieve(self._prime_sieve_limit)
         self.chain = []
 
     def get_result(cls):

@@ -13,6 +13,8 @@
   3  0.102066   9.87%              30      939474939
   4  4.78291    468.08%            40  1413899983141
 """
+
+
 def make_odd_bit_palindrome(x: int) -> str:
     res = x
     base = 2

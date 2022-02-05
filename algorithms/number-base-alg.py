@@ -13,7 +13,8 @@ def gcd(a, b, /) -> int:
     >>> gcd(12, 18)
     6
     """
-    while b: a, b = b, a % b
+    while b:
+        a, b = b, a % b
     return abs(a)
 
 
@@ -28,6 +29,7 @@ def divisors(number) -> List[int]:
     """
     factors = list()
     sqrt_n = sqrt(number)
+
     for i in range(1, math.floor(sqrt_n + 1)):
         if number % i == 0:
             factors.append(i)
@@ -81,11 +83,13 @@ def prime_factorization2(number) -> DefaultDict[int, int]:
     {2: 2, 5: 1, 11: 1} # 2 * 2 * 5 * 11
     """
     sqrt_n = math.sqrt(number)
+
     for i in range(2, math.floor(sqrt_n + 1)):
         if number % i == 0:
             old_factorization = prime_factorization2(number // i).copy()
             old_factorization[i] += 1
             return old_factorization
+
     # No divisors -> x is a prime number
     res = collections.defaultdict(int)
     res[number] = 1
@@ -130,8 +134,10 @@ def is_prime_trial_division(n) -> bool:
     True
     """
     # simple test for prime n: 2 and 3 are prime, but 1 is not
-    if n <= 3: return n > 1
-    if n in {5, 7, 11, 13, 17, 19, 23, 29}: return True
+    if n <= 3:
+        return n > 1
+    if n in {5, 7, 11, 13, 17, 19, 23, 29}:
+        return True
 
     # check if multiple of 2, 3, 5, 7, 11, 13, 17, 19, 23 or 29
     if not (n % 2 and n % 3 and n % 5 and n % 7 and n % 11 and n % 13 and
@@ -140,7 +146,7 @@ def is_prime_trial_division(n) -> bool:
 
     # all primes are of the form ck + i for i < c and i co-prime to c; c = 2*3*5 = 30
     for divisor in range(30, math.floor(math.sqrt(n) + 1), 30):
-        if not (n % (divisor + 1) and n % (divisor + 7) and
+        if not (n % (divisor +  1) and n % (divisor +  7) and
                 n % (divisor + 11) and n % (divisor + 13) and
                 n % (divisor + 17) and n % (divisor + 19) and
                 n % (divisor + 23) and n % (divisor + 29)):

@@ -29,8 +29,7 @@ def solution(limit=10 ** 6):
             for i in range(2 * p, limit + 1, p):
                 phi[i] -= phi[i] // p
 
-    return max(range(2, limit + 1),
-               key=(lambda i: i / phi[i]))
+    return max(range(2, limit + 1), key=(lambda i: i / phi[i]))
 
 
 if __name__ == '__main__':

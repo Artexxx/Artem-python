@@ -8,17 +8,17 @@
         |> стираем значение и возращаемся на шаг назад
 Итог:
     _____________________ Возьмем сложное судоку
-    3 * * | * * * | * * *
-    * * 5 | * * 9 | * * *
-    2 * * | 5 * 4 | * * *
+    3 . . | . . . | . . .
+    . . 5 | . . 9 | . . .
+    2 . . | 5 . 4 | . . .
     - - - + - - - + - - -
-    * 2 * | * * * | 7 * *
-    1 6 * | * * * | * 5 8
-    7 * 4 | 3 1 * | 6 * *
+    . 2 . | . . . | 7 . .
+    1 6 . | . . . | . 5 8
+    7 . 4 | 3 1 . | 6 . .
     - - - + - - - + - - -
-    * * * | 8 9 * | 1 * *
-    * * * | * 6 7 | * 8 *
-    * * * | * * 5 | 4 3 7
+    . . . | 8 9 . | 1 . .
+    . . . | . 6 7 | . 8 .
+    . . . | . . 5 | 4 3 7
 
     _____________________ Решённая судоку
     3 9 7 | 6 8 1 | 5 2 4
@@ -46,10 +46,12 @@ class Sudoku(object):
 
     def solve(self):
         empty = self.get_empty_position()
+
         if not empty:
             return True
         else:
             row, col = empty
+
         for number in (1, 2, 3, 4, 5, 6, 7, 8, 9):
             if self.valid_cell(number, (row, col)):
                 self[row][col] = number
@@ -132,22 +134,23 @@ class Sudoku(object):
             raise AssertionError("Судоку решено\введено неправильно")
 
     def __str__(self):
-        str_sudoku = ''
+        str_sudoku = str()
+
         for i, row in enumerate(self.row_iter()):
             if i % 3 == 0 and i != 0:
                 str_sudoku += '- - - + - - - + - - -' + '\n'
-
             str_row = " "
+
             for idx, item in enumerate(row):
                 if idx % 3 == 0 and idx != 0:
                     str_row += '|' + ' '
                 str_row += str(item) + ' '
 
             str_sudoku += str_row.strip() + '\n'
-        return str_sudoku.replace('0', '*')
+        return str_sudoku.replace('0', '.')
 
     def __repr__(self):
-        return str(self)
+        return f'Sudoku({self._board})'
 
     def __getitem__(self, item):
         return self._board[item]
@@ -170,6 +173,7 @@ if __name__ == '__main__':
         print('\n________________ Решённая судоку:')
         print(sudoku)
         print(f'Решено за {sudoku.count_tries} подстановок')
+
 
     from cProfile import Profile
     with Profile() as pr:
