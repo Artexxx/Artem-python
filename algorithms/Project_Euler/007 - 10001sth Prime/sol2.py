@@ -5,36 +5,48 @@
 
 Какое число является N-ым простым числом?
 
-
   №      Время  Замедление      Аргумент    Результат
 ---  ---------  ------------  ----------  -----------
-  1  0.0153429  1.534%             10001       104743 (ответ)
-  2  0.254947   23.960%           100001      1299721
-  3  3.19012    293.517%         1000001     15485867
+  1  0.0056097  0.561%             10001       104743 (ответ)
+  2  0.0664887  6.088%            100001      1299721
+  3  0.837998   77.151%          1000001     15485867
 """
 import math
-from typing import List
 
 
-def bit_sieve(limit) -> List[bool]:
-    """ Sieve of Eratosthenes
-     Generate boolean array of length N, where prime indices are True.
-
+def bit_sieve(limit: int) -> bytearray:
+    """
+    Sieve of Eratosthenes
+    Input limit>=3, Return boolean array of length N, where prime indices are True.
     The time complexity of this algorithm is O(nloglog(n).
 
-    >>> bit_sieve(10)
-    [False, False, True, True, False, True, False, True, False, False]
-    """
-    primes = [True] * limit
-    primes[0], primes[1] = False, False
+    Example
+    ========
+    >>> list(bit_sieve(10))
+    [0, 0, 1, 1, 0, 1, 0, 1, 0, 0]
 
-    number_of_multiples = len(primes[4::2])
-    primes[4::2] = [False] * number_of_multiples
+    Time-Profile
+    ============
+      №       Time  Slowdown      Argument    Count primes
+    ---  ---------  ------------  ----------  ------------
+      1  0.0011774  0.118%           100_000          9592
+      2  0.013186   1.201%         1_000_000         78498
+      3  0.131736   11.855%       10_000_000        664579
+      4  1.63013    149.840%     100_000_000       5761455
+    """
+    sieve = bytearray([True]) * limit
+    zero = bytearray([False])
+
+    sieve[0] = False
+    sieve[1] = False
+    number_of_multiples = len(sieve[4::2])  # old code ─ slow version
+    sieve[4::2] = [False] * number_of_multiples
+
     for factor in range(3, int(math.sqrt(limit)) + 1, 2):
-        if primes[factor]:
-            number_of_multiples = len(primes[factor * factor::factor * 2])
-            primes[factor * factor::factor * 2] = [False] * number_of_multiples
-    return primes
+        if sieve[factor]:
+            number_of_multiples = len(sieve[factor * factor::2 * factor])
+            sieve[factor * factor::factor * 2] = zero * number_of_multiples
+    return sieve
 
 
 def solution(n):
@@ -60,8 +72,7 @@ def solution(n):
 
 
 if __name__ == "__main__":
-    # print(solution(int(input().strip())))
     ### Run Time-Profile Table ###
-    import sys;sys.path.append('..')
+    import sys; sys.path.append('..')
     from time_profile import TimeProfile
     TimeProfile(solution, [10001, 100001, 1000001])

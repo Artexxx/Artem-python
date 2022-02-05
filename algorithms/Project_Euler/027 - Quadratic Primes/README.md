@@ -44,9 +44,79 @@ b = prime
 
 
 ```python
+
+def bit_sieve(limit: int) -> bytearray:
+    """
+    Sieve of Eratosthenes
+    Input limit>=3, Return boolean array of length N, where prime indices are True.
+    The time complexity of this algorithm is O(nloglog(n).
+
+    Example
+    ========
+    >>> list(bit_sieve(10))
+    [0, 0, 1, 1, 0, 1, 0, 1, 0, 0]
+
+    Time-Profile
+    ============
+      №       Time  Slowdown      Argument    Count primes
+    ---  ---------  ------------  ----------  ------------
+      1  0.0011774  0.118%           100_000          9592
+      2  0.013186   1.201%         1_000_000         78498
+      3  0.131736   11.855%       10_000_000        664579
+      4  1.63013    149.840%     100_000_000       5761455
+    """
+    sieve = bytearray([True]) * limit
+    zero = bytearray([False])
+
+    sieve[0] = False
+    sieve[1] = False
+    # number_of_multiples = len(sieve[4::2]) # old code ─ slow version
+    number_of_multiples = (limit - 4 + limit % 2) // 2
+    sieve[4::2] = [False] * number_of_multiples
+
+    for factor in range(3, int(math.sqrt(limit)) + 1, 2):
+        if sieve[factor]:
+            # number_of_multiples = len(sieve[factor * factor::2*factor]) # old code ─ slow version
+            number_of_multiples = ((limit - factor * factor - 1) // (2 * factor) + 1)
+            sieve[factor * factor::factor * 2] = zero * number_of_multiples
+    return sieve
+
+
+def prime_sieve(limit):
+    sieve = bit_sieve(limit)
+    yield 2
+    yield from (i for i in range(3, limit, 2) if sieve[i])
+
+
+def is_prime(number) -> bool:
+    """
+    Determines if the natural number n is prime.
+
+    >>> is_prime(10)
+    False
+    >>> is_prime(11)
+    True
+    """
+    # simple test for small n: 2 and 3 are prime, but 1 is not
+    if number <= 3:
+        return number > 1
+
+    # check if multiple of 2 or 3
+    if number % 2 == 0 or number % 3 == 0:
+        return False
+
+    # search for subsequent prime factors around multiples of 6
+    sqrt_n = math.sqrt(number)
+    for i in range(5, math.floor(sqrt_n + 1), 6):
+        if number % i == 0 or number % (i + 2) == 0:
+            return False
+    return True
+
+
 def solution(LIMIT):
-    """ Возвращает произведение коэффициентов a и b квадратичного выражения, согласно которому можно получить максимальное
-        количество простых чисел для последовательных значений n, начиная с значения n=0.
+    """
+    Возвращает произведение коэффициентов a и b квадратичного выражения, согласно которому можно получить максимальное
+    количество простых чисел для последовательных значений n, начиная с значения n=0.
 
     >>> solution(1000)
     -59231 # n^2 + an + b = n^2 - 61*n + 971
@@ -56,8 +126,10 @@ def solution(LIMIT):
         n, a, b = 0, 0, 0
 
     for a in range(-LIMIT + 1, LIMIT):
-        if a % 2 == 0: continue
-        for b in primes_sieve(LIMIT):
+        if a % 2 == 0:
+            continue
+
+        for b in prime_sieve(LIMIT):
             n = 0
             while is_prime(n * (n + a) + b):
                 n += 1

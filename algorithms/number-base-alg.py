@@ -5,7 +5,11 @@ from typing import List, DefaultDict
 
 
 def gcd(a, b, /) -> int:
-    """Computes the greatest common divisor of the integers a and b
+    """
+    Computes the greatest common divisor of the integers a and b
+
+    Example
+    ========
     >>> gcd(12, 18)
     6
     """
@@ -14,8 +18,11 @@ def gcd(a, b, /) -> int:
 
 
 def divisors(number) -> List[int]:
-    """Find the divisors for the number
+    """
+    Find the divisors for the number
 
+    Example
+    ========
     >>> divisors(220)
     [1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110, 220]
     """
@@ -30,8 +37,11 @@ def divisors(number) -> List[int]:
 
 
 def prime_factorization1(number) -> List[int]:
-    """Return a list of n's prime factors
+    """
+    Return a list of n's prime factors
 
+    Example
+    ========
     >>> prime_factorization1(220) # 2*2*5*11 == 220
     [2, 2, 5, 11]
     """
@@ -62,9 +72,12 @@ def memoize(f):
 
 @memoize
 def prime_factorization2(number) -> DefaultDict[int, int]:
-    """Return a Counter dict of n's prime factors
+    """
+    Return a Counter dict of n's prime factors
 
-     >>> prime_factorization2(220)
+    Example
+    =======
+    >>> prime_factorization2(220)
     {2: 2, 5: 1, 11: 1} # 2 * 2 * 5 * 11
     """
     sqrt_n = math.sqrt(number)
@@ -83,6 +96,8 @@ def is_prime(number) -> bool:
     """
     Determines if the natural number n is prime.
 
+    Example
+    =======
     >>> is_prime(10)
     False
     >>> is_prime(10**2000 + 4561)
@@ -107,6 +122,8 @@ def is_prime_trial_division(n) -> bool:
     """
     Determine if the natural number n is prime using trial division.
 
+    Example
+    ========
     >>> is_prime_trial_division(10)
     False
     >>> is_prime_trial_division(11)
@@ -131,26 +148,41 @@ def is_prime_trial_division(n) -> bool:
     return True
 
 
-def bit_sieve(limit) -> List[bool]:
+def bit_sieve(limit: int) -> bytearray:
     """
     Sieve of Eratosthenes
-    Return boolean array of length N, where prime indices are True.
-
+    Input limit>=3, Return boolean array of length N, where prime indices are True.
     The time complexity of this algorithm is O(nloglog(n).
 
-    >>> bit_sieve(10)
-    [False, False, True, True, False, True, False, True, False, False]
-    """
-    primes = [True] * limit
-    primes[0], primes[1] = False, False
+    Example
+    ========
+    >>> list(bit_sieve(10))
+    [0, 0, 1, 1, 0, 1, 0, 1, 0, 0]
 
-    number_of_multiples = len(primes[4::2])
-    primes[4::2] = [False] * number_of_multiples
+    Time-Profile
+    ============
+      №       Time  Slowdown      Argument    Count primes
+    ---  ---------  ------------  ----------  ------------
+      1  0.0011774  0.118%           100_000          9592
+      2  0.013186   1.201%         1_000_000         78498
+      3  0.131736   11.855%       10_000_000        664579
+      4  1.63013    149.840%     100_000_000       5761455
+    """
+    sieve = bytearray([True]) * limit
+    zero = bytearray([False])
+
+    sieve[0] = False
+    sieve[1] = False
+    # number_of_multiples = len(sieve[4::2]) # old code ─ slow version
+    number_of_multiples = (limit - 4 + limit % 2) // 2
+    sieve[4::2] = [False] * number_of_multiples
+
     for factor in range(3, int(math.sqrt(limit)) + 1, 2):
-        if primes[factor]:
-            number_of_multiples = len(primes[factor * factor::factor * 2])
-            primes[factor * factor::factor * 2] = [False] * number_of_multiples
-    return primes
+        if sieve[factor]:
+            # number_of_multiples = len(sieve[factor * factor::2*factor]) # old code ─ slow version
+            number_of_multiples = ((limit - factor * factor - 1) // (2 * factor) + 1)
+            sieve[factor * factor::factor * 2] = zero * number_of_multiples
+    return sieve
 
 
 if __name__ == '__main__':

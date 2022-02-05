@@ -8,51 +8,70 @@
 Найдите наименьшую сумму элементов множества из 5 простых чисел, для которых объединение любых двух даст новое простое число.
 
 Результат:
-    [13, 5197, 5701, 6733, 8389]
+    26033 # sum([13, 5197, 5701, 6733, 8389])
     # 3149980 function calls (3147535 primitive calls) in 2.128 seconds
 """
 import math
 from functools import lru_cache
-from typing import List, Tuple, Iterable
+from typing import List, Iterable
 
 
-def prime_sieve(n) -> Tuple[int]:
-    """ Sieve of Eratosthenes
-     Generate boolean array of length N, where prime indices are True.
-
+def bit_sieve(limit: int) -> bytearray:
+    """
+    Sieve of Eratosthenes
+    Input limit>=3, Return boolean array of length N, where prime indices are True.
     The time complexity of this algorithm is O(nloglog(n).
 
-    >>> prime_sieve(10)
-    [2, 3, 5, 7]
+    Example
+    =======
+    >>> list(bit_sieve(10))
+    [0, 0, 1, 1, 0, 1, 0, 1, 0, 0]
+
+    Time-Profile
+    ============
+      №       Time  Slowdown      Argument    Count primes
+    ---  ---------  ------------  ----------  ------------
+      1  0.0011774  0.118%           100_000          9592
+      2  0.013186   1.201%         1_000_000         78498
+      3  0.131736   11.855%       10_000_000        664579
+      4  1.63013    149.840%     100_000_000       5761455
     """
-    sieve = [True] * n
-    sieve[0], sieve[1] = False, False  # числа 0 и 1
+    sieve = bytearray([True]) * limit
+    zero = bytearray([False])
 
-    number_of_multiples = len(sieve[4::2])
+    sieve[0] = False
+    sieve[1] = False
+    # number_of_multiples = len(sieve[4::2]) # old code ─ slow version
+    number_of_multiples = (limit - 4 + limit % 2) // 2
     sieve[4::2] = [False] * number_of_multiples
-    for factor in range(3, int(math.sqrt(n)) + 1, 2):
+
+    for factor in range(3, int(math.sqrt(limit)) + 1, 2):
         if sieve[factor]:
-            number_of_multiples = len(sieve[factor * factor::factor * 2])
-            sieve[factor * factor::factor * 2] = [False] * number_of_multiples
+            # number_of_multiples = len(sieve[factor * factor::2*factor]) # old code ─ slow version
+            number_of_multiples = ((limit - factor * factor - 1) // (2 * factor) + 1)
+            sieve[factor * factor::factor * 2] = zero * number_of_multiples
+    return sieve
 
-    return tuple(num for num in range(3, n + 1, 2) if sieve[num])
+
+def prime_sieve(limit) -> List[int]:
+    sieve = bit_sieve(limit)
+    return [2] + [i for i in range(3, limit, 2) if sieve[i]]
 
 
-@lru_cache(maxsize=None)
 def is_prime(n: int) -> bool:
     """
     Determines if the natural number n is prime.
 
+    Example
+    =======
     >>> is_prime(10)
     False
     >>> is_prime(11)
     True
     """
-    # simple test for small n: 2 and 3 are prime, but 1 is not
     if n <= 3:
         return n > 1
 
-    # check if multiple of 2 or 3
     if n % 2 == 0 or n % 3 == 0:
         return False
 
@@ -64,19 +83,35 @@ def is_prime(n: int) -> bool:
     return True
 
 
+# Fixme: slow speed
+def custom_memoize(f):
+    cache = dict()
+
+    def wrapper(*args):
+        if not args in cache:
+            cache[args] = f(*args)
+            cache[args[::-1]] = cache[args]
+        return cache[args]
+
+    return wrapper
+
+
 @lru_cache(maxsize=None)
 def is_concat_prime(x, y):
-    """Возвращает True, если объединение двух простых чисел даст новое простое число"""
-    return is_prime(int(str(x) + str(y)))
+    """
+    Возвращает True, если при объединение в произвольном порядке x и y, в результате всегда получается простое число.
+    """
+    return (is_prime(int(str(x) + str(y))) and
+            is_prime(int(str(y) + str(x))))
 
 
-class solution():
-    DEBUG = False
-    MAX_ITER = 10000
+class PrimePairChain():
+    PrimeSieveLimit = 10_000
 
     def __init__(self, max_chain_length=4):
         self.max_chain_length = max_chain_length
-        self.primes: Tuple[int] = prime_sieve(self.MAX_ITER)
+        self._primes: List[int] = prime_sieve(self.PrimeSieveLimit)
+        self.chain = []
 
     def get_result(cls):
         """
@@ -89,29 +124,37 @@ class solution():
         for n in chain:
             if not is_concat_prime(n, candidate):
                 return False
-            if not is_concat_prime(candidate, n):
-                return False
         return True
 
     def solve_backtrack(self, chain: List[int]):
-        if self.DEBUG:
-            print(self.max_chain_length, chain)
-
-        for p in self.primes:
+        for p in self._primes:
             if self.test_chain(chain, p):
                 chain.append(p)
-                if (len(chain) == self.max_chain_length):
+                if len(chain) == self.max_chain_length:
                     return chain
                 self.solve_backtrack(chain)
                 chain.pop()
         return chain
 
 
+def solution(N):
+    """
+    Возвращает наименьшую сумму элементов множества из N простых чисел, для которых объединение любых двух даст новое простое число.
+
+    >>> solution(4)
+    792 # sum([3, 7, 109, 673])
+    >>> solution(5)
+    26033 # sum([13, 5197, 5701, 6733, 8389])
+    """
+    result = PrimePairChain(N).get_result()
+    return sum(result)
+
 
 if __name__ == '__main__':
     ### Run Time-Profile Table ###
     import cProfile
+
     with cProfile.Profile() as pr:
-        print(solution(5).get_result())
-        print('\n\n');
+        print(solution(5))
+        print('\n\n')
         pr.print_stats()

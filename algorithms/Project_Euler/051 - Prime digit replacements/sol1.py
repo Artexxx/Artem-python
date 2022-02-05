@@ -19,26 +19,47 @@ from collections import Counter
 from string import digits
 
 
-def prime_sieve(n):
-    """ Sieve of Eratosthenes
-     Generate boolean array of length N, where prime indices are True.
-
+def bit_sieve(limit: int) -> bytearray:
+    """
+    Sieve of Eratosthenes
+    Input limit>=3, return boolean array of length N, where prime indices are True.
     The time complexity of this algorithm is O(nloglog(n).
 
-    >>> prime_sieve(10)
-    [2, 3, 5, 7]
+    Example
+    ========
+    >>> list(bit_sieve(10))
+    [0, 0, 1, 1, 0, 1, 0, 1, 0, 0]
+
+    Time-Profile
+    ========
+      №       Time  Slowdown      Argument    Count primes
+    ---  ---------  ------------  ----------  ------------
+      1  0.0011774  0.118%           100_000          9592
+      2  0.013186   1.201%         1_000_000         78498
+      3  0.131736   11.855%       10_000_000        664579
+      4  1.63013    149.840%     100_000_000       5761455
     """
-    sieve = [True] * n
-    sieve[0], sieve[1] = False, False  # числа 0 и 1
+    sieve = bytearray([True]) * limit
+    zero = bytearray([False])
 
-    number_of_multiples = len(sieve[4::2])
+    sieve[0] = False
+    sieve[1] = False
+    # number_of_multiples = len(sieve[4::2]) # old code ─ slow version
+    number_of_multiples = (limit - 4 + limit % 2) // 2
     sieve[4::2] = [False] * number_of_multiples
-    for factor in range(3, int(math.sqrt(n)) + 1, 2):
-        if sieve[factor]:
-            number_of_multiples = len(sieve[factor * factor::factor * 2])
-            sieve[factor * factor::factor * 2] = [False] * number_of_multiples
 
-    return (num for num in range(3, n + 1, 2) if sieve[num])
+    for factor in range(3, int(math.sqrt(limit)) + 1, 2):
+        if sieve[factor]:
+            # number_of_multiples = len(sieve[factor * factor::2*factor]) # old code ─ slow version
+            number_of_multiples = ((limit - factor * factor - 1) // (2 * factor) + 1)
+            sieve[factor * factor::factor * 2] = zero * number_of_multiples
+    return sieve
+
+
+def prime_sieve(limit):
+    sieve = bit_sieve(limit)
+    yield 2
+    yield from (i for i in range(3, limit, 2) if sieve[i])
 
 
 def count_duplicated_digits(number: int) -> int:
@@ -46,7 +67,9 @@ def count_duplicated_digits(number: int) -> int:
 
 
 def get_duplicated_digits(number: str) -> str:
-    """ Возвращает повторяющиеся цифры
+    """
+    Возвращает повторяющиеся цифры
+
     >>> list(get_duplicated_digits("1112333"))
     ['1', '3']
     """
@@ -56,7 +79,9 @@ def get_duplicated_digits(number: str) -> str:
 
 
 def get_patterns(number: int):
-    """ Возвращает паттерны повторяющихся цифр
+    """
+    Возвращает паттерны повторяющихся цифр
+
     >>> list(get_patterns(1112333))
     ['***2333', '1112***']
     """
@@ -73,6 +98,9 @@ def get_candidates(pattern):
 def solution():
     """
     Находит наименьшее простое число, которое является одним из восьми простых чисел, полученных заменой части цифр (не обязательно соседних) одинаковыми цифрами.
+
+    >>> solution()
+    121313
     """
     fprimes = [prime for prime in prime_sieve(10 ** 6)
                if count_duplicated_digits(prime) >= 3]

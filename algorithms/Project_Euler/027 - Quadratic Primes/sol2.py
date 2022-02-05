@@ -25,23 +25,47 @@
 import math
 
 
-def primes_sieve(n):
-    ''' Решето Эратосфена.
+def bit_sieve(limit: int) -> bytearray:
+    """
+    Sieve of Eratosthenes
+    Input limit>=3, return boolean array of length N, where prime indices are True.
+    The time complexity of this algorithm is O(nloglog(n).
 
-    >>> list(primes_sieve(50))
-    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
-    '''
-    primes = [True] * n
-    primes[0], primes[1] = False, False  # Числа 0 и 1
+    Example
+    ========
+    >>> list(bit_sieve(10))
+    [0, 0, 1, 1, 0, 1, 0, 1, 0, 0]
 
-    number_of_multiples = len(primes[4::2])
-    primes[4::2] = [False] * number_of_multiples
+    Time-Profile
+    ============
+      №       Time  Slowdown      Argument    Count primes
+    ---  ---------  ------------  ----------  ------------
+      1  0.0011774  0.118%           100_000          9592
+      2  0.013186   1.201%         1_000_000         78498
+      3  0.131736   11.855%       10_000_000        664579
+      4  1.63013    149.840%     100_000_000       5761455
+    """
+    sieve = bytearray([True]) * limit
+    zero = bytearray([False])
 
-    for p in range(3, int(math.sqrt(n)) + 1, 2):
-        if primes[p]:
-            number_of_multiples = len(primes[p * p::p * 2])
-            primes[p * p::p * 2] = [False] * number_of_multiples
-    return (i for (i, isprime) in enumerate(primes) if isprime)
+    sieve[0] = False
+    sieve[1] = False
+    # number_of_multiples = len(sieve[4::2]) # old code ─ slow version
+    number_of_multiples = (limit - 4 + limit % 2) // 2
+    sieve[4::2] = [False] * number_of_multiples
+
+    for factor in range(3, int(math.sqrt(limit)) + 1, 2):
+        if sieve[factor]:
+            # number_of_multiples = len(sieve[factor * factor::2*factor]) # old code ─ slow version
+            number_of_multiples = ((limit - factor * factor - 1) // (2 * factor) + 1)
+            sieve[factor * factor::factor * 2] = zero * number_of_multiples
+    return sieve
+
+
+def prime_sieve(limit):
+    sieve = bit_sieve(limit)
+    yield 2
+    yield from (i for i in range(3, limit, 2) if sieve[i])
 
 
 def is_prime(number) -> bool:
@@ -70,8 +94,9 @@ def is_prime(number) -> bool:
 
 
 def solution(LIMIT):
-    """ Возвращает произведение коэффициентов a и b квадратичного выражения, согласно которому можно получить максимальное
-        количество простых чисел для последовательных значений n, начиная с значения n=0.
+    """
+    Возвращает произведение коэффициентов a и b квадратичного выражения, согласно которому можно получить максимальное
+    количество простых чисел для последовательных значений n, начиная с значения n=0.
 
     >>> solution(1000)
     -59231 # n^2 + an + b = n^2 - 61*n + 971
@@ -81,8 +106,10 @@ def solution(LIMIT):
         n, a, b = 0, 0, 0
 
     for a in range(-LIMIT + 1, LIMIT):
-        if a % 2 == 0: continue
-        for b in primes_sieve(LIMIT):
+        if a % 2 == 0:
+            continue
+
+        for b in prime_sieve(LIMIT):
             n = 0
             while is_prime(n * (n + a) + b):
                 n += 1
@@ -98,6 +125,9 @@ def solution(LIMIT):
 
 if __name__ == '__main__':
     ### Run Time-Profile Table ###
-    import sys; sys.path.append('..')
+    import sys;
+
+    sys.path.append('..')
     from time_profile import TimeProfile
+
     TimeProfile(solution, [10, 100, 1000])

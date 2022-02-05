@@ -31,21 +31,24 @@ def is_prime(n):
     return True
 
 
-def sum_of_primes(n):
-    if n > 2: sumOfPrimes = 2
-    else: return 0
+def solution(n):
+    if n > 2:
+        result_sum = 2
+    else:
+        return 0
+
     for candidate in range(3, n, 2):
         if is_prime(candidate):
-            sumOfPrimes += candidate
-    return sumOfPrimes
+            result_sum += candidate
+    return result_sum
 ```
 ```text
   №       Время  Замедление        Число     Результат
 ---  ----------  ------------    -------  ------------
-  1   0.0051545  0.515%          10000         5736396
-  2   0.0862083  8.11%          100 000      454396537
-  3   1.90828    182.21%       1 000 000   37550402023
-  4  18.3567     1644.84%      5 000 000  838596693108
+  1   0.0051545  0.515%           10_000       5736396
+  2   0.0862083  8.11%           100_000     454396537
+  3   1.90828    182.21%       1_000_000   37550402023
+  4  18.3567     1644.84%      5_000_000  838596693108
 ```
 
 ## Частное решение (2)
@@ -63,75 +66,66 @@ def sum_of_primes(n):
 >
 >*2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30*
 >
->Следующее незачеркнутое число, `3` — простое. Пройдём по ряду чисел, зачёркивая все числа, кратные 3 (то есть, каждое третье, начиная с `3*3 = 9`):
+>Следующее не зачеркнутое число, `3` — простое. Пройдём по ряду чисел, зачёркивая все числа, кратные 3 (то есть, каждое третье, начиная с `3*3 = 9`):
 >
 >*2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30*
 >
->Следующее незачеркнутое число, `5` — простое. Пройдём по ряду чисел, зачёркивая все числа, кратные 5 (то есть, каждое пятое, начиная с `5*5 = 25`):
+>Следующее не зачеркнутое число, `5` — простое. Пройдём по ряду чисел, зачёркивая все числа, кратные 5 (то есть, каждое пятое, начиная с `5*5 = 25`):
 >
 >*2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30*
 >
->Следующее незачеркнутое число — `7`. Его квадрат, 49 — больше 30, поэтому на этом работа завершена. Все составные числа уже зачеркнуты:
+>Следующее не зачеркнутое число — `7`. Его квадрат, 49 — больше 30, поэтому на этом работа завершена. Все составные числа уже зачеркнуты:
 >
 >*2  3     5     7           11    13          17    19          23                29*
 ```python
-def bit_sieve(limit) -> List[bool]:
-    """ Sieve of Eratosthenes
-     Generate boolean array of length N, where prime indices are True.
-
+def bit_sieve(limit: int) -> bytearray:
+    """
+    Sieve of Eratosthenes
+    Input limit>=3, Return boolean array of length N, where prime indices are True.
     The time complexity of this algorithm is O(nloglog(n).
 
-    >>> bit_sieve(10)
-    [False, False, True, True, False, True, False, True, False, False]
+    Example
+    ========
+    >>> list(bit_sieve(10))
+    [0, 0, 1, 1, 0, 1, 0, 1, 0, 0]
+
+    Time-Profile
+    ============
+      №       Time  Slowdown      Argument    Count primes
+    ---  ---------  ------------  ----------  ------------
+      1  0.0011774  0.118%           100_000          9592
+      2  0.013186   1.201%         1_000_000         78498
+      3  0.131736   11.855%       10_000_000        664579
+      4  1.63013    149.840%     100_000_000       5761455
     """
-    primes = [True] * limit
-    primes[0], primes[1] = False, False
+    sieve = bytearray([True]) * limit
+    zero = bytearray([False])
 
-    number_of_multiples = len(primes[4::2])
-    primes[4::2] = [False] * number_of_multiples
+    sieve[0] = False
+    sieve[1] = False
+    number_of_multiples = len(sieve[4::2])
+    sieve[4::2] = [False] * number_of_multiples
+
     for factor in range(3, int(math.sqrt(limit)) + 1, 2):
-        if primes[factor]:
-            number_of_multiples = len(primes[factor * factor::factor * 2])
-            primes[factor * factor::factor * 2] = [False] * number_of_multiples
-    return primes
+        if sieve[factor]:
+            number_of_multiples = len(sieve[factor * factor::2*factor])
+            sieve[factor * factor::factor * 2] = zero * number_of_multiples
+    return sieve
 
 
-def bit_sieve(limit) -> List[bool]:
-    """ Sieve of Eratosthenes
-     Generate boolean array of length N, where prime indices are True.
-
-    The time complexity of this algorithm is O(nloglog(n).
-
-    >>> bit_sieve(10)
-    [False, False, True, True, False, True, False, True, False, False]
-    """
-    primes = [True] * limit
-    primes[0], primes[1] = False, False
-
-    number_of_multiples = len(primes[4::2])
-    primes[4::2] = [False] * number_of_multiples
-    for factor in range(3, int(math.sqrt(limit)) + 1, 2):
-        if primes[factor]:
-            number_of_multiples = len(primes[factor * factor::factor * 2])
-            primes[factor * factor::factor * 2] = [False] * number_of_multiples
-    return primes
-
-def prime_sum(n: int) -> int:
-    list_of_primality = bit_sieve(n)
-    return sum((i for (i, isprime) in enumerate(list_of_primality) if isprime))
+def solution(limit: int) -> int:
+    sieve = bit_sieve(limit)
+    prime_sum = 2
+    for i in range(3, limit, 2):
+        if sieve[i]:
+            prime_sum += i
+    return prime_sum
 ```
 ```text
- №1      Время  Замедление       Число         Результат
----  ---------  ------------  --------    --------------
-  1  0.0113791  1.138%          10 0000        454396538
-  2  0.130103   11.87%         1 000 000     37550402024
-  3  1.57068    144.06%       10 000 000   3203324994357
-  4  8.45341    688.27%       50 000 000  72619548630278
-
- №2      Время  Замедление       Число       Результат
----  ---------  ------------  --------  --------------
-  1  0.0055752  0.558%          100000       454396537
-  2  0.0673298  6.18%          1000000     37550402023
-  3  0.923934   85.66%        10000000   3203324994356
-  4  4.993      406.91%       50000000  72619548630277
+  №      Время  Замедление      Аргумент       Результат
+---  ---------  ------------  ----------  --------------
+  1  0.0031426  0.314%           100_000       454396537
+  2  0.0310431  2.790%         1_000_000     37550402023
+  3  0.310128   27.908%       10_000_000   3203324994356
+  4  1.72953    141.940%      50_000_000  72619548630277
 ```

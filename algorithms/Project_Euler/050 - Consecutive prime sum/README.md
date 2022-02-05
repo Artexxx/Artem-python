@@ -20,17 +20,16 @@ solution  () => 997651
 ## Нормальное решение (1)
 
 ```python
-def get_primes(n):
-    is_prime = bit_sieve(n)
-    primes = [num for num in range(3, n + 1, 2) if is_prime[num]]
-    return primes
+def prime_sieve(limit) -> List[int]:
+    sieve = bit_sieve(limit)
+    return [2] + [i for i in range(3, limit, 2) if sieve[i]]
 
 
 def solution():
     """
     Находит простое число, меньше одного миллиона, которое можно записать в виде суммы наибольшего количества последовательных простых чисел.
     """
-    primes = get_primes(10**6)
+    primes = prime_sieve(10**6)
     longest = 21
     result = 0
 

@@ -17,38 +17,53 @@ import math
 from typing import List
 
 
-def bit_sieve(limit) -> List[bool]:
-    """ Sieve of Eratosthenes
-     Generate boolean array of length N, where prime indices are True.
-
+def bit_sieve(limit: int) -> bytearray:
+    """
+    Sieve of Eratosthenes
+    Input limit>=3, Return boolean array of length N, where prime indices are True.
     The time complexity of this algorithm is O(nloglog(n).
 
-    >>> bit_sieve(10)
-    [False, False, True, True, False, True, False, True, False, False]
+    Example
+    =======
+    >>> list(bit_sieve(10))
+    [0, 0, 1, 1, 0, 1, 0, 1, 0, 0]
+
+    Time-Profile
+    ============
+      №       Time  Slowdown      Argument    Count primes
+    ---  ---------  ------------  ----------  ------------
+      1  0.0011774  0.118%           100_000          9592
+      2  0.013186   1.201%         1_000_000         78498
+      3  0.131736   11.855%       10_000_000        664579
+      4  1.63013    149.840%     100_000_000       5761455
     """
-    primes = [True] * limit
-    primes[0], primes[1] = False, False
+    sieve = bytearray([True]) * limit
+    zero = bytearray([False])
 
-    number_of_multiples = len(primes[4::2])
-    primes[4::2] = [False] * number_of_multiples
+    sieve[0] = False
+    sieve[1] = False
+    # number_of_multiples = len(sieve[4::2]) # old code ─ slow version
+    number_of_multiples = (limit - 4 + limit % 2) // 2
+    sieve[4::2] = [False] * number_of_multiples
+
     for factor in range(3, int(math.sqrt(limit)) + 1, 2):
-        if primes[factor]:
-            number_of_multiples = len(primes[factor * factor::factor * 2])
-            primes[factor * factor::factor * 2] = [False] * number_of_multiples
-    return primes
+        if sieve[factor]:
+            # number_of_multiples = len(sieve[factor * factor::2*factor]) # old code ─ slow version
+            number_of_multiples = ((limit - factor * factor - 1) // (2 * factor) + 1)
+            sieve[factor * factor::factor * 2] = zero * number_of_multiples
+    return sieve
 
 
-def get_primes(n):
-    is_prime = bit_sieve(n)
-    primes = [num for num in range(3, n, 2) if is_prime[num]]
-    return primes
+def prime_sieve(limit) -> List[int]:
+    sieve = bit_sieve(limit)
+    return [2] + [i for i in range(3, limit, 2) if sieve[i]]
 
 
 def solution(LIMIT=10 ** 6):
     """
     Находит простое число, меньше одного миллиона, которое можно записать в виде суммы наибольшего количества последовательных простых чисел.
     """
-    primes = get_primes(LIMIT)
+    primes = prime_sieve(LIMIT)
     longest_len = 21
     result_sum = 0
 

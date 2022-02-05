@@ -4,12 +4,12 @@
 Найдите сумму всех простых чисел меньше n.
 
 
-  №       Время  Замедление      Число     Результат
----  ----------  ------------  -------  ------------
-  1   0.0051545  0.515%          10000       5736396
-  2   0.0862083  8.11%          100000     454396537
-  3   1.90828    182.21%       1000000   37550402023
-  4  18.3567     1644.84%      5000000  838596693108
+  №       Время  Замедление        Число     Результат
+---  ----------  ------------    -------  ------------
+  1   0.0051545  0.515%           10_000       5736396
+  2   0.0862083  8.11%           100_000     454396537
+  3   1.90828    182.21%       1_000_000   37550402023
+  4  18.3567     1644.84%      5_000_000  838596693108
 """
 from math import sqrt
 
@@ -25,17 +25,9 @@ def is_prime(n):
     return True
 
 
-def sum_of_primes(n):
-    if n > 2: sumOfPrimes = 2
-    else: return 0
-    for candidate in range(3, n, 2):
-        if is_prime(candidate):
-            sumOfPrimes += candidate
-    return sumOfPrimes
-
-
 def solution(n):
-    """Возвращает сумму всех простых чисел ниже n.
+    """
+    Возвращает сумму всех простых чисел ниже n.
 
     >>> solution(1000)
     76127
@@ -46,7 +38,15 @@ def solution(n):
     >>> solution(7)
     10
     """
-    return sum_of_primes(n)
+    if n > 2:
+        result_sum = 2
+    else:
+        return 0
+
+    for candidate in range(3, n, 2):
+        if is_prime(candidate):
+            result_sum += candidate
+    return result_sum
 
 
 if __name__ == "__main__":
