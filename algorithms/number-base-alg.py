@@ -4,12 +4,12 @@ from math import sqrt
 from typing import List, DefaultDict
 
 
-def gcd(a, b, /) -> int:
+def gcd(a: int, b: int) -> int:
     """
-    Computes the greatest common divisor of the integers a and b
+    Computes the greatest common divisor of the integers `a` and `b`
 
     Example
-    ========
+    =======
     >>> gcd(12, 18)
     6
     """
@@ -20,10 +20,10 @@ def gcd(a, b, /) -> int:
 
 def divisors(number) -> List[int]:
     """
-    Find the divisors for the number
+    Return a sorted list of all divisors of positive number.
 
     Example
-    ========
+    =======
     >>> divisors(220)
     [1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110, 220]
     """
@@ -40,10 +40,12 @@ def divisors(number) -> List[int]:
 
 def prime_factorization1(number) -> List[int]:
     """
-    Return a list of n's prime factors
+    Return a list of prime factors of a natural number, including duplicates.
 
     Example
     ========
+    >>> prime_factorization1(12) # 2*2*3 == 12
+    [2, 2, 3]
     >>> prime_factorization1(220) # 2*2*5*11 == 220
     [2, 2, 5, 11]
     """
@@ -75,12 +77,14 @@ def memoize(f):
 @memoize
 def prime_factorization2(number) -> DefaultDict[int, int]:
     """
-    Return a Counter dict of n's prime factors
+    Return a counter dict of prime factors of a natural number.
 
     Example
     =======
-    >>> prime_factorization2(220)
-    {2: 2, 5: 1, 11: 1} # 2 * 2 * 5 * 11
+    >>> prime_factorization2(12) # 2*2*3 == 12
+    {2: 2, 3: 1}
+    >>> prime_factorization2(220) # 2*2*5*11 == 220
+    {2: 2, 5: 1, 11: 1}
     """
     sqrt_n = math.sqrt(number)
 
@@ -98,7 +102,7 @@ def prime_factorization2(number) -> DefaultDict[int, int]:
 
 def is_prime(number) -> bool:
     """
-    Determines if the natural number n is prime.
+    Check if the natural number is prime.
 
     Example
     =======
@@ -124,7 +128,7 @@ def is_prime(number) -> bool:
 
 def is_prime_trial_division(n) -> bool:
     """
-    Determine if the natural number n is prime using trial division.
+    Determine if the natural number `n` is prime using trial division.
 
     Example
     ========
@@ -146,7 +150,7 @@ def is_prime_trial_division(n) -> bool:
 
     # all primes are of the form ck + i for i < c and i co-prime to c; c = 2*3*5 = 30
     for divisor in range(30, math.floor(math.sqrt(n) + 1), 30):
-        if not (n % (divisor +  1) and n % (divisor +  7) and
+        if not (n % (divisor + 1) and n % (divisor + 7) and
                 n % (divisor + 11) and n % (divisor + 13) and
                 n % (divisor + 17) and n % (divisor + 19) and
                 n % (divisor + 23) and n % (divisor + 29)):
@@ -157,7 +161,8 @@ def is_prime_trial_division(n) -> bool:
 def bit_sieve(limit: int) -> bytearray:
     """
     Sieve of Eratosthenes
-    Input limit>=3, Return boolean array of length N, where prime indices are True.
+    Input limit>=3, return boolean array of length `limit`,
+    where index is number and boolean values is whether prime or not
     The time complexity of this algorithm is O(nloglog(n).
 
     Example
@@ -167,12 +172,14 @@ def bit_sieve(limit: int) -> bytearray:
 
     Time-Profile
     ============
-      №       Time  Slowdown      Argument    Count primes
-    ---  ---------  ------------  ----------  ------------
-      1  0.0011774  0.118%           100_000          9592
-      2  0.013186   1.201%         1_000_000         78498
-      3  0.131736   11.855%       10_000_000        664579
-      4  1.63013    149.840%     100_000_000       5761455
+    ===  =========  ============  ===========  ============
+      №       Time  Slowdown         Argument  Count primes
+    ===  =========  ============  ===========  ============
+      1  0.001174   0.118%            100_000          9592
+      2  0.013186   1.201%          1_000_000         78498
+      3  0.131736   11.855%        10_000_000        664579
+      4  1.63013    149.840%      100_000_000       5761455
+    ===  =========  ============  ===========  ============
     """
     sieve = bytearray([True]) * limit
     zero = bytearray([False])
