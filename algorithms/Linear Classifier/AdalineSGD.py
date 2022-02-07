@@ -98,7 +98,7 @@ class AdalineSGD(object):
         return X @ self.w_ + self.bias_
 
     def activation(self, X):
-        """ Вычиляет линейную активацию f(z)"""
+        """ Вычисляет линейную активацию f(z)"""
         return X
 
     def predict(self, X):

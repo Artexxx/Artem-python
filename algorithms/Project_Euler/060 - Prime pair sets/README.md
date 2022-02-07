@@ -20,22 +20,25 @@ from typing import List, Iterable
 def bit_sieve(limit: int) -> bytearray:
     """
     Sieve of Eratosthenes
-    Input limit>=3, Return boolean array of length N, where prime indices are True.
+    Input limit>=3, return boolean array of length `limit`,
+    where index is number and boolean values is whether prime or not
     The time complexity of this algorithm is O(nloglog(n).
 
     Example
-    =======
+    ========
     >>> list(bit_sieve(10))
     [0, 0, 1, 1, 0, 1, 0, 1, 0, 0]
 
     Time-Profile
     ============
-      №       Time  Slowdown      Argument    Count primes
-    ---  ---------  ------------  ----------  ------------
-      1  0.0011774  0.118%           100_000          9592
-      2  0.013186   1.201%         1_000_000         78498
-      3  0.131736   11.855%       10_000_000        664579
-      4  1.63013    149.840%     100_000_000       5761455
+    ===  =========  ============  ===========  ============
+      №       Time  Slowdown         Argument  Count primes
+    ===  =========  ============  ===========  ============
+      1  0.001174   0.118%            100_000          9592
+      2  0.013186   1.201%          1_000_000         78498
+      3  0.131736   11.855%        10_000_000        664579
+      4  1.63013    149.840%      100_000_000       5761455
+    ===  =========  ============  ===========  ============
     """
     sieve = bytearray([True]) * limit
     zero = bytearray([False])
