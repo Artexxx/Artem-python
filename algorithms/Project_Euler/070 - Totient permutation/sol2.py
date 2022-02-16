@@ -29,7 +29,7 @@ def bit_sieve(limit: int) -> bytearray:
     Example
     ========
     >>> list(bit_sieve(10))
-    [0, 0, 1, 1, 0, 1, 0, 1, 0, 0]
+    [0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0]
 
     Time-Profile
     ============
@@ -45,21 +45,36 @@ def bit_sieve(limit: int) -> bytearray:
     sieve = bytearray([True]) * limit
     sieve[0] = False
     sieve[1] = False
-    number_of_multiples = len(sieve[4::2])
+    # old code ─ slow version
+    # # old code ─ slow version
+    # number_of_multiples = len(sieve[4::2])
+    number_of_multiples = (limit - 4 + limit % 2) // 2
+    number_of_multiples = (limit - 4 + limit % 2) // 2
     sieve[4::2] = [False] * number_of_multiples
 
-    for factor in range(3, int(math.sqrt(limit)) + 1, 2):
+    for factor in range(3, int(math.sqrt(limit + 1)) + 1, 2):
         if sieve[factor]:
-            # number_of_multiples = len(sieve[factor * factor::2*factor]) # old code ─ slow version
+            # old code ─ slow version
+            # number_of_multiples = len(sieve[factor * factor::2*factor])
             number_of_multiples = ((limit - factor * factor - 1) // (2 * factor) + 1)
             sieve[factor * factor::factor * 2] = [False] * number_of_multiples
     return sieve
 
 
 def prime_sieve(limit) -> List[int]:
+    """
+    Input limit>=3, return a list of prime numbers less than `limit`.
+
+    Example
+    ========
+    >>> prime_sieve(11)
+    [2, 3, 5, 7, 11]
+    >>> prime_sieve(17)
+    [2, 3, 5, 7, 11, 13, 17]
+    """
     from itertools import compress
-    sieve = bit_sieve(limit)
-    return [2, *compress(range(3, limit, 2), sieve)]
+    sieve = bit_sieve(limit+1)
+    return [2, *compress(range(3, limit+1, 2), sieve[3::2])]
 
 
 def has_same_digits(num1: int, num2: int) -> bool:
@@ -86,7 +101,7 @@ def solution(limit=10 ** 7):
     >>> solution(10000)
     4435
     """
-    primes = prime_sieve((limit//2+1)+1)
+    primes = prime_sieve(limit)
     count_primes = len(primes)
     min_numerator = 1
     min_denominator = 0
@@ -97,9 +112,10 @@ def solution(limit=10 ** 7):
             n = p1 * p2
             if n > limit:
                 break
-            phi_n = (p1 - 1) * (p2 - 1)  # phi_n = p1*p2 * (1-1/p1) * (1-1/p1)
+            # phi_n = p1*p2 * (1-1/p1) * (1-1/p1)
+            phi_n = (p1 - 1) * (p2 - 1)
             if ((n * min_denominator < min_numerator * phi_n) and
-                    has_same_digits(n, int(phi_n))):
+                    has_same_digits(n, phi_n)):
                 min_numerator = n
                 min_denominator = phi_n
     return min_numerator
@@ -109,4 +125,4 @@ if __name__ == '__main__':
     ### Run Time-Profile Table ###
     import sys; sys.path.append('..')
     from time_profile import TimeProfile
-    TimeProfile(solution, [10 ** 5, 10 ** 6, 10 ** 7])
+    # TimeProfile(prime_sieve, [10 ** 5, 10 ** 6, 10 ** 7])

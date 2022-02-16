@@ -11,12 +11,14 @@
 Найдите наименьшее простое число, которое является одним из восьми простых чисел, полученных заменой части цифр (не обязательно соседних) одинаковыми цифрами.
 
    Время  Замедление    Аргумент      Результат
---------  ------------  ----------  -----------
-0.230331  23.033%                        121313 <Ответ>
+--------  ------------  ----------  ----------- <248858 function calls>
+0.224035  22.403%                        121313 (Ответ)
 """
+import cProfile
 import math
 from collections import Counter
 from string import digits
+from typing import Iterator, List
 
 
 def bit_sieve(limit: int) -> bytearray:
@@ -45,22 +47,36 @@ def bit_sieve(limit: int) -> bytearray:
     sieve = bytearray([True]) * limit
     sieve[0] = False
     sieve[1] = False
-    # number_of_multiples = len(sieve[4::2]) # old code ─ slow version
+    # old code ─ slow version
+    # # old code ─ slow version
+    # number_of_multiples = len(sieve[4::2])
+    number_of_multiples = (limit - 4 + limit % 2) // 2
     number_of_multiples = (limit - 4 + limit % 2) // 2
     sieve[4::2] = [False] * number_of_multiples
 
     for factor in range(3, int(math.sqrt(limit)) + 1, 2):
         if sieve[factor]:
-            # number_of_multiples = len(sieve[factor * factor::2*factor]) # old code ─ slow version
+            # old code ─ slow version
+            # number_of_multiples = len(sieve[factor * factor::2*factor])
             number_of_multiples = ((limit - factor * factor - 1) // (2 * factor) + 1)
             sieve[factor * factor::factor * 2] = [False] * number_of_multiples
     return sieve
 
 
-def prime_sieve(limit) -> Iterator[int]:
-    sieve = bit_sieve(limit)
-    yield 2
-    yield from (i for i in range(3, limit, 2) if sieve[i])
+def prime_sieve(limit) -> List[int]:
+    """
+    Input limit>=3, return a list of prime numbers less than `limit`.
+
+    Example
+    ========
+    >>> prime_sieve(11)
+    [2, 3, 5, 7, 11]
+    >>> prime_sieve(17)
+    [2, 3, 5, 7, 11, 13, 17]
+    """
+    from itertools import compress
+    sieve = bit_sieve(limit+1)
+    return [2, *compress(range(3, limit+1, 2), sieve[3::2])]
 
 
 def count_duplicated_digits(number: int) -> int:
@@ -98,7 +114,8 @@ def get_candidates(pattern):
 
 def solution():
     """
-    Находит наименьшее простое число, которое является одним из восьми простых чисел, полученных заменой части цифр (не обязательно соседних) одинаковыми цифрами.
+    Находит наименьшее простое число, которое является одним из восьми простых чисел,
+    полученных заменой части цифр (не обязательно соседних) одинаковыми цифрами.
 
     >>> solution()
     121313
@@ -125,3 +142,7 @@ if __name__ == '__main__':
     import sys; sys.path.append('..')
     from time_profile import TimeProfile
     TimeProfile(solution)
+    with cProfile.Profile() as pr:
+        solution()
+    print(pr.print_stats())
+

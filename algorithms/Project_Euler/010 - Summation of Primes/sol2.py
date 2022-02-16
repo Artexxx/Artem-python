@@ -40,7 +40,9 @@ def bit_sieve(limit: int) -> bytearray:
     sieve = bytearray([True]) * limit
     sieve[0] = False
     sieve[1] = False
-    number_of_multiples = len(sieve[4::2])
+    # old code ─ slow version
+    # number_of_multiples = len(sieve[4::2])
+    number_of_multiples = (limit - 4 + limit % 2) // 2
     sieve[4::2] = [False] * number_of_multiples
 
     for factor in range(3, int(math.sqrt(limit)) + 1, 2):
@@ -62,9 +64,9 @@ def solution(limit: int) -> int:
     >>> solution(7)
     10
     """
-    sieve = bit_sieve(limit)
+    sieve = bit_sieve(limit+1)
     prime_sum = 2
-    for i in range(3, limit, 2):
+    for i in range(3, limit+1, 2):
         if sieve[i]:
             prime_sum += i
     return prime_sum

@@ -71,22 +71,25 @@ def bit_sieve(limit: int) -> bytearray:
     sieve = bytearray([True]) * limit
     sieve[0] = False
     sieve[1] = False
-    # number_of_multiples = len(sieve[4::2]) # old code ─ slow version
+    # # old code ─ slow version
+    # number_of_multiples = len(sieve[4::2])
+    number_of_multiples = (limit - 4 + limit % 2) // 2 # old code ─ slow version
     number_of_multiples = (limit - 4 + limit % 2) // 2
     sieve[4::2] = [False] * number_of_multiples
 
     for factor in range(3, int(math.sqrt(limit)) + 1, 2):
         if sieve[factor]:
-            # number_of_multiples = len(sieve[factor * factor::2*factor]) # old code ─ slow version
+            # old code ─ slow version
+            # number_of_multiples = len(sieve[factor * factor::2*factor])
             number_of_multiples = ((limit - factor * factor - 1) // (2 * factor) + 1)
             sieve[factor * factor::factor * 2] = [False] * number_of_multiples
     return sieve
 
 
 def prime_sieve(limit) -> Iterator[int]:
-    sieve = bit_sieve(limit)
+    sieve = bit_sieve(limit+1)
     yield 2
-    yield from (i for i in range(3, limit, 2) if sieve[i])
+    yield from (i for i in range(3, limit+1, 2) if sieve[i])
 
 
 def is_prime(number) -> bool:

@@ -40,7 +40,9 @@ def bit_sieve(limit: int) -> bytearray:
     sieve = bytearray([True]) * limit
     sieve[0] = False
     sieve[1] = False
-    number_of_multiples = len(sieve[4::2])  # old code ─ slow version
+    # old code ─ slow version
+    # number_of_multiples = len(sieve[4::2])
+    number_of_multiples = (limit - 4 + limit % 2) // 2  # old code ─ slow version
     sieve[4::2] = [False] * number_of_multiples
 
     for factor in range(3, int(math.sqrt(limit)) + 1, 2):

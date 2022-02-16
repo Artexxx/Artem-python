@@ -21,9 +21,19 @@ solution  () => 997651
 
 ```python
 def prime_sieve(limit) -> List[int]:
+    """
+    Input limit>=3, return a list of prime numbers less than `limit`.
+
+    Example
+    ========
+    >>> prime_sieve(11)
+    [2, 3, 5, 7, 11]
+    >>> prime_sieve(17)
+    [2, 3, 5, 7, 11, 13, 17]
+    """
     from itertools import compress
-    sieve = bit_sieve(limit)
-    return [2, *compress(range(3, limit, 2), sieve)]
+    sieve = bit_sieve(limit+1)
+    return [2, *compress(range(3, limit+1, 2), sieve[3::2])]
 
 
 def solution():
