@@ -84,8 +84,6 @@ def bit_sieve(limit: int) -> bytearray:
     ===  =========  ============  ===========  ============
     """
     sieve = bytearray([True]) * limit
-    zero = bytearray([False])
-
     sieve[0] = False
     sieve[1] = False
     number_of_multiples = len(sieve[4::2]) # old code ─ slow version
@@ -94,7 +92,7 @@ def bit_sieve(limit: int) -> bytearray:
     for factor in range(3, int(math.sqrt(limit)) + 1, 2):
         if sieve[factor]:
             number_of_multiples = len(sieve[factor * factor::2*factor])
-            sieve[factor * factor::factor * 2] = zero * number_of_multiples
+            sieve[factor * factor::factor * 2] = [False] * number_of_multiples
     return sieve
 
 

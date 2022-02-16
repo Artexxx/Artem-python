@@ -45,7 +45,7 @@
 > Нетрудно заметить, что максимум n/φ(n) наблюдается при n=6, для n ≤ 10.
 > Найдите значение n ≤ 1 000 000, при котором значение n/φ(n) максимально.
 ``` python
-solution()  # => 
+solution(10**6)  # => 510510
 ```
 
 ## Нормальное решение (1)
@@ -63,22 +63,43 @@ n=p1<sup>a1</sup>⋅...⋅pk<sup>ak</sup>,
 
 ![phi-n.svg](res/phi-n.svg)
 
-<br>Пример вычисления: φ(36)=φ(2<sup>2</sup> ⋅ 3<sup>2</sup>)=φ(2<sup>2</sup>)φ(3<sup>2</sup>)=(2<sup>2</sup>-2)(3<sup>2</sup>-3)=2⋅6=12
+<br>Пример вычисления:
+<br>У 10 есть простые множители 2 и 5.
+<br>φ(10) = 10 * (1 - 1/2) * (1 - 1/5) 
+<br>    = (10 * (1 - 1/2)) * (1 - 1/5) 
+<br>    = (10 - 10/2) * (1 - 1/5) => (phi -= phi/2)
+<br>    = 5 * (1 - 1/5) = 5 - 5/5 => (phi -= phi/5) 
+<br>    = 4
 
 ```python
-def solution(limit=10 ** 6):
+def get_totients(limit: int) -> List[int]:
     """
-    Возвращает значение n ≤ limit, при котором значение n/φ(n) максимально.
+    Calculates a list of totients from 0 to `limit` exclusive, using the
+    definition of Euler's product formula.
+
+    >>> get_totients(5)
+    [0, 1, 1, 2, 2, 4]
+    >>> get_totients(10)
+    [0, 1, 1, 2, 2, 4, 2, 6, 4, 6, 4]
     """
     phi = list(range(limit + 1))
 
     for p in range(2, len(phi)):
         if phi[p] == p:  # p is prime
-            for i in range(2 * p, limit + 1, p):
+            for i in range(p, limit + 1, p):
                 phi[i] -= phi[i] // p
+    return phi
 
-    return max(range(2, limit + 1),
-               key=(lambda i: i / phi[i]))
+
+def solution(limit=10 ** 6):
+    """
+    Возвращает значение n ≤ limit, при котором значение n/φ(n) максимально.
+
+    >>> solution(10)
+    6
+    """
+    phi = get_totients(limit)
+    return max(range(2, limit + 1), key=(lambda i: i / phi[i]))
 ```
 ```text
   №      Время  Замедление      Аргумент    Результат
@@ -90,14 +111,14 @@ def solution(limit=10 ** 6):
 
 ## Нормальное решение (2)
 
-Так как φ мультипликативна и для простого p: φ(p^n) = p^(n-1)*(p-1).
-Следовательно, φ(n) = n / φ (n), очевидно, также мультипликативно с φ(p^n) = p/(p-1). 
-
 <img src="https://s0.wp.com/latex.php?latex=\frac{n}{\phi(n)} = \frac{n}{n \displaystyle\prod_{p | n} \left(1 - \frac{1}{p} \right)} = \frac{1}{\displaystyle\prod_{p | n} \left(1 - \frac{1}{p} \right)} = \prod_{p | n} \frac{p}{p - 1},%5C;%5C;n%3E1+&amp;bg=ffffff&amp;fg=000&amp;s=0" alt="\frac{n}{\phi(n)} = \frac{n}{n \displaystyle\prod_{p | n} \left(1 - \frac{1}{p} \right)} = \frac{1}{\displaystyle\prod_{p | n} \left(1 - \frac{1}{p} \right)} = \prod_{p | n} \frac{p}{p - 1}" class="latex">
 
-Поэтому для максимизации φ(n) нет смысла смотреть на значения n, содержащие простые числа в степени больше 1: не надо менять значение φ(n), а просто увеличиваете n.
-Более того, φ(p) уменьшается по мере увеличения p, поэтому учитывая два значения n с равным числом простых множителей, предпочтительней иметь меньшие простые множители, чем большие.
-Из этого следует, что n <= N, максимизирующий φ(n), является наибольшим «простым факториалом», меньшим или равным N.
+Надо максимизировать отношение n/φ(n).
+<br>φ(n) уменьшается по мере увеличения p, поэтому учитывая два значения n с равным количеством простых множителей, предпочтительней иметь меньшие простые множители, чем большие.
+<br> Число n <= N, минимизирующее φ(n), является наибольшим «простым факториалом», меньшим или равным N.
+<br>То есть, чтобы свести отношение n/φ(n) к максимуму, нужно минимизировать знаменатель. 
+Каждый раз, когда добавляем отдельный простой множитель, знаменатель становится меньше. 
+Поэтому надо искать число с максимальным количеством различных простых множителей.
 
 ```python
 def bit_sieve(limit: int) -> bytearray:
@@ -124,8 +145,6 @@ def bit_sieve(limit: int) -> bytearray:
     ===  =========  ============  ===========  ============
     """
     sieve = bytearray([True]) * limit
-    zero = bytearray([False])
-
     sieve[0] = False
     sieve[1] = False
     number_of_multiples = len(sieve[4::2])
@@ -135,7 +154,7 @@ def bit_sieve(limit: int) -> bytearray:
         if sieve[factor]:
             # number_of_multiples = len(sieve[factor * factor::2*factor]) # old code ─ slow version
             number_of_multiples = ((limit - factor * factor - 1) // (2 * factor) + 1)
-            sieve[factor * factor::factor * 2] = zero * number_of_multiples
+            sieve[factor * factor::factor * 2] = [False] * number_of_multiples
     return sieve
 
 

@@ -41,8 +41,6 @@ def bit_sieve(limit: int) -> bytearray:
     ===  =========  ============  ===========  ============
     """
     sieve = bytearray([True]) * limit
-    zero = bytearray([False])
-
     sieve[0] = False
     sieve[1] = False
     # number_of_multiples = len(sieve[4::2]) # old code ─ slow version
@@ -53,13 +51,14 @@ def bit_sieve(limit: int) -> bytearray:
         if sieve[factor]:
             # number_of_multiples = len(sieve[factor * factor::2*factor]) # old code ─ slow version
             number_of_multiples = ((limit - factor * factor - 1) // (2 * factor) + 1)
-            sieve[factor * factor::factor * 2] = zero * number_of_multiples
+            sieve[factor * factor::factor * 2] = [False] * number_of_multiples
     return sieve
 
 
 def prime_sieve(limit) -> List[int]:
+    from itertools import compress
     sieve = bit_sieve(limit)
-    return [2] + [i for i in range(3, limit, 2) if sieve[i]]
+    return [2, *compress(range(3, limit, 2), sieve)]
 
 
 def is_prime(n: int) -> bool:

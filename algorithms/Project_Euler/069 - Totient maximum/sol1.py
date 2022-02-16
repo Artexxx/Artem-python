@@ -15,20 +15,43 @@
 
 Нетрудно заметить, что максимум n/φ(n) наблюдается при n=6, для n ≤ 10.
 Найдите значение n ≤ 1 000 000, при котором значение n/φ(n) максимально.
+
+  №     Время  Замедление      Аргумент    Результат
+---  --------  ------------  ----------  -----------
+  1  0.005239  0.524%             10000         2310
+  2  0.05868   5.344%            100000        30030
+  3  0.856168  79.749%          1000000       510510
 """
+from typing import List
 
 
-def solution(limit=10 ** 6):
+def get_totients(limit: int) -> List[int]:
     """
-    Возвращает значение n ≤ limit, при котором значение n/φ(n) максимально.
+    Calculates a list of totients from 0 to `limit` exclusive, using the
+    definition of Euler's product formula.
+
+    >>> get_totients(5)
+    [0, 1, 1, 2, 2, 4]
+    >>> get_totients(10)
+    [0, 1, 1, 2, 2, 4, 2, 6, 4, 6, 4]
     """
     phi = list(range(limit + 1))
 
     for p in range(2, len(phi)):
         if phi[p] == p:  # p is prime
-            for i in range(2 * p, limit + 1, p):
+            for i in range(p, limit + 1, p):
                 phi[i] -= phi[i] // p
+    return phi
 
+
+def solution(limit=10 ** 6):
+    """
+    Возвращает значение n ≤ limit, при котором значение n/φ(n) максимально.
+
+    >>> solution(10)
+    6
+    """
+    phi = get_totients(limit)
     return max(range(2, limit + 1), key=(lambda i: i / phi[i]))
 
 

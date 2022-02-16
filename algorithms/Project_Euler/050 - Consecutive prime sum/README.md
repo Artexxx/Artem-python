@@ -21,8 +21,9 @@ solution  () => 997651
 
 ```python
 def prime_sieve(limit) -> List[int]:
+    from itertools import compress
     sieve = bit_sieve(limit)
-    return [2] + [i for i in range(3, limit, 2) if sieve[i]]
+    return [2, *compress(range(3, limit, 2), sieve)]
 
 
 def solution():

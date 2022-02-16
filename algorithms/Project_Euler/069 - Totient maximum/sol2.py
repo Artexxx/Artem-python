@@ -44,8 +44,6 @@ def bit_sieve(limit: int) -> bytearray:
     ===  =========  ============  ===========  ============
     """
     sieve = bytearray([True]) * limit
-    zero = bytearray([False])
-
     sieve[0] = False
     sieve[1] = False
     number_of_multiples = len(sieve[4::2])
@@ -55,7 +53,7 @@ def bit_sieve(limit: int) -> bytearray:
         if sieve[factor]:
             # number_of_multiples = len(sieve[factor * factor::2*factor]) # old code ─ slow version
             number_of_multiples = ((limit - factor * factor - 1) // (2 * factor) + 1)
-            sieve[factor * factor::factor * 2] = zero * number_of_multiples
+            sieve[factor * factor::factor * 2] = [False] * number_of_multiples
     return sieve
 
 
@@ -68,6 +66,9 @@ def prime_sieve(limit) -> Iterator[int]:
 def solution(limit=10 ** 6):
     """
     Возвращает значение n ≤ limit, при котором значение n/φ(n) максимально.
+
+    >>> solution(10)
+    6
     """
     result = 1
     for prime in prime_sieve(int(math.sqrt(limit)) + 1):
