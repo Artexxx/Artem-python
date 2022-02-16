@@ -5,7 +5,7 @@
 
 Интересно, что φ(87109) = 79180, и, как можно заметить, 87109 является перестановкой 79180.
 
-Найдите такое значение n, 1<n<107, при котором φ(n) является перестановкой n, а отношение n/φ(n) является минимальным.
+Найдите такое значение n, 1<n<10^7, при котором φ(n) является перестановкой n, а отношение n/φ(n) является минимальным.
 
   №       Время  Замедление      Аргумент    Результат
 ---  ----------  ------------  ----------  -----------
@@ -41,15 +41,13 @@ def has_same_digits(num1: int, num2: int) -> bool:
 
     >>> has_same_digits(123456789, 987654321)
     True
-    >>> has_same_digits(123, 23)
-    False
     >>> has_same_digits(1234566, 123456)
     False
     """
     return sorted(str(num1)) == sorted(str(num2))
 
 
-def solution(limit=10**7):
+def solution(limit=10 ** 7):
     """
     Найдите такое значение n, 1 < n < `limit`, при котором φ(n) является
     перестановкой n, а отношение n/φ(n) является минимальным.
@@ -59,15 +57,16 @@ def solution(limit=10**7):
     >>> solution(10000)
     4435
     """
-    min_numerator = 1    # i
-    min_denominator = 0  # φ(i)
+    min_numerator = 1
+    min_denominator = 0
     totients = get_totients(limit)
 
     for i in range(2, limit):
-        t = totients[i]
-        if i * min_denominator < min_numerator * t and has_same_digits(i, t):
+        phi_i = totients[i]
+        if (i * min_denominator < min_numerator * phi_i and
+                has_same_digits(i, phi_i)):
             min_numerator = i
-            min_denominator = t
+            min_denominator = phi_i
     return min_numerator
 
 
@@ -75,4 +74,4 @@ if __name__ == '__main__':
     ### Run Time-Profile Table ###
     import sys; sys.path.append('..')
     from time_profile import TimeProfile
-    TimeProfile(solution, [10**5, 10 ** 6, 10 ** 7])
+    TimeProfile(solution, [10**5, 10**6, 10**7])

@@ -130,7 +130,7 @@ def solution(N):
     """
     result_sum = 0
     for board in get_first_n_boards_from_file(N):
-        sudoku = Sudoku(grid)
+        sudoku = Sudoku(board)
         sudoku.solve()
         first_line = sudoku[0]
         result_sum += first_line[0] * 100 + first_line[1] * 10 + first_line[2]
