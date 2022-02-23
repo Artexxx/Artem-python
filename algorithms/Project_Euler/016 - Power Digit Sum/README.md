@@ -14,30 +14,20 @@ solution   (20)  # => 31 = 1 + 0 + 4 + 8 + 5 + 7 + 6
 solution   (50)  # => 76
 ```
 
-## Частное решение (1)
+## Нормальные решения
 
 ```python
+solution = lambda n: sum(map(int, str(2 ** n)))
+```
 
-def solution(power):
-    num = 2 ** power
-    string_num = str(num)
-    list_num = list(string_num)
-    sum_of_num = 0
-
-    for i in list_num:
-        sum_of_num += int(i)
-    return sum_of_num
-
-
+Аналогичное решение без использования строк:
+```python
 def solution2(power):
-    """Аналогичное решение без использования строк"""
     num = 2 ** power
     result_num = 0
     while num:
         result_num, num = result_num + num % 10, num // 10
     return result_num
-
-solution3 = lambda n: sum(map(int, str(2 ** n)))
 ```
 
 ```text

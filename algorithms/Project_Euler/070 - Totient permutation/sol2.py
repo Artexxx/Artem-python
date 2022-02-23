@@ -7,11 +7,11 @@
 
 Найдите такое значение n, 1<n<10^7, при котором φ(n) является перестановкой n, а отношение n/φ(n) является минимальным.
 
-  №       Время  Замедление      Аргумент    Результат
----  ----------  ------------  ----------  -----------
-  1   0.0731314  7.313%            100000        75841
-  2   0.956609   88.348%          1000000       783169
-  3  10.4914     953.475%        10000000      8319823
+  №      Время  Замедление      Аргумент    Результат
+---  ---------  ------------  ----------  -----------
+  1  0.0323387  3.234%            100000        75841
+  2  0.275686   24.335%          1000000       783169
+  3  2.60506    232.938%        10000000      8319823
 """
 from typing import List
 
@@ -46,9 +46,7 @@ def bit_sieve(limit: int) -> bytearray:
     sieve[0] = False
     sieve[1] = False
     # old code ─ slow version
-    # # old code ─ slow version
     # number_of_multiples = len(sieve[4::2])
-    number_of_multiples = (limit - 4 + limit % 2) // 2
     number_of_multiples = (limit - 4 + limit % 2) // 2
     sieve[4::2] = [False] * number_of_multiples
 
@@ -93,7 +91,7 @@ def has_same_digits(num1: int, num2: int) -> bool:
 
 def solution(limit=10 ** 7):
     """
-    Найдите такое значение n, 1 < n < `limit`, при котором φ(n) является
+    Находит такое значение n, 1 < n < `limit`, при котором φ(n) является
     перестановкой n, а отношение n/φ(n) является минимальным.
 
     >>> solution(100)
@@ -125,4 +123,4 @@ if __name__ == '__main__':
     ### Run Time-Profile Table ###
     import sys; sys.path.append('..')
     from time_profile import TimeProfile
-    # TimeProfile(prime_sieve, [10 ** 5, 10 ** 6, 10 ** 7])
+    TimeProfile(solution, [10 ** 5, 10 ** 6, 10 ** 7])
