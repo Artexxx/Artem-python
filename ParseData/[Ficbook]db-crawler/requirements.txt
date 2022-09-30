@@ -6,7 +6,7 @@ DAWG==0.8.0
 DAWG-Python==0.7.2
 docopt==0.6.2
 idna==2.9
-joblib==0.15.1
+joblib==1.2.0
 lxml==4.5.1
 nltk==3.5
 pymorphy2==0.8
